@@ -1,10 +1,15 @@
 package de.htwsaar.verwaltung_ms.data;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-@Table(name = "ACTIVE_ROBOTS")
+@Table(name = "ROBOTS")
 public class Robot {
 
     @Id
@@ -15,29 +20,35 @@ public class Robot {
     private String roboterName;
 
     @Column(name = "handshake_code", unique = true, nullable = false)
-    private Long hsc;
+    private String hsc;
 
     @Column(name = "mac_adr", unique = true, nullable = false)
-    private String mac_adr;
+    private String macAdr;
+
+    @Column(name = "active")
+    private boolean isActive;
+
+    @Column(name = "last_active")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Instant lastActive;
 
     @OneToOne(mappedBy = "robot")
+    @JsonIgnore
     private Robot_Info robot_info;
 
     public Robot() {
     }
 
-    public Robot(Long id, String roboterName, Long hsc, String mac_adr) {
-        this.id = id;
+    public Robot(String roboterName, String hsc, String macAdr) {
         this.roboterName = roboterName;
         this.hsc = hsc;
-        this.mac_adr = mac_adr;
+        this.macAdr = macAdr;
     }
 
-    public Robot(Long id, String roboterName, Long hsc, String mac_adr, Robot_Info robot_info) {
-        this.id = id;
+    public Robot(String roboterName, String hsc, String macAdr, Robot_Info robot_info) {
         this.roboterName = roboterName;
         this.hsc = hsc;
-        this.mac_adr = mac_adr;
+        this.macAdr = macAdr;
         this.robot_info = robot_info;
     }
 
@@ -57,20 +68,36 @@ public class Robot {
         this.roboterName = roboterName;
     }
 
-    public Long getHsc() {
+    public String getHsc() {
         return hsc;
     }
 
-    public void setHsc(Long hsc) {
+    public void setHsc(String hsc) {
         this.hsc = hsc;
     }
 
-    public String getMac_adr() {
-        return mac_adr;
+    public String getMacAdr() {
+        return macAdr;
     }
 
-    public void setMac_adr(String mac_adr) {
-        this.mac_adr = mac_adr;
+    public void setMacAdr(String mac_adr) {
+        this.macAdr = mac_adr;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public Instant getLastActive() {
+        return lastActive;
+    }
+
+    public void setLastActive(Instant lastActive) {
+        this.lastActive = lastActive;
     }
 
     public Robot_Info getRobot_info() {
@@ -86,12 +113,12 @@ public class Robot {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Robot robot = (Robot) o;
-        return id.equals(robot.id) && roboterName.equals(robot.roboterName) && hsc.equals(robot.hsc) && mac_adr.equals(robot.mac_adr);
+        return id.equals(robot.id) && roboterName.equals(robot.roboterName) && hsc.equals(robot.hsc) && macAdr.equals(robot.macAdr);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, roboterName, hsc, mac_adr);
+        return Objects.hash(id, roboterName, hsc, macAdr);
     }
 
     @Override
@@ -99,8 +126,10 @@ public class Robot {
         return "Robot{" +
                 "id=" + id +
                 ", roboterName='" + roboterName + '\'' +
-                ", hsc=" + hsc +
-                ", mac_adr='" + mac_adr + '\'' +
+                ", hsc='" + hsc + '\'' +
+                ", macAdr='" + macAdr + '\'' +
+                ", isActive=" + isActive +
+                ", lastActive=" + lastActive +
                 '}';
     }
 }
