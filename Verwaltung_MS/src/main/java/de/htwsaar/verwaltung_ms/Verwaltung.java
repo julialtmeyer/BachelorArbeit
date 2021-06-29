@@ -7,15 +7,17 @@ import de.htwsaar.verwaltung_ms.data.RobotRepository;
 import de.htwsaar.verwaltung_ms.mqtt.Publisher;
 import de.htwsaar.verwaltung_ms.mqtt.messages.Heartbeat;
 import de.htwsaar.verwaltung_ms.mqtt.messages.Request;
-import org.springframework.stereotype.Component;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
+import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 
-@Component
+@Service
 public class Verwaltung {
+
     private RobotRepository robotRepository;
     private final Publisher publisher;
     private final Configuration config;
@@ -59,6 +61,22 @@ public class Verwaltung {
             robotRepository.save(robot);
         }
 
+    }
+
+    @Scheduled(fixedRate = 1000)
+    public void checkActiveRobots(){
+        List<Robot> robots = robotRepository.findActiveRobots();
+        for(Robot robot: robots){
+            Instant instantNow = Instant.now();
+            Instant instantRobot = robot.getLastActive();
+            Duration duration = Duration.between(instantRobot, instantNow);
+            if(duration.getSeconds() > 10){
+                robot.setActive(false);
+                robotRepository.save(robot);
+                String out = String.format("%s is now inactive!", robot.getRoboterName());
+                System.out.println(out );
+            }
+        }
     }
 
     private String regMessageBuilder(Robot robot){
