@@ -26,10 +26,16 @@ public Heartbeat deserialize(JsonParser p, DeserializationContext ctxt) throws I
         JsonNode jsonNode = p.getCodec().readTree(p);
         JsonNode heartbeatNode = jsonNode.get("heartbeat");
         Heartbeat heartbeat = new Heartbeat();
-        heartbeat.setId(heartbeatNode.get("Id").asLong());
-        heartbeat.setName(heartbeatNode.get("robotName").asText());
-        heartbeat.setHsc(heartbeatNode.get("hsc").asText());
-        heartbeat.setMacAdr(heartbeatNode.get("macAdr").asText());
+        try {
+                heartbeat.setId(heartbeatNode.get("Id").asLong());
+                heartbeat.setName(heartbeatNode.get("robotName").asText());
+                heartbeat.setHsc(heartbeatNode.get("hsc").asText());
+                heartbeat.setMacAdr(heartbeatNode.get("macAdr").asText());
+        }
+        catch (NullPointerException e){
+                System.err.println("Error while reading Request! Payload does not match the requirements.");
+        }
+
 
         return heartbeat;
         }

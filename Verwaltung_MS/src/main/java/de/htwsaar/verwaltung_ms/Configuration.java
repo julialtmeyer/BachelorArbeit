@@ -5,7 +5,7 @@ import org.springframework.context.annotation.PropertySource;
 
 
 @org.springframework.context.annotation.Configuration
-@PropertySource("")
+@PropertySource("classpath:/application.properties")
 public class Configuration {
 
     @Value("${clientKey}")
@@ -34,9 +34,6 @@ public class Configuration {
 
     @Value("${useCertificate}")
     private boolean use_certificate;
-
-    @Value("${counterPath}")
-    private String counterPath;
 
     public String getUsername() {
         return username;
@@ -72,9 +69,5 @@ public class Configuration {
 
     public String getTopic() {
         return topic;
-    }
-
-    public String getCounterPath() {
-        return counterPath;
     }
 }

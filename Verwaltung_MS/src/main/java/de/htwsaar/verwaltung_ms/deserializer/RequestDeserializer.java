@@ -25,8 +25,13 @@ public class RequestDeserializer extends StdDeserializer<Request> {
         JsonNode jsonNode = p.getCodec().readTree(p);
         JsonNode requestNode = jsonNode.get("request");
         Request request = new Request();
-        request.setHsc(requestNode.get("hsc").asText());
-        request.setMacAdr(requestNode.get("macAdr").asText());
+        try {
+            request.setHsc(requestNode.get("hsc").asText());
+            request.setMacAdr(requestNode.get("macAdr").asText());
+        }
+        catch (NullPointerException e){
+            System.err.println("Error while reading Request! Payload does not match the requirements.");
+        }
 
         return request;
     }
