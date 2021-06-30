@@ -1,13 +1,8 @@
-package de.htwsaar.verwaltung_ms.mqtt;
+package de.htwsaar.backend_service.mqtt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import de.htwsaar.verwaltung_ms.Configuration;
-import de.htwsaar.verwaltung_ms.Verwaltung;
-import de.htwsaar.verwaltung_ms.mqtt.messages.Heartbeat;
-import de.htwsaar.verwaltung_ms.mqtt.messages.Request;
+import de.htwsaar.backend_service.Configuration;
 import org.eclipse.paho.client.mqttv3.*;
 import org.springframework.stereotype.Component;
 
@@ -24,15 +19,12 @@ public class Subscriber implements MqttCallback {
 
     private final Configuration config;
 
-    private Verwaltung verwaltung;
-
     /**
      * Instantiates a new Subscriber.
      */
-    public Subscriber(Client client, Configuration config, Verwaltung verwaltung){
+    public Subscriber(Client client, Configuration config){
         this.client = client;
         this.config = config;
-        this.verwaltung = verwaltung;
         config();
         subscribe();
     }
@@ -71,17 +63,6 @@ public class Subscriber implements MqttCallback {
         ObjectMapper objectMapper = new ObjectMapper();
         String payloadAsString = message.toString();
 
-        if(payloadAsString.toLowerCase().contains("request")){
-            System.out.println("Registration Request received.");
-            Request request = objectMapper.readValue(payloadAsString, Request.class);
-            verwaltung.registerRobot(request);
-        }
-       else if(payloadAsString.toLowerCase().contains("heartbeat")){
-            System.out.println("Heartbeat received");
-            Heartbeat heartbeat = objectMapper.readValue(payloadAsString, Heartbeat.class);
-            verwaltung.checkHeartbeat(heartbeat);
-
-        }
     }
 
     @Override
