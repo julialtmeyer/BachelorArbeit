@@ -1,6 +1,6 @@
 package de.htwsaar.backend_service.mqtt;
 
-import de.htwsaar.verwaltung_ms.Configuration;
+import de.htwsaar.backend_service.Configuration;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;

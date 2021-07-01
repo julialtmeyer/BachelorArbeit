@@ -1,4 +1,4 @@
-package de.htwsaar.backend_service.mqtt.messages;
+package de.htwsaar.backend_service.messages;
 
 import java.util.Objects;
 

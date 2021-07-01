@@ -14,6 +14,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class Verwaltung {
@@ -29,6 +31,9 @@ public class Verwaltung {
     }
 
     public void registerRobot(Request request){
+        if(!validMacAddress(request.getMacAdr())){
+            System.out.println("mac fail");
+        }
         Robot robot = robotRepository.findRobotByMacAdr(request.getMacAdr());
         if(robot == null){
             robot = new Robot();
@@ -49,6 +54,9 @@ public class Verwaltung {
     }
 
     public void checkHeartbeat(Heartbeat heartbeat){
+        if(!validMacAddress(heartbeat.getMacAdr())){
+            System.out.println("mac fail");
+        }
         Robot robot = robotRepository.findRobotByIdAndHscAndMacAdr(heartbeat.getId(),heartbeat.getHsc(),heartbeat.getMacAdr());
         if (robot == null){
             //To Do Error
@@ -100,5 +108,13 @@ public class Verwaltung {
         Random rnd = new Random();
         int number = rnd.nextInt(9999);
         return String.format("%04d", number);
+    }
+
+    private boolean validMacAddress(String mac){
+        boolean validMac;
+        String macAdrPattern = "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$";
+        Pattern pattern = Pattern.compile(macAdrPattern);
+        Matcher matcher = pattern.matcher(mac);
+        return validMac = matcher.matches();
     }
 }

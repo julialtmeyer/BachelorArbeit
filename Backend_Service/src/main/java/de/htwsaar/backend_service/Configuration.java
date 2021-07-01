@@ -29,8 +29,14 @@ public class Configuration {
     @Value("${serverUrlLocal}")
     private String serverUrlLocal;
 
-    @Value("${subscribeTopic}")
-    private String topic;
+    @Value("${topicRoot}")
+    private String topicRoot;
+
+    @Value("${subTopicInformation}")
+    private String subTopicInformation;
+
+    @Value("${subTopicDrive}")
+    private String subTopicDrive;
 
     @Value("${useCertificate}")
     private boolean use_certificate;
@@ -67,7 +73,15 @@ public class Configuration {
         return clientCertifiacte;
     }
 
-    public String getTopic() {
-        return topic;
+    public String getTopicRoot() {
+        return topicRoot;
+    }
+
+    public String getSubTopicInformation() {
+        return subTopicInformation;
+    }
+
+    public String getSubTopicDrive() {
+        return subTopicDrive;
     }
 }
