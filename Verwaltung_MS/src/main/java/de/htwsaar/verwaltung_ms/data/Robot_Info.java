@@ -8,11 +8,11 @@ import java.util.Objects;
 public class Robot_Info {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "robot_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "robot_id", nullable = false, unique = true)
     private Robot robot;
 
     @Column(name = "battery")

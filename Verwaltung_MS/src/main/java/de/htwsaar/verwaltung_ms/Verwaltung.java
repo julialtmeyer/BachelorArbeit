@@ -3,7 +3,9 @@ package de.htwsaar.verwaltung_ms;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htwsaar.verwaltung_ms.data.Robot;
+import de.htwsaar.verwaltung_ms.data.RobotInfoRepository;
 import de.htwsaar.verwaltung_ms.data.RobotRepository;
+import de.htwsaar.verwaltung_ms.data.Robot_Info;
 import de.htwsaar.verwaltung_ms.mqtt.Publisher;
 import de.htwsaar.verwaltung_ms.mqtt.messages.Heartbeat;
 import de.htwsaar.verwaltung_ms.mqtt.messages.Request;
@@ -21,11 +23,13 @@ import java.util.regex.Pattern;
 public class Verwaltung {
 
     private RobotRepository robotRepository;
+    private RobotInfoRepository robotInfoRepository;
     private final Publisher publisher;
     private final Configuration config;
 
-    public Verwaltung(RobotRepository robotRepository, Publisher publisher, Configuration config) {
+    public Verwaltung(RobotRepository robotRepository, RobotInfoRepository robotInfoRepository, Publisher publisher, Configuration config) {
         this.robotRepository = robotRepository;
+        this.robotInfoRepository = robotInfoRepository;
         this.publisher = publisher;
         this.config = config;
     }
@@ -41,6 +45,14 @@ public class Verwaltung {
             robot.setMacAdr(request.getMacAdr());
             String robot_name = "Robot_" + rdmFourDigitNumber();
             robot.setRoboterName(robot_name);
+            Robot_Info robot_info = new Robot_Info();
+            robot_info.setX_coord(0);
+            robot_info.setY_coord(0);
+            robot_info.setRobot(robot);
+            robot = robotRepository.save(robot);
+            robot_info.setRobot(robot);
+            robot_info = robotInfoRepository.save(robot_info);
+            robot.setRobot_info(robot_info);
             robot = robotRepository.save(robot);
         }
 

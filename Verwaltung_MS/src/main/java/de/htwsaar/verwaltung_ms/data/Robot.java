@@ -2,6 +2,7 @@ package de.htwsaar.verwaltung_ms.data;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -33,7 +34,6 @@ public class Robot {
     private Instant lastActive;
 
     @OneToOne(mappedBy = "robot")
-    @JsonIgnore
     private Robot_Info robot_info;
 
     public Robot() {
@@ -100,6 +100,7 @@ public class Robot {
         this.lastActive = lastActive;
     }
 
+    @JsonIgnoreProperties({"id", "robot", "battery", "last_picture"})
     public Robot_Info getRobot_info() {
         return robot_info;
     }
