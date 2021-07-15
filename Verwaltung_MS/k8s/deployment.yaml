@@ -26,13 +26,6 @@ spec:
                 name: app-secrets
 ---
 apiVersion: v1
-kind: Service
-metadata:
-  name: verwaltung-service
-  labels:
-    app: verwaltung-app
----
-apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-config

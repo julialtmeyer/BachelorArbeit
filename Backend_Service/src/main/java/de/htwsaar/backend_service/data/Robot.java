@@ -2,8 +2,10 @@ package de.htwsaar.backend_service.data;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -32,8 +34,7 @@ public class Robot {
     private Instant lastActive;
 
     @OneToOne(mappedBy = "robot")
-    @JsonIgnore
-    private Robot_Info robot_info;
+    private de.htwsaar.backend_service.data.Robot_Info robot_info;
 
     public Robot() {
     }
@@ -44,7 +45,7 @@ public class Robot {
         this.macAdr = macAdr;
     }
 
-    public Robot(String roboterName, String hsc, String macAdr, Robot_Info robot_info) {
+    public Robot(String roboterName, String hsc, String macAdr, de.htwsaar.backend_service.data.Robot_Info robot_info) {
         this.roboterName = roboterName;
         this.hsc = hsc;
         this.macAdr = macAdr;
@@ -99,7 +100,8 @@ public class Robot {
         this.lastActive = lastActive;
     }
 
-    public Robot_Info getRobot_info() {
+    @JsonIgnoreProperties({"id", "robot", "battery", "last_picture"})
+    public de.htwsaar.backend_service.data.Robot_Info getRobot_info() {
         return robot_info;
     }
 

@@ -22,16 +22,21 @@ public class InformationDeserializer extends StdDeserializer<InformationMessage>
     @Override
     public InformationMessage deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 
-        JsonNode jsonNode = p.getCodec().readTree(p);
-        JsonNode informationNode = jsonNode.get("information");
+        JsonNode informationNode = p.getCodec().readTree(p);
         InformationMessage info = new InformationMessage();
         try {
-            info.setBattery(informationNode.get("battery").asText());
-            info.setPicture(informationNode.get("pic").asText());
-            info.setX_coord(informationNode.get("x").asInt());
-            info.setY_coord(informationNode.get("y").asInt());
+            if(informationNode.get("battery").canConvertToInt()){
+                info.setBattery(informationNode.get("battery").asInt());
+            }
+            else if(informationNode.get("battery").isTextual()){
+                info.setBattery(Integer.valueOf(informationNode.get("battery").asText()));
+            }
+            info.setBattery(informationNode.get("battery").asInt());
+            info.setPicture(informationNode.get("picture").asText());
+            info.setX_coord(informationNode.get("x_coord").asInt());
+            info.setY_coord(informationNode.get("y_coord").asInt());
         }
-        catch (NullPointerException e) {
+        catch (Exception e) {
             System.err.println("Error while reading Information! Payload does not match the requirements.");
         }
         return info;

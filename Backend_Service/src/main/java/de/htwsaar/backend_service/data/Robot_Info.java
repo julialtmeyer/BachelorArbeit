@@ -8,12 +8,12 @@ import java.util.Objects;
 public class Robot_Info {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "robot_id")
-    private Robot robot;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "robot_id", nullable = false, unique = true)
+    private de.htwsaar.backend_service.data.Robot robot;
 
     @Column(name = "battery")
     private Integer battery;
@@ -30,7 +30,7 @@ public class Robot_Info {
     public Robot_Info() {
     }
 
-    public Robot_Info(Long id, Robot robot, Integer x_coord, Integer y_coord) {
+    public Robot_Info(Long id, de.htwsaar.backend_service.data.Robot robot, Integer x_coord, Integer y_coord) {
         this.id = id;
         this.robot = robot;
         this.x_coord = x_coord;
@@ -45,7 +45,7 @@ public class Robot_Info {
         this.id = id;
     }
 
-    public Robot getRobot() {
+    public de.htwsaar.backend_service.data.Robot getRobot() {
         return robot;
     }
 

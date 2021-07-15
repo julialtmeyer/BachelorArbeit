@@ -3,8 +3,10 @@ package de.htwsaar.backend_service.mqtt;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htwsaar.backend_service.Configuration;
+import de.htwsaar.backend_service.InformationController;
 import de.htwsaar.backend_service.data.Robot;
 import de.htwsaar.backend_service.data.RobotRepository;
+import de.htwsaar.backend_service.messages.InformationMessage;
 import de.htwsaar.backend_service.messages.Message;
 import org.eclipse.paho.client.mqttv3.*;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,6 +24,8 @@ public class Subscriber implements MqttCallback {
 
     private MqttClient mqttClient;
 
+    private InformationController informationController;
+
     private final Client client;
 
     private final Configuration config;
@@ -33,7 +37,8 @@ public class Subscriber implements MqttCallback {
     /**
      * Instantiates a new Subscriber.
      */
-    public Subscriber(Client client, Configuration config, RobotRepository robotRepository){
+    public Subscriber(InformationController informationController, Client client, Configuration config, RobotRepository robotRepository){
+        this.informationController = informationController;
         this.client = client;
         this.config = config;
         this.robotRepository = robotRepository;
@@ -75,8 +80,12 @@ public class Subscriber implements MqttCallback {
     public void messageArrived(String topic, MqttMessage message) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         String payloadAsString = message.toString();
-        Message message1 = new Message(message.getPayload().toString(), topic, message.getQos());
-
+        if(payloadAsString.toLowerCase().contains("information")){
+            String robotName = topicToRobotName(topic);
+            System.out.println("Information received from " + robotName);
+            InformationMessage info = objectMapper.readValue(payloadAsString, InformationMessage.class);
+            informationController.saveRobotInformation(robotName, info);
+        }
     }
 
     @Override
@@ -95,5 +104,11 @@ public class Subscriber implements MqttCallback {
                 System.out.println("Subscribed to: " + topicInfo);
             }
         }
+    }
+
+    private String topicToRobotName(String topic){
+        String split[] = topic.split("/");
+        String robotName = split[2];
+        return robotName;
     }
 }

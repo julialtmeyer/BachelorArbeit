@@ -1,8 +1,14 @@
 package de.htwsaar.backend_service.messages;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import de.htwsaar.backend_service.deserializer.InformationDeserializer;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+@JsonDeserialize(using = InformationDeserializer.class)
 public class InformationMessage {
 
-    private String battery;
+    private Integer battery;
     private String picture;
     private Integer x_coord;
     private Integer y_coord;
@@ -10,11 +16,11 @@ public class InformationMessage {
     public InformationMessage() {
     }
 
-    public String getBattery() {
+    public Integer getBattery() {
         return battery;
     }
 
-    public void setBattery(String battery) {
+    public void setBattery(Integer battery) {
         this.battery = battery;
     }
 
