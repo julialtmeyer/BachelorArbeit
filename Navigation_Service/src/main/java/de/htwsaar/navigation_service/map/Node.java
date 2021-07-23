@@ -1,28 +1,30 @@
 package de.htwsaar.navigation_service.map;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = StreetNode.class, name = "StreetNode"),
-        @JsonSubTypes.Type(value = DestinationNode.class, name = "DestinationNode"),
-        @JsonSubTypes.Type(value = CorrelationNode.class, name = "CorrelationNode")
-})
-public abstract class Node {
+import java.util.LinkedList;
+import java.util.List;
+
+public class Node {
 
     private Integer id;
     private Double x;
     private Double y;
-    private Integer weight;
+    private List<Node> neighbors;
 
-    public Node(@JsonProperty("id") Integer id,@JsonProperty("x") double x,@JsonProperty("y") double y,
-                @JsonProperty("weight") Integer weight) {
+    @JsonCreator
+    public Node(@JsonProperty("id") Integer id,@JsonProperty("x") double x,@JsonProperty("y") double y,@JsonProperty("neighbors") List<Node> neighbors) {
         this.id = id;
         this.x = x;
         this.y = y;
-        this.weight = weight;
+        this.neighbors = neighbors;
+    }
+
+    public Node(@JsonProperty("id") Integer id,@JsonProperty("x") double x,@JsonProperty("y") double y) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.neighbors = new LinkedList<>();
     }
 
     public Integer getId() {
@@ -49,11 +51,13 @@ public abstract class Node {
         this.y = y;
     }
 
-    public Integer getWeight() {
-        return weight;
+    @JsonIgnore
+    public List<Node> getNeighbors() {
+        return neighbors;
     }
 
-    public void setWeight(Integer weight) {
-        this.weight = weight;
+    public void setNeighbors(List<Node> neighbors) {
+        this.neighbors = neighbors;
     }
+
 }

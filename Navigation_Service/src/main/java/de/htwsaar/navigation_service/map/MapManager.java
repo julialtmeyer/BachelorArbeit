@@ -50,32 +50,11 @@ public class MapManager {
 
             for(Node node : mapGraph.getNodes()){
 
-                if(node.getClass().equals(StreetNode.class) && !((StreetNode) node).getNeighbors().isEmpty()){
-                    for (Node neighbor : ((StreetNode) node).getNeighbors()){
+                    for (Node neighbor : node.getNeighbors()){
                         neighbor = getNodeById(neighbor.getId());
                         graph.addEdge(node, neighbor);
                         graph.setEdgeWeight(node, neighbor, getDistanceToNode(node, neighbor));
                     }
-                }
-                else if(node.getClass().equals(CorrelationNode.class)){
-                    Node correlation = getNodeById(((CorrelationNode) node).getCorrelation().getId());
-                    Node prev = getNodeById(((CorrelationNode) node).getPreviousNode().getId());
-                    Node next = getNodeById(((CorrelationNode) node).getNextNode().getId());
-
-                    graph.addEdge(node, correlation);
-                    graph.setEdgeWeight(node, correlation, getDistanceToNode(node, correlation));
-
-                    graph.addEdge(node, prev);
-                    graph.setEdgeWeight(node, prev, getDistanceToNode(node, prev));
-
-                    graph.addEdge(node, next);
-                    graph.setEdgeWeight(node, next, getDistanceToNode(node, next));
-                }
-                else {
-                    Node entry = getNodeById(((DestinationNode) node).getEntryNode().getId());
-                    graph.addEdge(node, entry);
-                    graph.setEdgeWeight(node, entry, getDistanceToNode(node, entry));
-                }
             }
 
         } catch (Exception e){
