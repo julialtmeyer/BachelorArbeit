@@ -64,7 +64,8 @@ public class Client {
                 connectionOptions.setSocketFactory(socketFactory);
             }
             else {
-                this.client = new MqttClient(config.getServerUrlLocal(), MqttClient.generateClientId(), persistence);
+                String uri = "tcp://" + config.getBrokerHost() + ":" + config.getBrokerPort();
+                this.client = new MqttClient(uri, MqttClient.generateClientId(), persistence);
             }
             connectionOptions.setCleanSession(true);
 

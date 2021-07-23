@@ -70,12 +70,6 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.11.1</version>
         </dependency>
-        <dependency>
-            <groupId>de.htwsaar</groupId>
-            <artifactId>Verwaltung_MS</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
     <build>

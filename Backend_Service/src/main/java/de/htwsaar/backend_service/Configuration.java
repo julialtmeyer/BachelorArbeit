@@ -26,8 +26,11 @@ public class Configuration {
     @Value("${serverUrl}")
     private String serverUrl;
 
-    @Value("${serverUrlLocal}")
-    private String serverUrlLocal;
+    @Value("${brokerHost}")
+    private String brokerHost;
+
+    @Value("{brokerPort}")
+    private int brokerPort;
 
     @Value("${topicRoot}")
     private String topicRoot;
@@ -53,8 +56,12 @@ public class Configuration {
         return serverUrl;
     }
 
-    public String getServerUrlLocal() {
-        return serverUrlLocal;
+    public String getBrokerHost() {
+        return brokerHost;
+    }
+
+    public int getBrokerPort() {
+        return brokerPort;
     }
 
     public boolean isUse_certificate() {

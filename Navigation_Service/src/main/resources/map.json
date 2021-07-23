@@ -1,10 +1,308 @@
 {
   "name": "htw",
   "id": 0,
-  "Nodes": [{
-
-  }, {
-
-  }
+  "nodes": [
+    {"StreetNode" : {
+      "id": "0",
+      "x" : 596 ,
+      "y" : 577,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":1,"x":596,"y":444,"weight":1}}
+      ]
+    }
+  },
+    {"StreetNode" : {
+      "id": "1",
+      "x" : 596 ,
+      "y" : 444,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"0","x":596,"y":577,"weight":1}},
+        {"StreetNode":{"id":"2","x":151,"y":444,"weight":1}},
+        {"StreetNode":{"id":"4","x":596,"y":293,"weight":1}},
+        {"StreetNode":{"id":"3","x":1007,"y":444,"weight":1}},
+        {"CorrelationNode":{"id":"20","x":645,"y":444,"weight":2}}
+      ]
+    }},
+    {"StreetNode" : {
+      "id": "2",
+      "x" : 151 ,
+      "y" : 444,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"1","x":596,"y":444,"weight":1}},
+        {"StreetNode":{"id":"5","x":20,"y":444,"weight":1}},
+        {"StreetNode":{"id":"6","x":151,"y":136,"weight":1}}
+      ]
+    }},
+    {"StreetNode" : {
+      "id": "3",
+      "x" : 1007 ,
+      "y" : 444,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"1","x":596,"y":444,"weight":1}},
+        {"StreetNode":{"id":"8","x":1007,"y":293,"weight":1}},
+        {"StreetNode":{"id":"11","x":1060,"y":444,"weight":1}},
+        {"CorrelationNode":{"id":"28","x":957,"y":444,"weight":2}}
+      ]
+    }},
+    {"StreetNode" : {
+      "id": "4",
+      "x" : 596 ,
+      "y" : 293,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"1","x":596,"y":444,"weight":1}},
+        {"StreetNode":{"id":"7","x":596,"y":136,"weight":1}},
+        {"StreetNode":{"id":"8","x":1007,"y":293,"weight":1}}
+      ]
+    }},
+    {"StreetNode" : {
+      "id": "5",
+      "x" : 20 ,
+      "y" : 444,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"2","x":151,"y":444,"weight":1}}
+      ]
+    }},
+    {"StreetNode" : {
+      "id": "6",
+      "x" : 151 ,
+      "y" : 136,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"2","x":151,"y":444,"weight":1}},
+        {"StreetNode":{"id":"7","x":596,"y":136,"weight":1}}
+      ]
+    }},
+    {"StreetNode" : {
+      "id": "7",
+      "x" : 596 ,
+      "y" : 136,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"6","x":151,"y":136,"weight":1}},
+        {"StreetNode":{"id":"9","x":740,"y":136,"weight":1}},
+        {"StreetNode":{"id":"4","x":596,"y":293,"weight":1}}
+      ]
+    }},
+    {"StreetNode" : {
+      "id": "8",
+      "x" : 1007 ,
+      "y" : 293,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"4","x":596,"y":293,"weight":1}},
+        {"StreetNode":{"id":"10","x":1007,"y":136,"weight":1}},
+        {"StreetNode":{"id":"3","x":1007,"y":444,"weight":1}}
+      ]
+    }},
+    {"StreetNode" : {
+      "id": "9",
+      "x" : 740 ,
+      "y" : 136,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"7","x":596,"y":136,"weight":1}},
+        {"StreetNode":{"id":"10","x":1007,"y":136,"weight":1}},
+        {"StreetNode":{"id":"12","x":740,"y":52,"weight":1}}
+      ]
+    }},
+    {"StreetNode" : {
+      "id": "10",
+      "x" : 1007 ,
+      "y" : 136,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"8","x":1007,"y":293,"weight":1}},
+        {"StreetNode":{"id":"9","x":740,"y":136,"weight":1}}
+      ]
+    }},
+    {"StreetNode" : {
+      "id": "11",
+      "x" : 1060 ,
+      "y" : 444,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"3","x":1007,"y":444,"weight":1}},
+        {"StreetNode":{"id":"13","x":1060,"y":52,"weight":1}}
+      ]
+    }},
+    {"StreetNode" : {
+      "id": "12",
+      "x" : 740 ,
+      "y" : 52,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"9","x":740,"y":136,"weight":1}},
+        {"StreetNode":{"id":"13","x":1060,"y":52,"weight":1}}
+      ]
+    }},
+    {"StreetNode" : {
+      "id": "13",
+      "x" : 1060 ,
+      "y" : 52,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"12","x":740,"y":52,"weight":1}},
+        {"StreetNode":{"id":"14","x":1094,"y":52,"weight":1}},
+        {"StreetNode":{"id":"11","x":1060,"y":444,"weight":1}}
+      ]
+    }},
+    {"StreetNode" : {
+      "id": "14",
+      "x" : 1094 ,
+      "y" : 52,
+      "weight":1,
+      "neighbors":[
+        {"StreetNode":{"id":"13","x":1060,"y":52,"weight":1}}
+      ]
+    }},
+    {"CorrelationNode": {
+      "id": "20",
+      "x" : 645 ,
+      "y" : 444,
+      "weight":2,
+      "correlation" : {"DestinationNode":{"id":"50","x":645,"y":509,"weight":3}},
+      "previousNode" : {"StreetNode":{"id":"1","x":596,"y":444,"weight":1}},
+      "nextNode": {"CorrelationNode":{"id":"21","x":683,"y":444,"weight":2}}
+    }},
+    {"CorrelationNode": {
+      "id": "21",
+      "x" : 683 ,
+      "y" : 444,
+      "weight":2,
+      "correlation" : {"DestinationNode":{"id":"51","x":683,"y":509,"weight":3}},
+      "previousNode" : {"CorrelationNode":{"id":"20","x":645,"y":444,"weight":2}},
+      "nextNode": {"CorrelationNode":{"id":"22","x":722,"y":444,"weight":2}}
+    }},
+    {"CorrelationNode": {
+      "id": "22",
+      "x" : 722 ,
+      "y" : 444,
+      "weight":2,
+      "correlation" : {"DestinationNode":{"id":"52","x":683,"y":509,"weight":3}},
+      "previousNode" : {"CorrelationNode":{"id":"21","x":645,"y":444,"weight":2}},
+      "nextNode": {"CorrelationNode":{"id":"23","x":722,"y":444,"weight":2}}
+    }},
+    {"CorrelationNode": {
+      "id": "23",
+      "x" : 761 ,
+      "y" : 444,
+      "weight":2,
+      "correlation" : {"DestinationNode":{"id":"53","x":683,"y":509,"weight":3}},
+      "previousNode" : {"CorrelationNode":{"id":"22","x":645,"y":444,"weight":2}},
+      "nextNode": {"CorrelationNode":{"id":"24","x":722,"y":444,"weight":2}}
+    }},
+    {"CorrelationNode": {
+      "id": "24",
+      "x" : 800 ,
+      "y" : 444,
+      "weight":2,
+      "correlation" : {"DestinationNode":{"id":"54","x":683,"y":509,"weight":3}},
+      "previousNode" : {"CorrelationNode":{"id":"23","x":645,"y":444,"weight":2}},
+      "nextNode": {"CorrelationNode":{"id":"25","x":722,"y":444,"weight":2}}
+    }},
+    {"CorrelationNode": {
+      "id": "25",
+      "x" : 839 ,
+      "y" : 444,
+      "weight":2,
+      "correlation" : {"DestinationNode":{"id":"55","x":683,"y":509,"weight":3}},
+      "previousNode" : {"CorrelationNode":{"id":"24","x":645,"y":444,"weight":2}},
+      "nextNode": {"CorrelationNode":{"id":"26","x":722,"y":444,"weight":2}}
+    }},
+    {"CorrelationNode": {
+      "id": "26",
+      "x" : 879 ,
+      "y" : 444,
+      "weight":2,
+      "correlation" : {"DestinationNode":{"id":"56","x":683,"y":509,"weight":3}},
+      "previousNode" : {"CorrelationNode":{"id":"25","x":645,"y":444,"weight":2}},
+      "nextNode": {"CorrelationNode":{"id":"27","x":722,"y":444,"weight":2}}
+    }},
+    {"CorrelationNode": {
+      "id": "27",
+      "x" : 918 ,
+      "y" : 444,
+      "weight":2,
+      "correlation" : {"DestinationNode":{"id":"57","x":683,"y":509,"weight":3}},
+      "previousNode" : {"CorrelationNode":{"id":"26","x":645,"y":444,"weight":2}},
+      "nextNode": {"CorrelationNode":{"id":"28","x":722,"y":444,"weight":2}}
+    }},
+    {"CorrelationNode": {
+      "id": "28",
+      "x" : 957 ,
+      "y" : 444,
+      "weight":2,
+      "correlation" : {"DestinationNode":{"id":"58","x":683,"y":509,"weight":3}},
+      "previousNode" : {"CorrelationNode":{"id":"27","x":645,"y":444,"weight":2}},
+      "nextNode": {"StreetNode":{"id":"3","x":1007,"y":444,"weight":1}}}},
+    {"DestinationNode": {
+      "id": "50",
+      "x" : 645 ,
+      "y" : 509,
+      "weight":3,
+      "entryNode": {"CorrelationNode":{"id":"20","x":645,"y":444,"weight":2}}
+    }},
+    {"DestinationNode": {
+      "id": "51",
+      "x" : 683 ,
+      "y" : 509,
+      "weight":3,
+      "entryNode": {"CorrelationNode":{"id":"21","x":683,"y":444,"weight":2}}
+    }},
+    {"DestinationNode": {
+      "id": "52",
+      "x" : 722 ,
+      "y" : 509,
+      "weight":3,
+      "entryNode": {"CorrelationNode":{"id":"22","x":722,"y":444,"weight":2}}
+    }},
+    {"DestinationNode": {
+      "id": "53",
+      "x" : 761 ,
+      "y" : 509,
+      "weight":3,
+      "entryNode": {"CorrelationNode":{"id":"23","x":761,"y":444,"weight":2}}
+    }},
+    {"DestinationNode": {
+      "id": "54",
+      "x" : 800 ,
+      "y" : 509,
+      "weight":3,
+      "entryNode": {"CorrelationNode":{"id":"24","x":800,"y":444,"weight":2}}
+    }},
+    {"DestinationNode": {
+      "id": "55",
+      "x" : 839 ,
+      "y" : 509,
+      "weight":3,
+      "entryNode": {"CorrelationNode":{"id":"25","x":839,"y":444,"weight":2}}
+    }},
+    {"DestinationNode": {
+      "id": "56",
+      "x" : 879 ,
+      "y" : 509,
+      "weight":3,
+      "entryNode": {"CorrelationNode":{"id":"26","x":879,"y":444,"weight":2}}
+    }},
+    {"DestinationNode": {
+      "id": "57",
+      "x" : 918 ,
+      "y" : 509,
+      "weight":3,
+      "entryNode": {"CorrelationNode":{"id":"27","x":918,"y":444,"weight":2}}
+    }},
+    {"DestinationNode": {
+      "id": "58",
+      "x" : 957 ,
+      "y" : 509,
+      "weight":3,
+      "entryNode": {"CorrelationNode":{"id":"28","x":957,"y":444,"weight":2}}
+    }}
   ]
 }
