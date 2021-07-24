@@ -28,23 +28,16 @@ public class NavigationTest {
 
     @Test
     public void findPathExactNodeCoordNoSkippingCorrelation(){
-        Integer start_x = 596;
-        Integer start_y = 577;
-        Integer dest_x = 722;
-        Integer dest_y = 509;
+        NavigationRequest navigationRequest = new NavigationRequest(596, 577, 722, 509);
 
-
-        navigationController.pathFromPointAtoPointB(start_x, start_y, dest_x, dest_y);
+        navigationController.pathFromPointAtoPointB(navigationRequest);
     }
 
     @Test
     public void findPathExactNodeCoordStreetToStreetSkipCorrelation(){
-        Integer start_x = 596;
-        Integer start_y = 444;
-        Integer dest_x = 1007;
-        Integer dest_y = 444;
+        NavigationRequest navigationRequest = new NavigationRequest(596, 577, 1007, 444);
 
 
-        navigationController.pathFromPointAtoPointB(start_x, start_y, dest_x, dest_y);
+        navigationController.pathFromPointAtoPointB(navigationRequest);
     }
 }

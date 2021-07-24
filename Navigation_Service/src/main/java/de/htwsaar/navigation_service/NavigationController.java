@@ -24,25 +24,19 @@ public class NavigationController {
         this.configuration = configuration;
     }
 
-    public void pathFromPointAtoPointB(Integer start_x, Integer start_y, Integer dest_x, Integer dest_y){
+    public List<Node> pathFromPointAtoPointB(NavigationRequest navigationRequest){
 
-        Optional<Node> startNode = findNodeinGraphWithCoordinates(start_x, start_y);
+        Optional<Node> startNode = findNodeinGraphWithCoordinates(navigationRequest.getStart_x(), navigationRequest.getStart_y());
         if(!startNode.isPresent()){
             System.out.println("no Node at start coordinates");
         }
-        Optional<Node> destNode = findNodeinGraphWithCoordinates(dest_x, dest_y);
+        Optional<Node> destNode = findNodeinGraphWithCoordinates(navigationRequest.getDest_x(), navigationRequest.getDest_y());
         if(!destNode.isPresent()){
             System.out.println("no Node at destination coordinates");
         }
 
-        List<Node> shortestPath = dijkstraSearch(startNode.get(), destNode.get());
+        return  dijkstraSearch(startNode.get(), destNode.get());
 
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            System.out.println(mapper.writeValueAsString(shortestPath));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
     }
 
     private List<Node> dijkstraSearch(Node start, Node dest){
