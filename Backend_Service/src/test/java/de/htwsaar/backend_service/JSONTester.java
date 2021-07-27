@@ -15,7 +15,7 @@ public class JSONTester {
 
     @Test
     public void testJSONMappingOfDriveCommand(){
-        Command command = new DriveCommand(10);
+        Command command = new DriveCommand(10.0);
         ObjectMapper mapper = new ObjectMapper();
 
         try {
@@ -29,7 +29,7 @@ public class JSONTester {
 
     @Test
     public void testJSONMappingOfTurnCommand(){
-        Command command = new TurnCommand(10);
+        Command command = new TurnCommand(10.0);
         ObjectMapper mapper = new ObjectMapper();
 
         try {
@@ -44,8 +44,8 @@ public class JSONTester {
     @Test
     public void testInformationMessage(){
         InformationMessage informationMessage = new InformationMessage();
-        informationMessage.setX_coord(4);
-        informationMessage.setY_coord(6);
+        informationMessage.setX_coord(4.0);
+        informationMessage.setY_coord(6.0);
         informationMessage.setPicture("asdasd");
         informationMessage.setBattery(50);
         ObjectMapper mapper = new ObjectMapper();

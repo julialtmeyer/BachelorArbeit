@@ -17,8 +17,6 @@ public class NavigationTest {
     public void testFindANode(){
         Integer x = 596;
         Integer y = 444;
-        Optional<Node> node = navigationController.findNodeinGraphWithCoordinates(x ,y);
-        assert node.isPresent();
     }
 
     @Test

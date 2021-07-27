@@ -1,4 +1,4 @@
-package de.htwsaar.backend_service.data;
+package de.htwsaar.backend_service.model;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,5 @@
-package de.htwsaar.backend_service.data;
+package de.htwsaar.backend_service.model;
 
-import de.htwsaar.backend_service.data.Robot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,8 +15,8 @@ public interface RobotRepository extends JpaRepository<Robot, Long> {
     Robot findRobotByIdAndHscAndMacAdr(Long id, String hsc, String mac_adr);
 
     @Query(value = "SELECT r from Robot r WHERE r.isActive = TRUE")
-    List<de.htwsaar.backend_service.data.Robot> findActiveRobots();
+    List<Robot> findActiveRobots();
 
     @Query(value = "SELECT r from Robot r WHERE r.roboterName = :name")
-    de.htwsaar.backend_service.data.Robot findRobotByName(@Param("name")String name);
+    Robot findRobotByName(@Param("name")String name);
 }

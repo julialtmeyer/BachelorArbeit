@@ -29,8 +29,8 @@ public class Configuration {
     @Value("${brokerHost}")
     private String brokerHost;
 
-    @Value("{brokerPort}")
-    private int brokerPort;
+    @Value("${brokerPort}")
+    private Integer brokerPort;
 
     @Value("${topicRoot}")
     private String topicRoot;
@@ -43,6 +43,12 @@ public class Configuration {
 
     @Value("${useCertificate}")
     private boolean use_certificate;
+
+    @Value("${navigationURL}")
+    private String navigationUrl;
+
+    @Value("${mapScaleFactor}")
+    private Double mapScaleFactor;
 
     public String getUsername() {
         return username;
@@ -90,5 +96,13 @@ public class Configuration {
 
     public String getSubTopicDrive() {
         return subTopicDrive;
+    }
+
+    public String getNavigationUrl(){
+        return navigationUrl;
+    }
+
+    public Double getMapScaleFactor() {
+        return mapScaleFactor;
     }
 }

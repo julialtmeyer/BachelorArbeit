@@ -1,4 +1,4 @@
-package de.htwsaar.backend_service.data;
+package de.htwsaar.backend_service.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -34,7 +34,7 @@ public class Robot {
     private Instant lastActive;
 
     @OneToOne(mappedBy = "robot")
-    private de.htwsaar.backend_service.data.Robot_Info robot_info;
+    private Robot_Info robot_info;
 
     public Robot() {
     }
@@ -45,7 +45,7 @@ public class Robot {
         this.macAdr = macAdr;
     }
 
-    public Robot(String roboterName, String hsc, String macAdr, de.htwsaar.backend_service.data.Robot_Info robot_info) {
+    public Robot(String roboterName, String hsc, String macAdr, Robot_Info robot_info) {
         this.roboterName = roboterName;
         this.hsc = hsc;
         this.macAdr = macAdr;
@@ -101,7 +101,7 @@ public class Robot {
     }
 
     @JsonIgnoreProperties({"id", "robot", "battery", "last_picture"})
-    public de.htwsaar.backend_service.data.Robot_Info getRobot_info() {
+    public Robot_Info getRobot_info() {
         return robot_info;
     }
 

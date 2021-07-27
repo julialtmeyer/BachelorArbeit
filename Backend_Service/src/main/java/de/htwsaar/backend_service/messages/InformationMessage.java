@@ -1,19 +1,28 @@
 package de.htwsaar.backend_service.messages;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import de.htwsaar.backend_service.deserializer.InformationDeserializer;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-@JsonDeserialize(using = InformationDeserializer.class)
 public class InformationMessage {
 
     private Integer battery;
     private String picture;
-    private Integer x_coord;
-    private Integer y_coord;
+    private Double x_coord;
+    private Double y_coord;
 
     public InformationMessage() {
+    }
+
+    @JsonCreator
+    public InformationMessage(@JsonProperty("battery") Integer battery, @JsonProperty("picture") String picture,
+                              @JsonProperty("x_coord") Double x_coord, @JsonProperty("y_coord") Double y_coord) {
+        this.battery = battery;
+        this.picture = picture;
+        this.x_coord = x_coord;
+        this.y_coord = y_coord;
+
     }
 
     public Integer getBattery() {
@@ -32,19 +41,19 @@ public class InformationMessage {
         this.picture = picture;
     }
 
-    public Integer getX_coord() {
+    public Double getX_coord() {
         return x_coord;
     }
 
-    public void setX_coord(Integer x_coord) {
+    public void setX_coord(Double x_coord) {
         this.x_coord = x_coord;
     }
 
-    public Integer getY_coord() {
+    public Double getY_coord() {
         return y_coord;
     }
 
-    public void setY_coord(Integer y_coord) {
+    public void setY_coord(Double y_coord) {
         this.y_coord = y_coord;
     }
 
