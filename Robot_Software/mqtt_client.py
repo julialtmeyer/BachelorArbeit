@@ -80,7 +80,7 @@ def on_message(client, userdata, message):
 
     data = json.loads(message.payload.decode("utf-8"))
 
-    if message.topic == ROBOT_REGISTRATION_TOPIC and data.get("response").get("hsc") == HANDSHAKE and data.get(
+    if message.topic == ROBOT_REGISTRATION_TOPIC and "response" in data.keys() and data.get("response").get("hsc") == HANDSHAKE and data.get(
             "response").get("macAdr") == MAC:
         ROBOT_ID = data.get("response").get("id")
         ROBOT_NAME = data.get("response").get("roboterName")

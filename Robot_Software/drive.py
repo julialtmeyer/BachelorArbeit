@@ -15,6 +15,7 @@ BP = brickpi3.BrickPi3()
 
 
 def drive(data):
+    BP.set_motor_position(BP.PORT_A, 0)
     for command in data.get("commands"):
         if "TurnCommand" in command.keys():
             direction = command.get("TurnCommand").get("direction")
@@ -28,6 +29,7 @@ def drive(data):
 def drive_distance(distance):
     sleep_timer = calculate_sleep_time(distance)
     BP.set_motor_position(BP.PORT_A, 0)
+    time.sleep(0.2)
     BP.set_motor_dps(BP.PORT_B, SPEED_DPS)
     BP.set_motor_dps(BP.PORT_C, SPEED_DPS)
     time.sleep(sleep_timer)
