@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import mqtt_client
 import brickpi3
 
