@@ -41,25 +41,35 @@ def drive_distance(distance):
 def drive_corner_counter_turn(angle):
     distance = calculate_counter_turn_distance(angle)
     num_revs = calculate_revs_for_turn(distance)
+    sleep = calculate_sleep_time_revs(num_revs)
 
+    BP.set_motor_limits(BP.PORT_B, 0, 360)
+    BP.set_motor_limits(BP.PORT_C, 0, 360)
     BP.offset_motor_encoder(BP.PORT_B, BP.get_motor_encoder(BP.PORT_B))
     BP.offset_motor_encoder(BP.PORT_C, BP.get_motor_encoder(BP.PORT_C))
-
     if angle < 0:
         BP.set_motor_position(BP.PORT_A, -40)
+        time.sleep(0.2)
         BP.set_motor_position(BP.PORT_C, -num_revs)
         BP.set_motor_position(BP.PORT_B, num_revs)
     else:
         BP.set_motor_position(BP.PORT_A, 40)
+        time.sleep(0.2)
         BP.set_motor_position(BP.PORT_C, num_revs)
         BP.set_motor_position(BP.PORT_B, -num_revs)
 
+    time.sleep(sleep)
     BP.set_motor_position(BP.PORT_A, 0)
 
 
 def calculate_sleep_time(distance):
     speed_cms = SPEED_DPS * ONE_DEGREE
     timer = distance / speed_cms
+    return timer
+
+
+def calculate_sleep_time_revs(revolutions):
+    timer = revolutions / 360
     return timer
 
 
