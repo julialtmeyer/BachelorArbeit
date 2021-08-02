@@ -4,8 +4,7 @@ import ssl
 import logging
 import string
 import threading
-from time import sleep
-
+import drive
 from paho.mqtt import client as mqtt_client
 from pathlib import Path
 
@@ -55,10 +54,7 @@ def connect_mqtt():
         MQTT_CLIENT.connect(MQTT_SERVER_LOCAL, MQTT_PORT_LOCAL, 60)
         LOG.info('MQTT connected to the local mqtt server')
 
-        thread1 = HeartbeatThread()
-        # thread2 = InformationThread()
-        thread1.start()
-        # thread2.start()
+        publish_heartbeat()
 
     MQTT_CLIENT.loop_forever()
 
@@ -96,6 +92,8 @@ def on_message(client, userdata, message):
         ROBOT_INFORMATION_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/information"
         print("connected to topic" + ROBOT_INFORMATION_TOPIC)
         client.subscribe(ROBOT_INFORMATION_TOPIC)
+    elif message.topic == ROBOT_DRIVE_TOPIC:
+        drive.drive(data)
 
 
 def register_robot():
@@ -108,11 +106,16 @@ def register_robot():
 
     reg_req = "{\"request\": {\"hsc\": \"" + HANDSHAKE + "\",\"macAdr\": \"" + MAC + "\"}}"
 
-    publish_on_channel(ROBOT_REGISTRATION_TOPIC, reg_req)
+    publish_on_topic(ROBOT_REGISTRATION_TOPIC, reg_req)
 
 
-def publish_on_channel(topic, payload):
+def publish_on_topic(topic, payload):
     MQTT_CLIENT.publish(topic, payload)
+
+
+def publish_on_information(payload):
+    print(payload)
+    MQTT_CLIENT.publish(ROBOT_INFORMATION_TOPIC, payload)
 
 
 def get_mac(interface='wlan0'):
@@ -124,20 +127,6 @@ def get_mac(interface='wlan0'):
     return str[0:17]
 
 
-class HeartbeatThread(threading.Thread):
-
-    def __init__(self):
-        threading.Thread.__init__(self)
-
-    def run(self):
-        sleep_timer = 5
-        while True:
-            if MQTT_CLIENT.is_connected():
-                publish_heartbeat()
-
-            sleep(sleep_timer)
-
-
 def publish_heartbeat():
     heartbeat = "{\"heartbeat\":{" \
                 "\"Id\":\"" + str(ROBOT_ID) + "\"," \
@@ -145,4 +134,8 @@ def publish_heartbeat():
                                                                                      "\"hsc\":\"" + str(
         HANDSHAKE) + "\"," \
                      "\"macAdr\":\"" + str(MAC) + "\"}}"
-    publish_on_channel(ROBOT_REGISTRATION_TOPIC, heartbeat)
+
+    if ROBOT_NAME != "":
+        print(heartbeat)
+        publish_on_topic(ROBOT_REGISTRATION_TOPIC, heartbeat)
+    threading.Timer(5, publish_heartbeat).start()
