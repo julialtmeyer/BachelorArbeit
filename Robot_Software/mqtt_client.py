@@ -6,6 +6,7 @@ import logging
 import string
 import threading
 import drive
+import information
 from paho.mqtt import client as mqtt_client
 from pathlib import Path
 
@@ -55,6 +56,7 @@ def connect_mqtt():
         MQTT_CLIENT.connect(MQTT_SERVER_LOCAL, MQTT_PORT_LOCAL, 60)
         LOG.info('MQTT connected to the local mqtt server')
 
+        information.publish_information()
         publish_heartbeat()
 
     MQTT_CLIENT.loop_forever()
@@ -94,8 +96,8 @@ def on_message(client, userdata, message):
             ROBOT_INFORMATION_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/information"
             print("connected to topic" + ROBOT_INFORMATION_TOPIC)
             client.subscribe(ROBOT_INFORMATION_TOPIC)
-    elif message.topic == ROBOT_DRIVE_TOPIC:
-        drive.drive(data, LOCATION_X, LOCATION_Y)
+    # elif message.topic == ROBOT_DRIVE_TOPIC:
+        # drive.drive(data, LOCATION_X, LOCATION_Y)
 
 
 def register_robot():
