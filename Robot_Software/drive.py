@@ -45,9 +45,11 @@ def drive(data, x, y):
             direction = data.get("DriveCommand").get("direction")
             drive_distance(direction)
 
+
 def drive_distance(distance):
     # sleep_timer = calculate_sleep_time(distance)
-    num_revs = calculate_revs_for_distance(distance)
+    revs = distance_cm_to_revs(distance)
+    num_revs = calculate_steps_for_distance(revs)
     BP.set_motor_position(BP.PORT_A, 0)
     time.sleep(0.2)
     BP.offset_motor_encoder(BP.PORT_B, BP.get_motor_encoder(BP.PORT_B))
@@ -63,7 +65,7 @@ def drive_distance(distance):
 
 def drive_corner_counter_turn(angle):
     distance = calculate_counter_turn_distance(angle)
-    num_revs = calculate_revs_for_distance(distance)
+    num_revs = calculate_steps_for_distance(distance)
     sleep = calculate_sleep_time_revs(num_revs)
 
     BP.set_motor_limits(BP.PORT_B, 0, 360)
@@ -102,6 +104,11 @@ def calculate_counter_turn_distance(angle):
     return distance
 
 
-def calculate_revs_for_distance(distance):
+def calculate_steps_for_distance(distance):
     num_revs = distance * COUNT_PER_REV
+    return num_revs
+
+
+def distance_cm_to_revs(distance):
+    num_revs = distance / WHEEL_CIRCUMFERENCE
     return num_revs
