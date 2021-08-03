@@ -26,15 +26,24 @@ def drive(data, x, y):
     LOCATION_Y = y
 
     BP.set_motor_position(BP.PORT_A, 0)
-    for command in data.get("commands"):
-        if "TurnCommand" in command.keys():
-            direction = command.get("TurnCommand").get("direction")
+
+    if "commands" in data.keys():
+        for command in data.get("commands"):
+            if "TurnCommand" in command.keys():
+                direction = command.get("TurnCommand").get("direction")
+                drive_corner_counter_turn(direction)
+
+            elif "DriveCommand" in command.keys():
+                direction = command.get("DriveCommand").get("direction")
+                drive_distance(direction)
+    else:
+        if "TurnCommand" in data.keys():
+            direction = data.get("TurnCommand").get("direction")
             drive_corner_counter_turn(direction)
 
-        elif "DriveCommand" in command.keys():
-            direction = command.get("DriveCommand").get("direction")
+        elif "DriveCommand" in data.keys():
+            direction = data.get("DriveCommand").get("direction")
             drive_distance(direction)
-
 
 def drive_distance(distance):
     # sleep_timer = calculate_sleep_time(distance)
