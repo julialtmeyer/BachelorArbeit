@@ -94,7 +94,7 @@ def on_message(client, userdata, message):
         print("connected to topic" + ROBOT_INFORMATION_TOPIC)
         client.subscribe(ROBOT_INFORMATION_TOPIC)
     elif message.topic == ROBOT_DRIVE_TOPIC:
-        drive.drive(data)
+        drive.drive(data, LOCATION_X, LOCATION_Y)
 
 
 def register_robot():
