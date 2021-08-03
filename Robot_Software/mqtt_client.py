@@ -86,8 +86,8 @@ def on_message(client, userdata, message):
         if response['hsc'] == HANDSHAKE and response['macAdr'] == MAC:
             ROBOT_ID = response['id']
             ROBOT_NAME = response['roboterName']
-            LOCATION_X = response['location_x']
-            LOCATION_Y = response['location_y']
+            LOCATION_X = response['robot_info']['location_x']
+            LOCATION_Y = response['robot_info']['location_y']
             ROBOT_DRIVE_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/drive"
             print("connected to topic" + ROBOT_DRIVE_TOPIC)
             client.subscribe(ROBOT_DRIVE_TOPIC)
