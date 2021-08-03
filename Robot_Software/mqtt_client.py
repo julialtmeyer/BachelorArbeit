@@ -81,18 +81,18 @@ def on_message(client, userdata, message):
 
     data = json.loads(message.payload.decode("utf-8"))
 
-    if message.topic == ROBOT_REGISTRATION_TOPIC and "response" in data.keys() and data.get("response").get("hsc") == HANDSHAKE and data.get(
-            "response").get("macAdr") == MAC:
-        ROBOT_ID = data.get("response").get("id")
-        ROBOT_NAME = data.get("response").get("roboterName")
-        LOCATION_X = data.get("response").get("location_x")
-        LOCATION_Y = data.get("response").get("location_y")
-        ROBOT_DRIVE_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/drive"
-        print("connected to topic" + ROBOT_DRIVE_TOPIC)
-        client.subscribe(ROBOT_DRIVE_TOPIC)
-        ROBOT_INFORMATION_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/information"
-        print("connected to topic" + ROBOT_INFORMATION_TOPIC)
-        client.subscribe(ROBOT_INFORMATION_TOPIC)
+    if message.topic == ROBOT_REGISTRATION_TOPIC and "response" in data.keys():
+        if data.get("response").get("hsc") == HANDSHAKE and data.get("response").get("macAdr") == MAC:
+            ROBOT_ID = data.get("response").get("id")
+            ROBOT_NAME = data.get("response").get("roboterName")
+            LOCATION_X = data.get("response").get("location_x")
+            LOCATION_Y = data.get("response").get("location_y")
+            ROBOT_DRIVE_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/drive"
+            print("connected to topic" + ROBOT_DRIVE_TOPIC)
+            client.subscribe(ROBOT_DRIVE_TOPIC)
+            ROBOT_INFORMATION_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/information"
+            print("connected to topic" + ROBOT_INFORMATION_TOPIC)
+            client.subscribe(ROBOT_INFORMATION_TOPIC)
     elif message.topic == ROBOT_DRIVE_TOPIC:
         drive.drive(data, LOCATION_X, LOCATION_Y)
 
