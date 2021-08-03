@@ -82,11 +82,12 @@ def on_message(client, userdata, message):
     data = json.loads(message.payload.decode("utf-8"))
 
     if message.topic == ROBOT_REGISTRATION_TOPIC and "response" in data.keys():
-        if data.get("response").get("hsc") == HANDSHAKE and data.get("response").get("macAdr") == MAC:
-            ROBOT_ID = data.get("response").get("id")
-            ROBOT_NAME = data.get("response").get("roboterName")
-            LOCATION_X = data.get("response").get("location_x")
-            LOCATION_Y = data.get("response").get("location_y")
+        response = data['response']
+        if response['hsc'] == HANDSHAKE and response['macAdr'] == MAC:
+            ROBOT_ID = response['id']
+            ROBOT_NAME = response['roboterName']
+            LOCATION_X = response['location_x']
+            LOCATION_Y = response['location_y']
             ROBOT_DRIVE_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/drive"
             print("connected to topic" + ROBOT_DRIVE_TOPIC)
             client.subscribe(ROBOT_DRIVE_TOPIC)
