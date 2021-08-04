@@ -5,14 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htwsaar.backend_service.Naviagtion.Coordinate;
 import de.htwsaar.backend_service.Naviagtion.Node;
 import de.htwsaar.backend_service.messages.Command;
+import de.htwsaar.backend_service.messages.CommandList;
 import de.htwsaar.backend_service.model.Robot;
 import de.htwsaar.backend_service.model.RobotRepository;
 import de.htwsaar.backend_service.messages.DriveCommand;
 import de.htwsaar.backend_service.messages.TurnCommand;
 import de.htwsaar.backend_service.mqtt.Publisher;
 import de.htwsaar.backend_service.rest.HttpClient;
+import org.apache.commons.math3.util.Precision;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +85,6 @@ public class DriveController {
             destCoord.setX(dest.getX());
             destCoord.setY(dest.getY());
 
-
             Double distance = getDistance(startCoord, destCoord);
             Double degrees =  getDirection(startCoord, destCoord, directionCoord, distance);
 
@@ -108,7 +108,8 @@ public class DriveController {
 
     private boolean publishCommands(List<Command> commands, Robot robot){
         try {
-            String driveJson = toJSON(commands);
+            CommandList commandList = new CommandList(commands);
+            String driveJson = toJSON(commandList);
             String topic = config.getTopicRoot() + robot.getRoboterName() + config.getSubTopicDrive();
             publisher.publish(driveJson, topic, 0);
             return true;
@@ -129,14 +130,14 @@ public class DriveController {
      */
     private Double getDirection(Coordinate start, Coordinate dest, Coordinate direction, Double distance){
         Double directionDegrees;
-        Double distanceStartDirection = getDistance(start, direction);
-        Double distanceDirectionDest = getDistance(direction, dest);
+        Double distanceStartDirection =  Precision.round(getDistance(start, direction), 2);
+        Double distanceDirectionDest = Precision.round(getDistance(direction, dest), 2);
 
         if(isRightAngled(distanceStartDirection, distance, distanceDirectionDest)){
             directionDegrees = 90.0;
         }
 
-        else if(isValidtriangle(distanceStartDirection, distance, distanceDirectionDest)){
+        else if(isValidTriangle(distanceStartDirection, distance, distanceDirectionDest)){
             Double a = square(distance) + square(distanceStartDirection) - square(distanceDirectionDest);
             Double b = 2 * distance * distanceStartDirection;
 
@@ -190,8 +191,8 @@ public class DriveController {
         return position;
     }
 
-    private boolean isValidtriangle(Double a, Double b, Double c){
-        if(a +b <= c || a+c <= b || b+c <= a){
+    private boolean isValidTriangle(Double a, Double b, Double c){
+        if(a + b <= c || a + c <= b || b + c <= a){
             return false;
         }
         else

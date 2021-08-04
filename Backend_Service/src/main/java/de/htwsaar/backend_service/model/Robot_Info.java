@@ -16,7 +16,7 @@ public class Robot_Info {
     private Robot robot;
 
     @Column(name = "battery")
-    private Integer battery;
+    private Double battery;
 
     @Column(name = "last_picture", columnDefinition = "MEDIUMBLOB")
     private String last_picture;
@@ -61,11 +61,11 @@ public class Robot_Info {
         this.robot = robot_id;
     }
 
-    public Integer getBattery() {
+    public Double getBattery() {
         return battery;
     }
 
-    public void setBattery(Integer battery) {
+    public void setBattery(Double battery) {
         this.battery = battery;
     }
 

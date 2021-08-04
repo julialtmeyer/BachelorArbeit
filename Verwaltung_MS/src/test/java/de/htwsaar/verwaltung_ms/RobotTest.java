@@ -19,8 +19,8 @@ public class RobotTest {
         String robot_name = "Robot_1234";
         robot.setRoboterName(robot_name);
         Robot_Info robot_info = new Robot_Info();
-        robot_info.setLocation_x(0);
-        robot_info.setLocation_y(0);
+        robot_info.setLocation_x(0.0);
+        robot_info.setLocation_y(0.0);
         robot.setRobot_info(robot_info);
 
         ObjectMapper objectMapper = new ObjectMapper();

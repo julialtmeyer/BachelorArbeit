@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 public class InformationMessage {
 
-    private Integer battery;
+    private Double battery;
     private String picture;
     private Double x_coord;
     private Double y_coord;
@@ -16,7 +16,7 @@ public class InformationMessage {
     }
 
     @JsonCreator
-    public InformationMessage(@JsonProperty("battery") Integer battery, @JsonProperty("picture") String picture,
+    public InformationMessage(@JsonProperty("battery") Double battery, @JsonProperty("picture") String picture,
                               @JsonProperty("x_coord") Double x_coord, @JsonProperty("y_coord") Double y_coord) {
         this.battery = battery;
         this.picture = picture;
@@ -25,11 +25,11 @@ public class InformationMessage {
 
     }
 
-    public Integer getBattery() {
+    public Double getBattery() {
         return battery;
     }
 
-    public void setBattery(Integer battery) {
+    public void setBattery(Double battery) {
         this.battery = battery;
     }
 

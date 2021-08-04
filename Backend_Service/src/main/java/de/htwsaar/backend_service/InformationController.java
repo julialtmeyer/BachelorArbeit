@@ -21,7 +21,7 @@ public class InformationController {
         this.config = config;
     }
 
-    public void saveRobotInformation(String robotName, InformationMessage informationMessage){
+    public void saveRobotInformation(String robotName, InformationMessage informationMessage) throws IllegalArgumentException{
         Robot robot = robotRepository.findRobotByName(robotName);
         Robot_Info robot_info = robot.getRobot_info();
         robot_info.setLocation_x(informationMessage.getX_coord());

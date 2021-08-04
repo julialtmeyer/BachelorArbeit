@@ -1,14 +1,19 @@
 package de.htwsaar.backend_service.messages;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
-
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = DriveCommand.class, name = "DriveCommand"),
+        @JsonSubTypes.Type(value = TurnCommand.class, name = "TurnCommand")
+})
 public abstract class Command {
 
     private Double direction;
 
-    public Command(Double direction) {
+    public Command(@JsonProperty("direction") Double direction) {
         this.direction = direction;
     }
 

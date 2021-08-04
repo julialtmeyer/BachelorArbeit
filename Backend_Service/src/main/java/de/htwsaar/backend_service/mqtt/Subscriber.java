@@ -1,6 +1,7 @@
 package de.htwsaar.backend_service.mqtt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htwsaar.backend_service.Configuration;
 import de.htwsaar.backend_service.InformationController;
@@ -76,14 +77,19 @@ public class Subscriber implements MqttCallback {
      * @param message the Message recieved
      */
     @Override
-    public void messageArrived(String topic, MqttMessage message) throws JsonProcessingException {
+    public void messageArrived(String topic, MqttMessage message) {
         ObjectMapper objectMapper = new ObjectMapper();
         String payloadAsString = message.toString();
         if(payloadAsString.toLowerCase().contains("information")){
             String robotName = topicToRobotName(topic);
             System.out.println("Information received from " + robotName);
-            InformationMessage info = objectMapper.readValue(payloadAsString, InformationMessage.class);
-            informationController.saveRobotInformation(robotName, info);
+            InformationMessage info = null;
+            try {
+                info = objectMapper.readValue(payloadAsString, InformationMessage.class);
+                informationController.saveRobotInformation(robotName, info);
+            } catch (JsonProcessingException | IllegalArgumentException e) {
+                e.printStackTrace();
+            }
         }
     }
 

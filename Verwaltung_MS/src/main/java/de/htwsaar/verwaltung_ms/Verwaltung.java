@@ -46,10 +46,10 @@ public class Verwaltung {
             String robot_name = "Robot_" + rdmFourDigitNumber();
             robot.setRoboterName(robot_name);
             Robot_Info robot_info = new Robot_Info();
-            robot_info.setLocation_x(0);
-            robot_info.setLocation_y(0);
-            robot_info.setDirection_x(0);
-            robot_info.setDirection_y(1);
+            robot_info.setLocation_x(596.0);
+            robot_info.setLocation_y(477.0);
+            robot_info.setDirection_x(596.0);
+            robot_info.setDirection_y(677.0);
             robot_info.setRobot(robot);
             robot = robotRepository.save(robot);
             robot_info.setRobot(robot);

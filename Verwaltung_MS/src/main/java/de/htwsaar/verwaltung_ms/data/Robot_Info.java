@@ -16,29 +16,29 @@ public class Robot_Info {
     private Robot robot;
 
     @Column(name = "battery")
-    private Integer battery;
+    private Double battery;
 
     @Column(name = "last_picture", columnDefinition = "MEDIUMBLOB")
     private String last_picture;
 
     @Column(name = "location_x")
-    private Integer location_x;
+    private Double location_x;
 
     @Column(name = "location_y")
-    private Integer location_y;
+    private Double location_y;
 
     @Column(name = "direction_x")
-    private Integer direction_x;
+    private Double direction_x;
 
     @Column(name = "direction_y")
-    private Integer direction_y;
+    private Double direction_y;
 
 
 
     public Robot_Info() {
     }
 
-    public Robot_Info(Long id, Robot robot, Integer x_coord, Integer y_coord) {
+    public Robot_Info(Long id, Robot robot, Double x_coord, Double y_coord) {
         this.id = id;
         this.robot = robot;
         this.location_x = x_coord;
@@ -61,11 +61,11 @@ public class Robot_Info {
         this.robot = robot_id;
     }
 
-    public Integer getBattery() {
+    public Double getBattery() {
         return battery;
     }
 
-    public void setBattery(Integer battery) {
+    public void setBattery(Double battery) {
         this.battery = battery;
     }
 
@@ -77,35 +77,35 @@ public class Robot_Info {
         this.last_picture = last_picture;
     }
 
-    public Integer getLocation_x() {
+    public Double getLocation_x() {
         return location_x;
     }
 
-    public void setLocation_x(Integer x_coord) {
+    public void setLocation_x(Double x_coord) {
         this.location_x = x_coord;
     }
 
-    public Integer getLocation_y() {
+    public Double getLocation_y() {
         return location_y;
     }
 
-    public void setLocation_y(Integer y_coord) {
+    public void setLocation_y(Double y_coord) {
         this.location_y = y_coord;
     }
 
-    public Integer getDirection_x() {
+    public Double getDirection_x() {
         return direction_x;
     }
 
-    public void setDirection_x(Integer direction_x) {
+    public void setDirection_x(Double direction_x) {
         this.direction_x = direction_x;
     }
 
-    public Integer getDirection_y() {
+    public Double getDirection_y() {
         return direction_y;
     }
 
-    public void setDirection_y(Integer direction_y) {
+    public void setDirection_y(Double direction_y) {
         this.direction_y = direction_y;
     }
 

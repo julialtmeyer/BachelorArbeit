@@ -4,12 +4,12 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/Verwaltung_MS/pom.xml" />
-        <option value="$PROJECT_DIR$/Backend_Service/pom.xml" />
         <option value="$PROJECT_DIR$/Navigation_Service/pom.xml" />
+        <option value="$PROJECT_DIR$/Backend_Service/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" default="true" project-jdk-name="14" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
