@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import base64
 import io
 import time
@@ -8,6 +9,7 @@ from time import sleep
 framerate = 60
 quality = 100
 res = (3280, 2464)
+
 
 def init_camera():
     with PiCamera(framerate=framerate, resolution=res) as camera:

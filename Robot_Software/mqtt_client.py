@@ -1,11 +1,11 @@
+# -*- coding: utf-8 -*-
 import json
 import random
 import ssl
 import logging
 import string
 import threading
-from time import sleep
-
+import information
 from paho.mqtt import client as mqtt_client
 from pathlib import Path
 
@@ -20,8 +20,8 @@ CLIENT_KEY_PATH = dir_path / "certificates/client_key.pem"
 
 MQTT_CLIENT = mqtt_client.Client
 ROBOT_REGISTRATION_TOPIC = "data/BrickPi/registration"
-ROBOT_INFORMATION_TOPIC = "data/BrickPi"
-ROBOT_DRIVE_TOPIC = "data/BrickPi"
+ROBOT_INFORMATION_TOPIC = ""
+ROBOT_DRIVE_TOPIC = ""
 
 MQTT_SERVER_LOCAL = "192.168.178.49"
 MQTT_PORT_LOCAL = 32598
@@ -36,10 +36,14 @@ ROBOT_ID = ""
 ROBOT_NAME = ""
 LOCATION_X = 0
 LOCATION_Y = 0
+LOCAL = False
 
 
-def connect_mqtt():
+def connect_mqtt(local):
     global MQTT_CLIENT
+    global LOCAL
+
+    LOCAL = local
 
     MQTT_CLIENT = mqtt_client.Client()
 
@@ -55,10 +59,8 @@ def connect_mqtt():
         MQTT_CLIENT.connect(MQTT_SERVER_LOCAL, MQTT_PORT_LOCAL, 60)
         LOG.info('MQTT connected to the local mqtt server')
 
-        thread1 = HeartbeatThread()
-        # thread2 = InformationThread()
-        thread1.start()
-        # thread2.start()
+    information_thread()
+    publish_heartbeat()
 
     MQTT_CLIENT.loop_forever()
 
@@ -84,18 +86,23 @@ def on_message(client, userdata, message):
 
     data = json.loads(message.payload.decode("utf-8"))
 
-    if message.topic == ROBOT_REGISTRATION_TOPIC and data.get("response").get("hsc") == HANDSHAKE and data.get(
-            "response").get("macAdr") == MAC:
-        ROBOT_ID = data.get("response").get("id")
-        ROBOT_NAME = data.get("response").get("roboterName")
-        LOCATION_X = data.get("response").get("location_x")
-        LOCATION_Y = data.get("response").get("location_y")
-        ROBOT_DRIVE_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/drive"
-        print("connected to topic" + ROBOT_DRIVE_TOPIC)
-        client.subscribe(ROBOT_DRIVE_TOPIC)
-        ROBOT_INFORMATION_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/information"
-        print("connected to topic" + ROBOT_INFORMATION_TOPIC)
-        client.subscribe(ROBOT_INFORMATION_TOPIC)
+    if message.topic == ROBOT_REGISTRATION_TOPIC and "response" in data.keys():
+        response = data['response']
+        if response['hsc'] == HANDSHAKE and response['macAdr'] == MAC:
+            ROBOT_ID = response['id']
+            ROBOT_NAME = response['roboterName']
+            LOCATION_X = response['robot_info']['location_x']
+            LOCATION_Y = response['robot_info']['location_y']
+            ROBOT_DRIVE_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/drive"
+            print("connected to topic" + ROBOT_DRIVE_TOPIC)
+            client.subscribe(ROBOT_DRIVE_TOPIC)
+            ROBOT_INFORMATION_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/information"
+            print("connected to topic" + ROBOT_INFORMATION_TOPIC)
+            client.subscribe(ROBOT_INFORMATION_TOPIC)
+    elif message.topic == ROBOT_DRIVE_TOPIC:
+        if not LOCAL:
+            import drive
+            drive.drive(data, LOCATION_X, LOCATION_Y)
 
 
 def register_robot():
@@ -108,11 +115,16 @@ def register_robot():
 
     reg_req = "{\"request\": {\"hsc\": \"" + HANDSHAKE + "\",\"macAdr\": \"" + MAC + "\"}}"
 
-    publish_on_channel(ROBOT_REGISTRATION_TOPIC, reg_req)
+    publish_on_topic(ROBOT_REGISTRATION_TOPIC, reg_req)
 
 
-def publish_on_channel(topic, payload):
+def publish_on_topic(topic, payload):
     MQTT_CLIENT.publish(topic, payload)
+
+
+def publish_on_information(payload):
+    print(payload)
+    MQTT_CLIENT.publish(ROBOT_INFORMATION_TOPIC, payload)
 
 
 def get_mac(interface='wlan0'):
@@ -124,20 +136,6 @@ def get_mac(interface='wlan0'):
     return str[0:17]
 
 
-class HeartbeatThread(threading.Thread):
-
-    def __init__(self):
-        threading.Thread.__init__(self)
-
-    def run(self):
-        sleep_timer = 5
-        while True:
-            if MQTT_CLIENT.is_connected():
-                publish_heartbeat()
-
-            sleep(sleep_timer)
-
-
 def publish_heartbeat():
     heartbeat = "{\"heartbeat\":{" \
                 "\"Id\":\"" + str(ROBOT_ID) + "\"," \
@@ -145,4 +143,14 @@ def publish_heartbeat():
                                                                                      "\"hsc\":\"" + str(
         HANDSHAKE) + "\"," \
                      "\"macAdr\":\"" + str(MAC) + "\"}}"
-    publish_on_channel(ROBOT_REGISTRATION_TOPIC, heartbeat)
+
+    if ROBOT_NAME != "":
+        print(heartbeat)
+        publish_on_topic(ROBOT_REGISTRATION_TOPIC, heartbeat)
+    threading.Timer(5, publish_heartbeat).start()
+
+
+def information_thread():
+    if ROBOT_INFORMATION_TOPIC != "":
+        information.publish_information(local=LOCAL, topic=ROBOT_INFORMATION_TOPIC, x=LOCATION_X, y=LOCATION_Y)
+    threading.Timer(1, information_thread).start()
