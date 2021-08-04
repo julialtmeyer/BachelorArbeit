@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+import threading
 import time
 import json
 import brickpi3
+from sensors import ultrasonic
 
 TURN_RADIUS_COUNTER_TURN = 11.5
 TURN_RADIUS_SAME_TURN = 17.5
@@ -12,6 +14,7 @@ COUNT_PER_REV = 360  # number of encoder steps it takes for drive wheel to spin 
 MAP_SCALE_FACTOR = 0.19857
 LOCATION_X = 0
 LOCATION_Y = 0
+OBSTACLE = False
 # pi * radius:
 PIVOT_CIRCLE_COUNTER_TURN = 42.411
 PIVOT_CIRCLE_SAME_TURN = 54.98
@@ -19,11 +22,13 @@ BP = brickpi3.BrickPi3()
 
 
 def drive(data, x, y):
+    global OBSTACLE
     global LOCATION_X
     global LOCATION_Y
 
     LOCATION_X = x
     LOCATION_Y = y
+    OBSTACLE = False
 
     BP.set_motor_position(BP.PORT_A, 0)
 
@@ -48,6 +53,8 @@ def drive(data, x, y):
 
 def drive_distance(distance):
     # sleep_timer = calculate_sleep_time(distance)
+    global LOCATION_X
+    global LOCATION_Y
     revs = distance_cm_to_revs(distance)
     num_revs = calculate_steps_for_distance(revs)
     BP.set_motor_position(BP.PORT_A, 0)
@@ -56,6 +63,9 @@ def drive_distance(distance):
     BP.offset_motor_encoder(BP.PORT_C, BP.get_motor_encoder(BP.PORT_C))
     BP.set_motor_position(BP.PORT_B, num_revs)
     BP.set_motor_position(BP.PORT_C, num_revs)
+    if check_for_collision(BP.PORT_B, num_revs):
+        print("collision")
+
     # BP.set_motor_dps(BP.PORT_B, SPEED_DPS)
     # BP.set_motor_dps(BP.PORT_C, SPEED_DPS)
     # time.sleep(sleep_timer)
@@ -78,11 +88,16 @@ def drive_corner_counter_turn(angle):
         time.sleep(0.2)
         BP.set_motor_position(BP.PORT_C, -num_revs)
         BP.set_motor_position(BP.PORT_B, num_revs)
+        check_for_collision(BP.PORT_B, num_revs)
     else:
         BP.set_motor_position(BP.PORT_A, 40)
         time.sleep(0.2)
         BP.set_motor_position(BP.PORT_C, num_revs)
         BP.set_motor_position(BP.PORT_B, -num_revs)
+        check_for_collision(BP.PORT_C, num_revs)
+
+    if OBSTACLE:
+        print("collision")
 
     time.sleep(sleep)
     BP.set_motor_position(BP.PORT_A, 0)
@@ -112,3 +127,20 @@ def calculate_steps_for_distance(distance):
 def distance_cm_to_revs(distance):
     num_revs = distance / WHEEL_CIRCUMFERENCE
     return num_revs
+
+
+def check_for_collision(port, num_revs):
+    global OBSTACLE
+    while BP.get_motor_encoder(port) != num_revs:
+        if ultrasonic.check_obstacle():
+            stop_movement()
+            OBSTACLE = True
+            return True
+
+    return False
+
+
+def stop_movement():
+    BP.set_motor_position(BP.PORT_A, 0)
+    BP.set_motor_position(BP.PORT_B, BP.get_motor_encoder(BP.PORT_B))
+    BP.set_motor_position(BP.PORT_C, BP.get_motor_encoder(BP.PORT_C))
