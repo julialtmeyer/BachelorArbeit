@@ -1,0 +1,148 @@
+import json
+import random
+import ssl
+import logging
+import string
+import threading
+from time import sleep
+
+from paho.mqtt import client as mqtt_client
+from pathlib import Path
+
+LOG = logging.getLogger("MQTT")
+
+MAC = ""
+
+dir_path = Path(__file__).parent.absolute().parent.absolute()
+CA_CERTIFICATE_PATH = dir_path / "certificates/ca_certificate.pem"
+CLIENT_CERTIFICATE_PATH = dir_path / "certificates/client_certificate.pem"
+CLIENT_KEY_PATH = dir_path / "certificates/client_key.pem"
+
+MQTT_CLIENT = mqtt_client.Client
+ROBOT_REGISTRATION_TOPIC = "data/BrickPi/registration"
+ROBOT_INFORMATION_TOPIC = "data/BrickPi"
+ROBOT_DRIVE_TOPIC = "data/BrickPi"
+
+MQTT_SERVER_LOCAL = "192.168.178.49"
+MQTT_PORT_LOCAL = 32598
+MQTT_SERVER_HTW = "134.96.216.207"
+MQTT_PORT_HTW = 8883
+USERNAME_HTW = "user"
+PASSWORD_HTW = "DgBe3RZVvZ"
+USE_CERTIFICATE = False
+
+HANDSHAKE = ""
+ROBOT_ID = ""
+ROBOT_NAME = ""
+LOCATION_X = 0
+LOCATION_Y = 0
+
+
+def connect_mqtt():
+    global MQTT_CLIENT
+
+    MQTT_CLIENT = mqtt_client.Client()
+
+    MQTT_CLIENT.on_connect = on_connect
+    MQTT_CLIENT.on_message = on_message
+    if USE_CERTIFICATE:
+        MQTT_CLIENT.username_pw_set(USERNAME_HTW, PASSWORD_HTW)
+        MQTT_CLIENT.tls_set(CA_CERTIFICATE_PATH, CLIENT_CERTIFICATE_PATH, CLIENT_KEY_PATH, cert_reqs=ssl.CERT_NONE,
+                            tls_version=ssl.PROTOCOL_TLSv1_2, ciphers=None)
+        MQTT_CLIENT.connect(MQTT_SERVER_HTW, MQTT_PORT_HTW, 60)
+        LOG.info('MQTT connected to the htw mqtt server')
+    else:
+        MQTT_CLIENT.connect(MQTT_SERVER_LOCAL, MQTT_PORT_LOCAL, 60)
+        LOG.info('MQTT connected to the local mqtt server')
+
+        thread1 = HeartbeatThread()
+        # thread2 = InformationThread()
+        thread1.start()
+        # thread2.start()
+
+    MQTT_CLIENT.loop_forever()
+
+
+def on_connect(client, userdata, flags, rc):
+    client.subscribe(ROBOT_REGISTRATION_TOPIC)
+    print("connected")
+    register_robot()
+    LOG.info(client, "MQTT connected with result code " + str(rc))
+
+
+def on_publish(client, userdata, mid):
+    LOG.debug(client, "on_publish, mid{}".format(mid))
+
+
+def on_message(client, userdata, message):
+    global ROBOT_NAME
+    global ROBOT_ID
+    global ROBOT_DRIVE_TOPIC
+    global ROBOT_INFORMATION_TOPIC
+    global LOCATION_X
+    global LOCATION_Y
+
+    data = json.loads(message.payload.decode("utf-8"))
+
+    if message.topic == ROBOT_REGISTRATION_TOPIC and data.get("response").get("hsc") == HANDSHAKE and data.get(
+            "response").get("macAdr") == MAC:
+        ROBOT_ID = data.get("response").get("id")
+        ROBOT_NAME = data.get("response").get("roboterName")
+        LOCATION_X = data.get("response").get("location_x")
+        LOCATION_Y = data.get("response").get("location_y")
+        ROBOT_DRIVE_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/drive"
+        print("connected to topic" + ROBOT_DRIVE_TOPIC)
+        client.subscribe(ROBOT_DRIVE_TOPIC)
+        ROBOT_INFORMATION_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/information"
+        print("connected to topic" + ROBOT_INFORMATION_TOPIC)
+        client.subscribe(ROBOT_INFORMATION_TOPIC)
+
+
+def register_robot():
+    global HANDSHAKE
+    global MAC
+
+    letters = string.ascii_lowercase
+    HANDSHAKE = ''.join(random.choice(letters) for i in range(20))
+    MAC = get_mac('wlan0')
+
+    reg_req = "{\"request\": {\"hsc\": \"" + HANDSHAKE + "\",\"macAdr\": \"" + MAC + "\"}}"
+
+    publish_on_channel(ROBOT_REGISTRATION_TOPIC, reg_req)
+
+
+def publish_on_channel(topic, payload):
+    MQTT_CLIENT.publish(topic, payload)
+
+
+def get_mac(interface='wlan0'):
+    # Return the MAC address of the specified interface
+    try:
+        str = open('/sys/class/net/%s/address' % interface).read()
+    except:
+        str = "00:00:00:00:00:00"
+    return str[0:17]
+
+
+class HeartbeatThread(threading.Thread):
+
+    def __init__(self):
+        threading.Thread.__init__(self)
+
+    def run(self):
+        sleep_timer = 5
+        while True:
+            if MQTT_CLIENT.is_connected():
+                publish_heartbeat()
+
+            sleep(sleep_timer)
+
+
+def publish_heartbeat():
+    heartbeat = "{\"heartbeat\":{" \
+                "\"Id\":\"" + str(ROBOT_ID) + "\"," \
+                                              "\"robotName\":\"" + str(ROBOT_NAME) + "\"," \
+                                                                                     "\"hsc\":\"" + str(
+        HANDSHAKE) + "\"," \
+                     "\"macAdr\":\"" + str(MAC) + "\"}}"
+    publish_on_channel(ROBOT_REGISTRATION_TOPIC, heartbeat)
