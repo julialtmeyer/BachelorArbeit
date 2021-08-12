@@ -60,4 +60,16 @@ public class Node {
         this.neighbors = neighbors;
     }
 
+    public void addNeighbor(Node neighbor) {
+        this.neighbors.add(neighbor);
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "id=" + id +
+                ", x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
