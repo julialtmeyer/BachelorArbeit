@@ -2,9 +2,9 @@ package de.htwsaar.backend_service.rest;
 
 import de.htwsaar.backend_service.Constants;
 import de.htwsaar.backend_service.DriveController;
-import de.htwsaar.backend_service.Naviagtion.Coordinate;
 import de.htwsaar.backend_service.model.Robot;
 import de.htwsaar.backend_service.model.RobotRepository;
+import org.locationtech.jts.geom.Coordinate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
