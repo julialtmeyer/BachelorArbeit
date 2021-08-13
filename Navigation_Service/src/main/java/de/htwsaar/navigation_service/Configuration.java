@@ -11,9 +11,21 @@ public class Configuration {
     @Value("${nodeToleranz}")
     private Double nodeToleranz;
 
+    @Value("${mapId}")
+    private Long mapId;
+
+    @Value("${gridSpacing}")
+    private Integer gridSpacing;
 
     public Double getNodeToleranz() {
         return nodeToleranz;
     }
 
+    public Long getMapId() {
+        return mapId;
+    }
+
+    public Integer getGridSpacing() {
+        return gridSpacing;
+    }
 }

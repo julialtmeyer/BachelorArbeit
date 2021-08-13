@@ -86,6 +86,13 @@
             <artifactId>jts-core</artifactId>
             <version>1.18.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>16</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
