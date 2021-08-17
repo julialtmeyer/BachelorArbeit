@@ -4,7 +4,7 @@ import de.htwsaar.backend_service.Constants;
 import de.htwsaar.backend_service.DriveController;
 import de.htwsaar.backend_service.model.Robot;
 import de.htwsaar.backend_service.model.RobotRepository;
-import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.CoordinateXY;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +57,7 @@ public class ControlRestController {
     }
 
     @PostMapping("/AtoB/{id}")
-    public ResponseEntity postDriveFromAToB(@RequestBody Coordinate destination, @PathVariable Long id){
+    public ResponseEntity postDriveFromAToB(@RequestBody CoordinateXY destination, @PathVariable Long id){
         ResponseEntity response;
         Optional<Robot> robot = robotRepository.findById(id);
         if (robot.isPresent()){

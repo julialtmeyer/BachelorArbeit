@@ -27,12 +27,8 @@ public class Robot_Info {
     @Column(name = "location_y")
     private Double location_y;
 
-    @Column(name = "direction_x")
-    private Double direction_x;
-
-    @Column(name = "direction_y")
-    private Double direction_y;
-
+    @Column(name = "direction")
+    private Double direction;
 
 
     public Robot_Info() {
@@ -93,20 +89,12 @@ public class Robot_Info {
         this.location_y = y_coord;
     }
 
-    public Double getDirection_x() {
-        return direction_x;
+    public Double getDirection() {
+        return direction;
     }
 
-    public void setDirection_x(Double direction_x) {
-        this.direction_x = direction_x;
-    }
-
-    public Double getDirection_y() {
-        return direction_y;
-    }
-
-    public void setDirection_y(Double direction_y) {
-        this.direction_y = direction_y;
+    public void setDirection(Double direction_x) {
+        this.direction = direction_x;
     }
 
     @Override
@@ -114,12 +102,14 @@ public class Robot_Info {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Robot_Info that = (Robot_Info) o;
-        return id.equals(that.id) && robot.equals(that.robot) && Objects.equals(battery, that.battery) && Objects.equals(last_picture, that.last_picture) && Objects.equals(location_x, that.location_x) && Objects.equals(location_y, that.location_y) && Objects.equals(direction_x, that.direction_x) && Objects.equals(direction_y, that.direction_y);
+        return id.equals(that.id) && robot.equals(that.robot) && Objects.equals(battery, that.battery)
+                && Objects.equals(last_picture, that.last_picture) && Objects.equals(location_x, that.location_x)
+                && Objects.equals(location_y, that.location_y) && Objects.equals(direction, that.direction);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, robot, battery, last_picture, location_x, location_y, direction_x, direction_y);
+        return Objects.hash(id, robot, battery, last_picture, location_x, location_y, direction);
     }
 
     @Override
@@ -131,8 +121,7 @@ public class Robot_Info {
                 ", last_picture='" + last_picture + '\'' +
                 ", location_x=" + location_x +
                 ", location_y=" + location_y +
-                ", direction_x=" + direction_x +
-                ", direction_y=" + direction_y +
+                ", direction_x=" + direction +
                 '}';
     }
 }
