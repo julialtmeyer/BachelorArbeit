@@ -62,7 +62,7 @@ public class ControlRestController {
         Optional<Robot> robot = robotRepository.findById(id);
         if (robot.isPresent()){
             if(robot.get().isActive()){
-                if(driveController.driveFromAtoB(robot.get(), destination)){
+                if(driveController.handleAtoB(robot.get(), destination)){
                     response = new ResponseEntity(HttpStatus.OK);
                 }
                 else {

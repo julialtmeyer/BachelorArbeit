@@ -36,6 +36,7 @@ ROBOT_ID = ""
 ROBOT_NAME = ""
 LOCATION_X = 0
 LOCATION_Y = 0
+ORIENTATION = 0
 LOCAL = False
 
 
@@ -83,6 +84,7 @@ def on_message(client, userdata, message):
     global ROBOT_INFORMATION_TOPIC
     global LOCATION_X
     global LOCATION_Y
+    global ORIENTATION
 
     data = json.loads(message.payload.decode("utf-8"))
 
@@ -93,6 +95,7 @@ def on_message(client, userdata, message):
             ROBOT_NAME = response['roboterName']
             LOCATION_X = response['robot_info']['location_x']
             LOCATION_Y = response['robot_info']['location_y']
+            ORIENTATION = response['robot_info']['direction']
             ROBOT_DRIVE_TOPIC = "data/BrickPi/" + ROBOT_NAME + "/drive"
             print("connected to topic" + ROBOT_DRIVE_TOPIC)
             client.subscribe(ROBOT_DRIVE_TOPIC)
@@ -102,7 +105,7 @@ def on_message(client, userdata, message):
     elif message.topic == ROBOT_DRIVE_TOPIC:
         if not LOCAL:
             import drive
-            drive.drive(data, LOCATION_X, LOCATION_Y)
+            drive.drive(data, LOCATION_X, LOCATION_Y, ORIENTATION)
 
 
 def register_robot():

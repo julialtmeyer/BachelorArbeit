@@ -13,6 +13,7 @@ import de.htwsaar.backend_service.mqtt.Publisher;
 import de.htwsaar.backend_service.rest.HttpClient;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
+import org.apache.commons.math3.util.Precision;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,17 +60,16 @@ public class DriveController {
 
     }
 
-    public boolean driveFromAtoB(Robot robot, Coordinate destination){
+    public List<Command> driveFromAtoB(Robot robot, Coordinate destination){
         List<Node> path;
         Coordinate robotLocation = new Coordinate(robot.getRobot_info().getLocation_x(), robot.getRobot_info().getLocation_y());
         path = httpClient.createNavigationPostRequest(robotLocation, destination);
+        List<Command> commands = new ArrayList<>();
 
         if(path.isEmpty()){
-            return false;
+            return commands;
         }
 
-
-        List<Command> commands = new ArrayList<>();
         for(int i = 0; i < path.size()-1; i++){
 
             Node start = path.get(i);
@@ -79,22 +79,114 @@ public class DriveController {
             Coordinate destCoord = new Coordinate(dest.getX(), dest.getY());
             Coordinate tempCoord = new Coordinate(startCoord.getX(), destCoord.getY());
 
-            Double distance = startCoord.distance(destCoord);
-            Double angle = Math.toDegrees(Angle.angleBetween(tempCoord, startCoord, destCoord));
-            if (angle > 180){
-                angle = 360-angle;
-            }
-            double degrees =  robot.getRobot_info().getDirection() - angle;
+            double angle;
+            double orientation = robot.getRobot_info().getDirection();
 
-            if(degrees != 0.0){
-                TurnCommand turn = new TurnCommand(degrees);
+
+            double alpha = Math.toDegrees(Angle.angleBetween(tempCoord, startCoord, destCoord));
+            if(start.getX() > dest.getX() && alpha == 180.0){
+                alpha = 0.0;
+            }
+
+            if(start.getY() < dest.getY()){
+                if(start.getX() < dest.getX()){
+                    if (orientation > 180){
+                        double a = 360 - orientation + 180 - alpha;
+                        double b = (Math.abs(orientation - 180.0) + alpha) * -1;
+
+                        angle = getSmaller(a, b);
+                    }
+                    else {
+                        if(orientation > alpha){
+                            angle = (Math.abs(orientation-180) - alpha) * -1;
+                        }
+                        else {
+                            angle = alpha - Math.abs(orientation-180);
+                        }
+                    }
+                }
+                else {
+                    if (orientation > 180){
+                        if(orientation > alpha){
+                            angle = (Math.abs(orientation-180) - alpha) * -1;
+                        }
+                        else {
+                            angle = alpha - Math.abs(orientation-180);
+                        }
+                    }
+                    else {
+                        double a = 180 - orientation + alpha;
+                        double b = (orientation + 180 - alpha) * -1;
+
+                        angle = getSmaller(a,b);
+                    }
+                }
+
+            }
+            else {
+                if(start.getY().equals(dest.getY()) && alpha == 0.0){
+                    alpha = 90.0;
+                }
+                if(start.getX() < dest.getX()){
+                    if(orientation > 180){
+                        double a = (360-orientation) + alpha;
+                        double b = (orientation - alpha) * -1;
+
+                        angle = getSmaller(a,b);
+                    }
+                    else {
+                        if(orientation > alpha){
+                            angle = (orientation - alpha) * -1;
+                        }
+                        else {
+                            angle = alpha - orientation;
+                        }
+                    }
+                }
+                else {
+                    if(orientation > 180){
+                        if((360 - orientation) > alpha){
+                            angle = (360 - orientation) - alpha;
+                        }
+                        else {
+                            angle = alpha - (360 - orientation);
+                        }
+                    }
+                    else {
+                        double a = (orientation + alpha) * -1;
+                        double b = 360 - orientation - alpha;
+
+                        angle = getSmaller(a,b);
+                    }
+                }
+            }
+
+            Double distance =  startCoord.distance(destCoord);
+
+            if(angle != 0.0){
+                TurnCommand turn = new TurnCommand(angle);
                 commands.add(turn);
             }
+            double o = robot.getRobot_info().getDirection() + angle;
+
+            if(o >= 360.0){
+                o = o - 360;
+            }
+            else if( o < 0.0){
+                o = 360 + o;
+            }
+
+            robot.getRobot_info().setDirection(o);
             distance = getActualDistance(distance);
             DriveCommand drive = new DriveCommand(distance);
             commands.add(drive);
         }
 
+        return commands;
+    }
+
+    public boolean handleAtoB(Robot robot, Coordinate destination){
+        List<Command> commands = driveFromAtoB(robot, destination);
         if(commands.isEmpty()){
             return false;
         }
@@ -117,6 +209,7 @@ public class DriveController {
 
     private Double getActualDistance(Double distance){
         Double actual = distance * config.getMapScaleFactor();
+        actual = Precision.round(actual, 2);
         return actual;
     }
 
@@ -124,5 +217,12 @@ public class DriveController {
         String json;
         ObjectMapper mapper = new ObjectMapper();
         return json = mapper.writeValueAsString(o);
+    }
+
+    private double getSmaller(double a, double b){
+        if(Math.abs(a) < Math.abs(b))
+            return a;
+        else
+            return b;
     }
 }
