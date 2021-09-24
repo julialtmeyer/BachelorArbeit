@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <style>
+
+        body .markdown-body {
+            padding: 45px;
+            border-radius: 3px;
+            word-wrap: break-word;
+        }
+
+        pre {
+            font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        }
+
+        .markdown-body {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            color: #333;
+            font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            font-size: 16px;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+
+        .markdown-body a {
+            background-color: transparent;
+        }
+
+        .markdown-body a:active,
+        .markdown-body a:hover {
+            outline: 0;
+        }
+
+        .markdown-body strong {
+            font-weight: bold;
+        }
+
+        .markdown-body h1 {
+            font-size: 2em;
+            margin: 0.67em 0;
+        }
+
+        .markdown-body img {
+            border: 0;
+        }
+
+        .markdown-body hr {
+            box-sizing: content-box;
+            height: 0;
+        }
+
+        .markdown-body pre {
+            overflow: auto;
+        }
+
+        .markdown-body code,
+        .markdown-body kbd,
+        .markdown-body pre {
+            font-family: monospace, monospace;
+            font-size: 1em;
+        }
+
+        .markdown-body input {
+            color: inherit;
+            font: inherit;
+            margin: 0;
+        }
+
+        .markdown-body html input[disabled] {
+            cursor: default;
+        }
+
+        .markdown-body input {
+            line-height: normal;
+        }
+
+        .markdown-body input[type="checkbox"] {
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        .markdown-body table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .markdown-body td,
+        .markdown-body th {
+            padding: 0;
+        }
+
+        .markdown-body input {
+            font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+        .markdown-body a {
+            color: #4078c0;
+            text-decoration: none;
+        }
+
+        .markdown-body a:hover,
+        .markdown-body a:active {
+            text-decoration: underline;
+        }
+
+        .markdown-body hr {
+            height: 0;
+            margin: 15px 0;
+            overflow: hidden;
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .markdown-body hr:before {
+            display: table;
+            content: "";
+        }
+
+        .markdown-body hr:after {
+            display: table;
+            clear: both;
+            content: "";
+        }
+
+        .markdown-body h1,
+        .markdown-body h2,
+        .markdown-body h3,
+        .markdown-body h4,
+        .markdown-body h5,
+        .markdown-body h6 {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            line-height: 1.1;
+        }
+
+        .markdown-body h1 {
+            font-size: 30px;
+        }
+
+        .markdown-body h2 {
+            font-size: 21px;
+        }
+
+        .markdown-body h3 {
+            font-size: 16px;
+        }
+
+        .markdown-body h4 {
+            font-size: 14px;
+        }
+
+        .markdown-body h5 {
+            font-size: 12px;
+        }
+
+        .markdown-body h6 {
+            font-size: 11px;
+        }
+
+        .markdown-body blockquote {
+            margin: 0;
+        }
+
+        .markdown-body ul,
+        .markdown-body ol {
+            padding: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .markdown-body ol ol,
+        .markdown-body ul ol {
+            list-style-type: lower-roman;
+        }
+
+        .markdown-body ul ul ol,
+        .markdown-body ul ol ol,
+        .markdown-body ol ul ol,
+        .markdown-body ol ol ol {
+            list-style-type: lower-alpha;
+        }
+
+        .markdown-body dd {
+            margin-left: 0;
+        }
+
+        .markdown-body code {
+            font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 12px;
+        }
+
+        .markdown-body pre {
+            margin-top: 0;
+            margin-bottom: 0;
+            font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        }
+
+        .markdown-body .select::-ms-expand {
+            opacity: 0;
+        }
+
+        .markdown-body .octicon {
+            font: normal normal normal 16px/1 octicons-anchor;
+            display: inline-block;
+            text-decoration: none;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .markdown-body .octicon-link:before {
+            content: '\f05c';
+        }
+
+        .markdown-body:before {
+            display: table;
+            content: "";
+        }
+
+        .markdown-body:after {
+            display: table;
+            clear: both;
+            content: "";
+        }
+
+        .markdown-body > *:first-child {
+            margin-top: 0 !important;
+        }
+
+        .markdown-body > *:last-child {
+            margin-bottom: 0 !important;
+        }
+
+        .markdown-body a:not([href]) {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .markdown-body .anchor {
+            display: inline-block;
+            padding-right: 2px;
+            margin-left: -18px;
+        }
+
+        .markdown-body .anchor:focus {
+            outline: none;
+        }
+
+        .markdown-body h1,
+        .markdown-body h2,
+        .markdown-body h3,
+        .markdown-body h4,
+        .markdown-body h5,
+        .markdown-body h6 {
+            margin-top: 1em;
+            margin-bottom: 16px;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+
+        .markdown-body h1 .octicon-link,
+        .markdown-body h2 .octicon-link,
+        .markdown-body h3 .octicon-link,
+        .markdown-body h4 .octicon-link,
+        .markdown-body h5 .octicon-link,
+        .markdown-body h6 .octicon-link {
+            color: #000;
+            vertical-align: middle;
+            visibility: hidden;
+        }
+
+        .markdown-body h1:hover .anchor,
+        .markdown-body h2:hover .anchor,
+        .markdown-body h3:hover .anchor,
+        .markdown-body h4:hover .anchor,
+        .markdown-body h5:hover .anchor,
+        .markdown-body h6:hover .anchor {
+            text-decoration: none;
+        }
+
+        .markdown-body h1:hover .anchor .octicon-link,
+        .markdown-body h2:hover .anchor .octicon-link,
+        .markdown-body h3:hover .anchor .octicon-link,
+        .markdown-body h4:hover .anchor .octicon-link,
+        .markdown-body h5:hover .anchor .octicon-link,
+        .markdown-body h6:hover .anchor .octicon-link {
+            visibility: visible;
+        }
+
+        .markdown-body h1 {
+            padding-bottom: 0.3em;
+            font-size: 2.25em;
+            line-height: 1.2;
+            border-bottom: 1px solid #eee;
+        }
+
+        .markdown-body h1 .anchor {
+            line-height: 1;
+        }
+
+        .markdown-body h2 {
+            padding-bottom: 0.3em;
+            font-size: 1.75em;
+            line-height: 1.225;
+            border-bottom: 1px solid #eee;
+        }
+
+        .markdown-body h2 .anchor {
+            line-height: 1;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.5em;
+            line-height: 1.43;
+        }
+
+        .markdown-body h3 .anchor {
+            line-height: 1.2;
+        }
+
+        .markdown-body h4 {
+            font-size: 1.25em;
+        }
+
+        .markdown-body h4 .anchor {
+            line-height: 1.2;
+        }
+
+        .markdown-body h5 {
+            font-size: 1em;
+        }
+
+        .markdown-body h5 .anchor {
+            line-height: 1.1;
+        }
+
+        .markdown-body h6 {
+            font-size: 1em;
+            color: #777;
+        }
+
+        .markdown-body h6 .anchor {
+            line-height: 1.1;
+        }
+
+        .markdown-body p,
+        .markdown-body blockquote,
+        .markdown-body ul,
+        .markdown-body ol,
+        .markdown-body dl,
+        .markdown-body table,
+        .markdown-body pre {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .markdown-body hr {
+            height: 4px;
+            padding: 0;
+            margin: 16px 0;
+            background-color: #e7e7e7;
+            border: 0 none;
+        }
+
+        .markdown-body ul,
+        .markdown-body ol {
+            padding-left: 2em;
+        }
+
+        .markdown-body ul ul,
+        .markdown-body ul ol,
+        .markdown-body ol ol,
+        .markdown-body ol ul {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .markdown-body li > p {
+            margin-top: 16px;
+        }
+
+        .markdown-body dl {
+            padding: 0;
+        }
+
+        .markdown-body dl dt {
+            padding: 0;
+            margin-top: 16px;
+            font-size: 1em;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        .markdown-body dl dd {
+            padding: 0 16px;
+            margin-bottom: 16px;
+        }
+
+        .markdown-body blockquote {
+            padding: 0 15px;
+            color: #777;
+            border-left: 4px solid #ddd;
+        }
+
+        .markdown-body blockquote > :first-child {
+            margin-top: 0;
+        }
+
+        .markdown-body blockquote > :last-child {
+            margin-bottom: 0;
+        }
+
+        .markdown-body table {
+            display: block;
+            width: 100%;
+            overflow: auto;
+            word-break: normal;
+            word-break: keep-all;
+        }
+
+        .markdown-body table th {
+            font-weight: bold;
+        }
+
+        .markdown-body table th,
+        .markdown-body table td {
+            padding: 6px 13px;
+            border: 1px solid #ddd;
+        }
+
+        .markdown-body table tr {
+            background-color: #fff;
+            border-top: 1px solid #ccc;
+        }
+
+        .markdown-body table tr:nth-child(2n) {
+            background-color: #f8f8f8;
+        }
+
+        .markdown-body img {
+            max-width: 100%;
+            box-sizing: content-box;
+            background-color: #fff;
+        }
+
+        .markdown-body code {
+            padding: 0;
+            padding-top: 0.2em;
+            padding-bottom: 0.2em;
+            margin: 0;
+            font-size: 85%;
+            background-color: rgba(0, 0, 0, 0.04);
+            border-radius: 3px;
+        }
+
+        .markdown-body code:before,
+        .markdown-body code:after {
+            letter-spacing: -0.2em;
+            content: "\00a0";
+        }
+
+        .markdown-body pre > code {
+            padding: 0;
+            margin: 0;
+            font-size: 100%;
+            word-break: normal;
+            white-space: pre;
+            background: transparent;
+            border: 0;
+        }
+
+        .markdown-body .highlight {
+            margin-bottom: 16px;
+        }
+
+        .markdown-body .highlight pre,
+        .markdown-body pre {
+            padding: 16px;
+            overflow: auto;
+            font-size: 85%;
+            line-height: 1.45;
+            background-color: #f7f7f7;
+            border-radius: 3px;
+        }
+
+        .markdown-body .highlight pre {
+            margin-bottom: 0;
+            word-break: normal;
+        }
+
+        .markdown-body pre {
+            word-wrap: normal;
+        }
+
+        .markdown-body pre code {
+            display: inline;
+            max-width: initial;
+            padding: 0;
+            margin: 0;
+            overflow: initial;
+            line-height: inherit;
+            word-wrap: normal;
+            background-color: transparent;
+            border: 0;
+        }
+
+        .markdown-body pre code:before,
+        .markdown-body pre code:after {
+            content: normal;
+        }
+
+        .markdown-body kbd {
+            display: inline-block;
+            padding: 3px 5px;
+            font-size: 11px;
+            line-height: 10px;
+            color: #555;
+            vertical-align: middle;
+            background-color: #fcfcfc;
+            border: solid 1px #ccc;
+            border-bottom-color: #bbb;
+            border-radius: 3px;
+            box-shadow: inset 0 -1px 0 #bbb;
+        }
+
+        .markdown-body .pl-c {
+            color: #969896;
+        }
+
+        .markdown-body .pl-c1,
+        .markdown-body .pl-s .pl-v {
+            color: #0086b3;
+        }
+
+        .markdown-body .pl-e,
+        .markdown-body .pl-en {
+            color: #795da3;
+        }
+
+        .markdown-body .pl-s .pl-s1,
+        .markdown-body .pl-smi {
+            color: #333;
+        }
+
+        .markdown-body .pl-ent {
+            color: #63a35c;
+        }
+
+        .markdown-body .pl-k {
+            color: #a71d5d;
+        }
+
+        .markdown-body .pl-pds,
+        .markdown-body .pl-s,
+        .markdown-body .pl-s .pl-pse .pl-s1,
+        .markdown-body .pl-sr,
+        .markdown-body .pl-sr .pl-cce,
+        .markdown-body .pl-sr .pl-sra,
+        .markdown-body .pl-sr .pl-sre {
+            color: #183691;
+        }
+
+        .markdown-body .pl-v {
+            color: #ed6a43;
+        }
+
+        .markdown-body .pl-id {
+            color: #b52a1d;
+        }
+
+        .markdown-body .pl-ii {
+            background-color: #b52a1d;
+            color: #f8f8f8;
+        }
+
+        .markdown-body .pl-sr .pl-cce {
+            color: #63a35c;
+            font-weight: bold;
+        }
+
+        .markdown-body .pl-ml {
+            color: #693a17;
+        }
+
+        .markdown-body .pl-mh,
+        .markdown-body .pl-mh .pl-en,
+        .markdown-body .pl-ms {
+            color: #1d3e81;
+            font-weight: bold;
+        }
+
+        .markdown-body .pl-mq {
+            color: #008080;
+        }
+
+        .markdown-body .pl-mi {
+            color: #333;
+            font-style: italic;
+        }
+
+        .markdown-body .pl-mb {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .markdown-body .pl-md {
+            background-color: #ffecec;
+            color: #bd2c00;
+        }
+
+        .markdown-body .pl-mi1 {
+            background-color: #eaffea;
+            color: #55a532;
+        }
+
+        .markdown-body .pl-mdr {
+            color: #795da3;
+            font-weight: bold;
+        }
+
+        .markdown-body .pl-mo {
+            color: #1d3e81;
+        }
+
+        .markdown-body kbd {
+            display: inline-block;
+            padding: 3px 5px;
+            font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            line-height: 10px;
+            color: #555;
+            vertical-align: middle;
+            background-color: #fcfcfc;
+            border: solid 1px #ccc;
+            border-bottom-color: #bbb;
+            border-radius: 3px;
+            box-shadow: inset 0 -1px 0 #bbb;
+        }
+
+        .markdown-body .plan-price-unit {
+            color: #767676;
+            font-weight: normal;
+        }
+
+        .markdown-body .task-list-item {
+            list-style-type: none;
+        }
+
+        .markdown-body .task-list-item + .task-list-item {
+            margin-top: 3px;
+        }
+
+        .markdown-body .task-list-item input {
+            margin: 0 0.35em 0.25em -1.6em;
+            vertical-align: middle;
+        }
+
+        .markdown-body .plan-choice {
+            padding: 15px;
+            padding-left: 40px;
+            display: block;
+            border: 1px solid #e0e0e0;
+            position: relative;
+            font-weight: normal;
+            background-color: #fafafa;
+        }
+
+        .markdown-body .plan-choice.open {
+            background-color: #fff;
+        }
+
+        .markdown-body .plan-choice.open .plan-choice-seat-breakdown {
+            display: block;
+        }
+
+        .markdown-body .plan-choice-free {
+            border-radius: 3px 3px 0 0;
+        }
+
+        .markdown-body .plan-choice-paid {
+            border-radius: 0 0 3px 3px;
+            border-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .markdown-body .plan-choice-radio {
+            position: absolute;
+            left: 15px;
+            top: 18px;
+        }
+
+        .markdown-body .plan-choice-exp {
+            color: #999;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .markdown-body .plan-choice-seat-breakdown {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .markdown-body :checked + .radio-label {
+            z-index: 1;
+            position: relative;
+            border-color: #4078c0;
+        }
+
+        @media print {
+            body .markdown-body {
+                padding: 0;
+                border: none;
+            }
+        }
+    </style>
+    <title>README</title></head>
+<body>
+<article class="markdown-body">
+
+    <ol>
+        <li><a href="#rest-schnittstelle---smartcitycozmosteuerung">Rest-Schnittstelle</a></li>
+        <li><a href="#mqtt-schnittstelle---smartcitycozmosteuerung">MQTT-Schnittstelle</a></li>
+        <li><a href="#getting-started">Getting Started</a></li>
+    </ol>
+
+    <p><strong>SDK</strong><br>
+        <a href="http://cozmosdk.anki.com/docs/api.html" rel="nofollow">http://cozmosdk.anki.com/docs/api.html</a>
+    </p>
+
+    <h1>
+        <a id="user-content-rest-schnittstelle---smartcitycozmosteuerung" class="anchor"
+           href="#rest-schnittstelle---smartcitycozmosteuerung" aria-hidden="true"><span aria-hidden="true"
+                                                                                         class="octicon octicon-link"></span></a>Rest-Schnittstelle
+        - SmartCityCozmoSteuerung</h1>
+    <p><strong>How to use</strong></p>
+    <div class="highlight highlight-source-js"><pre><span class="pl-s1">$</span><span class="pl-kos">.</span><span
+            class="pl-en">ajax</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+	<span class="pl-c1">url</span>: <span class="pl-s">"http://localhost:8080/robots"</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span
+                class="pl-en">then</span><span class="pl-kos">(</span><span class="pl-k">function</span><span
+                class="pl-kos">(</span><span class="pl-s1">data</span><span class="pl-kos">)</span> <span
+                class="pl-kos">{</span>
+	<span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span
+                class="pl-kos">(</span><span class="pl-s1">data</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre>
+    </div>
+    <div class="highlight highlight-source-js"><pre><span class="pl-s1">$</span><span class="pl-kos">.</span><span
+            class="pl-en">ajax</span><span class="pl-kos">(</span><span class="pl-kos">{</span>
+	<span class="pl-c1">type</span>: <span class="pl-s">"POST"</span><span class="pl-kos">,</span>
+	<span class="pl-c1">url</span>: <span class="pl-s">"http://localhost:8080/jobs"</span><span class="pl-kos">,</span>
+	<span class="pl-c1">data</span>: <span class="pl-s">'{"robotID":"anki-01"}'</span><span class="pl-kos">,</span>
+	<span class="pl-c1">contentType</span>: <span class="pl-s">"application/json; charset=utf-8"</span><span
+                class="pl-kos">,</span>
+	<span class="pl-c1">dataType</span>: <span class="pl-s">"json"</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">.</span><span
+                class="pl-en">then</span><span class="pl-kos">(</span><span class="pl-k">function</span><span
+                class="pl-kos">(</span><span class="pl-s1">data</span><span class="pl-kos">)</span> <span
+                class="pl-kos">{</span>
+	<span class="pl-smi">console</span><span class="pl-kos">.</span><span class="pl-en">log</span><span
+                class="pl-kos">(</span><span class="pl-s1">data</span><span class="pl-kos">)</span>
+<span class="pl-kos">}</span><span class="pl-kos">)</span><span class="pl-kos">;</span></pre>
+    </div>
+    <h3>
+        <a id="user-content-errors" class="anchor" href="#errors" aria-hidden="true"><span aria-hidden="true"
+                                                                                           class="octicon octicon-link"></span></a>Errors
+    </h3>
+    <p><strong>Beispiel Antwort</strong></p>
+    <div class="highlight highlight-source-js">
+            <pre><span class="pl-kos">{</span><span class="pl-c1">code</span>: <span class="pl-s">"005"</span><span
+                    class="pl-kos">,</span> <span class="pl-c1">msg</span>: <span class="pl-s">"invalid adjustment request"</span><span
+                    class="pl-kos">}</span></pre>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>DRIVECODE</td>
+            <td>001</td>
+            <td>Der erechnete Pfad ist nicht abfahrbar (z.B. zu kurz)</td>
+        </tr>
+        <tr>
+            <td>NAVIGATIONCODE</td>
+            <td>002</td>
+            <td>Es es nicht möglich an diese Position zu Navigieren</td>
+        </tr>
+        <tr>
+            <td>MAPCODE</td>
+            <td>003</td>
+            <td>Die Struktur der Karte ist nicht Ordnungsgemäß</td>
+        </tr>
+        <tr>
+            <td>ROBOT</td>
+            <td>004</td>
+            <td>Dieser Roboter existiert nicht</td>
+        </tr>
+        <tr>
+            <td>ADJUSTMENT</td>
+            <td>005</td>
+            <td>Die Parameter sind nicht zulässig</td>
+        </tr>
+        <tr>
+            <td>INSTRUCTION</td>
+            <td>006</td>
+            <td>Instruction Anfrage ist nicht Valide</td>
+        </tr>
+        <tr>
+            <td>IMAGE</td>
+            <td>007</td>
+            <td>Image Anfrage ist nicht Valide</td>
+        </tr>
+        <tr>
+            <td>JSON</td>
+            <td>008</td>
+            <td>JSON ist nicht Valide</td>
+        </tr>
+        <tr>
+            <td>INTERNAL</td>
+            <td>009</td>
+            <td>Interner Fehler</td>
+        </tr>
+        </tbody>
+    </table>
+    <h3>
+        <a id="user-content-channel" class="anchor" href="#channel" aria-hidden="true"><span aria-hidden="true"
+                                                                                             class="octicon octicon-link"></span></a>Channel
+    </h3>
+    <ul>
+        <li><a href="#roboter">/robots</a></li>
+        <li><a href="#image">/image</a></li>
+        <li><a href="#drive">/drive</a></li>
+        <li><a href="#adjustment">/adjustment</a></li>
+        <li><a href="#instruction">/instruction</a></li>
+        <li><a href="#jobs">/jobs</a></li>
+        <li><a href="#map">/map</a></li>
+    </ul>
+    <h2>
+        <a id="user-content-roboter" class="anchor" href="#roboter" aria-hidden="true"><span aria-hidden="true"
+                                                                                             class="octicon octicon-link"></span></a>Roboter
+    </h2>
+    <p>Gibt alle registrierten Roboter mit dessen Information zurück</p>
+    <p><code>/robots</code></p>
+    <p><strong>Response Example</strong></p>
+    <div class="highlight highlight-source-json"><pre>{
+   <span class="pl-s"><span class="pl-pds">"</span>robots<span class="pl-pds">"</span></span>:[
+      {
+         <span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span>:<span class="pl-s"><span
+                class="pl-pds">"</span>anki-01<span class="pl-pds">"</span></span>,
+         <span class="pl-s"><span class="pl-pds">"</span>robotName<span class="pl-pds">"</span></span>:<span
+                class="pl-s"><span class="pl-pds">"</span>Anki 1<span class="pl-pds">"</span></span>,
+         <span class="pl-s"><span class="pl-pds">"</span>posX<span class="pl-pds">"</span></span>:<span class="pl-c1">1103.0</span>,
+         <span class="pl-s"><span class="pl-pds">"</span>posY<span class="pl-pds">"</span></span>:<span class="pl-c1">485.0</span>,
+         <span class="pl-s"><span class="pl-pds">"</span>orientation<span class="pl-pds">"</span></span>:<span
+                class="pl-c1">270.0</span>,
+         <span class="pl-s"><span class="pl-pds">"</span>battery<span class="pl-pds">"</span></span>:<span
+                class="pl-c1">4.17</span>,
+         <span class="pl-s"><span class="pl-pds">"</span>charger<span class="pl-pds">"</span></span>:<span
+                class="pl-c1">true</span>
+      }
+   ]
+}</pre>
+    </div>
+    <ul>
+        <li>
+            <strong>robots</strong> List of Robots
+        </li>
+        <li>
+            <strong>robotID</strong> String
+        </li>
+        <li>
+            <strong>robotName</strong> String
+        </li>
+        <li>
+            <strong>posX</strong> Double
+        </li>
+        <li>
+            <strong>posY</strong> Double
+        </li>
+        <li>
+            <strong>orientation</strong> Integer (0 - 259)
+        </li>
+        <li>
+            <strong>battery</strong> Double
+        </li>
+        <li>
+            <strong>charger</strong> Boolean
+        </li>
+    </ul>
+    <h2>
+        <a id="user-content-image" class="anchor" href="#image" aria-hidden="true"><span aria-hidden="true"
+                                                                                         class="octicon octicon-link"></span></a>Image
+    </h2>
+    <p>Liefert ein Foto der Kamera eines gewünschten Ankis zurück</p>
+    <p><code>/image</code></p>
+    <p><strong>Request Example</strong></p>
+    <div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>anki-01<span class="pl-pds">"</span></span>
+}</pre>
+    </div>
+    <ul>
+        <li>
+            <strong>robotID</strong> String
+        </li>
+    </ul>
+    <p><strong>Response Example</strong></p>
+    <div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>anki-01<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>image<span class="pl-pds">"</span></span>: <span class="pl-s"><span
+                class="pl-pds">"</span>data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD ... tZNHKTzH//2Q==<span
+                class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>image-vision<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>data:image/jpeg;base64,/1j/42AAQQZJRgABAQEAYAASDAF ... tZNHKTzH//3G==<span
+                class="pl-pds">"</span></span>
+}</pre>
+    </div>
+    <ul>
+        <li>
+            <strong>robotID</strong> String
+        </li>
+        <li>
+            <strong>image</strong> String (base64 encoded image)
+        </li>
+        <li>
+            <strong>image-vision</strong> String (base64 encoded image)
+        </li>
+    </ul>
+    <h2>
+        <a id="user-content-drive" class="anchor" href="#drive" aria-hidden="true"><span aria-hidden="true"
+                                                                                         class="octicon octicon-link"></span></a>Drive
+    </h2>
+    <p>Lässt einen Anki an eine bestimmte Stelle auf der Karte fahren.</p>
+    <p><code>/drive</code></p>
+    <p><strong>Request Example</strong></p>
+    <div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>anki-01<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>posX<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">51.5</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>posY<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">14.42</span>
+}</pre>
+    </div>
+    <ul>
+        <li>
+            <strong>robotID</strong> String
+        </li>
+        <li>
+            <strong>posX</strong> Double
+        </li>
+        <li>
+            <strong>posY</strong> Double
+        </li>
+    </ul>
+    <h2>
+        <a id="user-content-adjustment" class="anchor" href="#adjustment" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Adjustment</h2>
+    <p>Stellt verschiedene Parameter beim Roboter ein</p>
+    <p><code>/adjustment</code></p>
+    <p><strong>Request Example</strong></p>
+    <div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span>:<span class="pl-s"><span
+                class="pl-pds">"</span>anki-01<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>bitmapFace<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>headPosition<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">1</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>forkPosition<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">0</span>}
+}</pre>
+    </div>
+    <ul>
+        <li>
+            <strong>robotID</strong> String
+        </li>
+        <li>
+            <strong>bitmapFace</strong> String (base64 encoded Image)
+        </li>
+        <li>
+            <strong>headPosition</strong> Double -25 &lt;-&gt; 44.5
+        </li>
+        <li>
+            <strong>forkPosition</strong> Double 0.0 &lt;-&gt; 1.0
+        </li>
+    </ul>
+    <h2>
+        <a id="user-content-instruction" class="anchor" href="#instruction" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Instruction</h2>
+    <p><code>/instruction</code></p>
+    <p><strong>Request Example</strong></p>
+    <div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>anki-01<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>code<span class="pl-pds">"</span></span>: <span class="pl-s"><span
+                class="pl-pds">"</span>PLAY<span class="pl-pds">"</span></span>
+}</pre>
+    </div>
+    <ul>
+        <li>
+            <strong>robotID</strong> String
+        </li>
+        <li>
+            <strong>code</strong> String ("PLAY", "STOP", "PAUSE")
+        </li>
+    </ul>
+    <h2>
+        <a id="user-content-jobs" class="anchor" href="#jobs" aria-hidden="true"><span aria-hidden="true"
+                                                                                       class="octicon octicon-link"></span></a>Jobs
+    </h2>
+    <p>Gibt alle Aufträge eines gewünschten Roboters zurück</p>
+    <p><code>/jobs</code></p>
+    <p><strong>Request Example</strong></p>
+    <div class="highlight highlight-source-json"><pre>{
+        <span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span>: <span class="pl-s"><span
+                class="pl-pds">"</span>anki-01<span class="pl-pds">"</span></span>
+}</pre>
+    </div>
+    <ul>
+        <li>
+            <strong>robotID</strong> String
+        </li>
+    </ul>
+    <p><strong>Response Example</strong></p>
+    <div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>jobs<span class="pl-pds">"</span></span>: [{
+        <span class="pl-s"><span class="pl-pds">"</span>jobID<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>job-1<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>jobName<span class="pl-pds">"</span></span>: <span class="pl-s"><span
+                class="pl-pds">"</span>Frontend Karte Anweisung<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>Der User hat auf die Karte im Frontend geklickt<span
+                class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>created<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">1594987536255</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>published<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">false</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>robot<span class="pl-pds">"</span></span>: {
+            <span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>anki-01<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>robotName<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>Anki 1<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>posX<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">210</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>posY<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">435</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>orientation<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>EAST<span class="pl-pds">"</span></span>
+        },
+        <span class="pl-s"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>COMPLETE<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>commandQueue<span class="pl-pds">"</span></span>: [{
+            <span class="pl-s"><span class="pl-pds">"</span>commandID<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>cmd-6<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>adjustment<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>publisher<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>backend<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>COMPLETE<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>forkPosition<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">1</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>headPosition<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">0</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>face<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>
+        },{
+            <span class="pl-s"><span class="pl-pds">"</span>commandID<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>cmd-7<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>adjustment<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>publisher<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>backend<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>COMPLETE<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>forkPosition<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">1</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>headPosition<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">0</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>face<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>
+        }]
+    }]
+}</pre>
+    </div>
+    <h2>
+        <a id="user-content-map" class="anchor" href="#map" aria-hidden="true"><span aria-hidden="true"
+                                                                                     class="octicon octicon-link"></span></a>Map
+    </h2>
+    <p>Gibt die aktuelle Straßenkarte zurück</p>
+    <p><code>/map</code></p>
+    <p><strong>Response Example</strong></p>
+    <div class="highlight highlight-source-json"><pre>
+[
+   {
+      <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>:<span class="pl-s"><span
+            class="pl-pds">"</span>cross<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>:<span class="pl-s"><span
+            class="pl-pds">"</span>0<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>neighbors<span class="pl-pds">"</span></span>:[
+         {
+            <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>2<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>distance<span class="pl-pds">"</span></span>:<span
+            class="pl-c1">250</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>orientation<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>n<span class="pl-pds">"</span></span>
+         },
+         {
+            <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>5<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>distance<span class="pl-pds">"</span></span>:<span
+            class="pl-c1">680</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>orientation<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>e<span class="pl-pds">"</span></span>
+         },
+         {
+            <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>12<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>distance<span class="pl-pds">"</span></span>:<span
+            class="pl-c1">240</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>orientation<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>s<span class="pl-pds">"</span></span>
+         },
+         {
+            <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>4<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>distance<span class="pl-pds">"</span></span>:<span
+            class="pl-c1">740</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>orientation<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>w<span class="pl-pds">"</span></span>
+         }
+      ],
+      <span class="pl-s"><span class="pl-pds">"</span>x<span class="pl-pds">"</span></span>:<span
+            class="pl-c1">990.0</span>,
+      <span class="pl-s"><span class="pl-pds">"</span>y<span class="pl-pds">"</span></span>:<span
+            class="pl-c1">735.0</span>
+   },
+   {
+      <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>:<span class="pl-s"><span
+            class="pl-pds">"</span>nes<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>:<span class="pl-s"><span
+            class="pl-pds">"</span>2<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>neighbors<span class="pl-pds">"</span></span>:[
+         {
+            <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>distance<span class="pl-pds">"</span></span>:<span
+            class="pl-c1">260</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>orientation<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>n<span class="pl-pds">"</span></span>
+         },
+         {
+            <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>6<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>distance<span class="pl-pds">"</span></span>:<span
+            class="pl-c1">680</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>orientation<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>e<span class="pl-pds">"</span></span>
+         },
+         {
+            <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>distance<span class="pl-pds">"</span></span>:<span
+            class="pl-c1">250</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>orientation<span class="pl-pds">"</span></span>:<span
+            class="pl-s"><span class="pl-pds">"</span>s<span class="pl-pds">"</span></span>
+         }
+      ],
+      <span class="pl-s"><span class="pl-pds">"</span>x<span class="pl-pds">"</span></span>:<span
+            class="pl-c1">990.0</span>,
+      <span class="pl-s"><span class="pl-pds">"</span>y<span class="pl-pds">"</span></span>:<span
+            class="pl-c1">485.0</span>
+   }, <span class="pl-ii">...</span></pre>
+    </div>
+    <h1>
+        <a id="user-content-mqtt-schnittstelle---smartcitycozmosteuerung" class="anchor"
+           href="#mqtt-schnittstelle---smartcitycozmosteuerung" aria-hidden="true"><span aria-hidden="true"
+                                                                                         class="octicon octicon-link"></span></a>MQTT-Schnittstelle
+        - SmartCityCozmoSteuerung</h1>
+    <h3>
+        <a id="user-content-channel-1" class="anchor" href="#channel-1" aria-hidden="true"><span aria-hidden="true"
+                                                                                                 class="octicon octicon-link"></span></a>Channel
+    </h3>
+    <ul>
+        <li><a href="#job">data/Gruppe3/job</a></li>
+        <li><a href="#instruction">data/Gruppe3/instruction</a></li>
+        <li><a href="#information">data/Gruppe3/information</a></li>
+        <li><a href="#log">data/Gruppe3/log</a></li>
+        <li><a href="#registration">data/Gruppe3/registration</a></li>
+    </ul>
+    <h2>
+        <a id="user-content-job" class="anchor" href="#job" aria-hidden="true"><span aria-hidden="true"
+                                                                                     class="octicon octicon-link"></span></a>Job
+    </h2>
+    <p><code>data/Gruppe3/job</code></p>
+    <p>Dient zum übertragen von Jobs. Kann aus drive Paketen, adjustment Paketen und nop Paketen bestehen</p>
+    <div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>jobID<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>job-1<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>jobName<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>Drive Path<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>Anki Test drive to (82, 735)<span
+                class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>created<span class="pl-pds">"</span></span> : <span class="pl-c1">1599138126361</span>,
+  <span class="pl-s"><span class="pl-pds">"</span>published<span class="pl-pds">"</span></span> : <span class="pl-c1">false</span>,
+  <span class="pl-s"><span class="pl-pds">"</span>robot<span class="pl-pds">"</span></span> : {
+    <span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>anki-test<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>robotName<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>Anki Test<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>posX<span class="pl-pds">"</span></span> : <span
+                class="pl-c1">990.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>posY<span class="pl-pds">"</span></span> : <span
+                class="pl-c1">735.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>orientation<span class="pl-pds">"</span></span> : <span
+                class="pl-c1">0.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>battery<span class="pl-pds">"</span></span> : <span class="pl-c1">0.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>charger<span class="pl-pds">"</span></span> : <span class="pl-c1">false</span>
+  },
+  <span class="pl-s"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>PENDING<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>commandQueue<span class="pl-pds">"</span></span> : [ {
+    <span class="pl-s"><span class="pl-pds">"</span>commandID<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>cmd-5<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>Turn 89°<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>publisher<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>backend<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>PENDING<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>turn degrees<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>seconds<span class="pl-pds">"</span></span> : <span class="pl-c1">1.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>endPosX<span class="pl-pds">"</span></span> : <span class="pl-c1">990.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>endPosY<span class="pl-pds">"</span></span> : <span class="pl-c1">735.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>endOrientation<span class="pl-pds">"</span></span> : <span
+                class="pl-c1">270.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>gyrolist<span class="pl-pds">"</span></span> : [ ],
+    <span class="pl-s"><span class="pl-pds">"</span>degrees<span class="pl-pds">"</span></span> : <span class="pl-c1">89.0</span>
+  }, {
+    <span class="pl-s"><span class="pl-pds">"</span>commandID<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>cmd-8<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>Drive 908 mm<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>publisher<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>backend<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>PENDING<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>drive distance<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>seconds<span class="pl-pds">"</span></span> : <span class="pl-c1">10.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>endPosX<span class="pl-pds">"</span></span> : <span class="pl-c1">82.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>endPosY<span class="pl-pds">"</span></span> : <span class="pl-c1">735.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>endOrientation<span class="pl-pds">"</span></span> : <span
+                class="pl-c1">270.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>gyrolist<span class="pl-pds">"</span></span> : [ ],
+    <span class="pl-s"><span class="pl-pds">"</span>distance<span class="pl-pds">"</span></span> : <span class="pl-c1">908.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>speed<span class="pl-pds">"</span></span> : <span class="pl-c1">100.0</span>
+  } ]
+}</pre>
+    </div>
+    <h3>
+        <a id="user-content-command-queue" class="anchor" href="#command-queue" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Command Queue</h3>
+    <h4>
+        <a id="user-content-fortbewegungs-kommando" class="anchor" href="#fortbewegungs-kommando"
+           aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fortbewegungs
+        Kommando</h4>
+    <p>Steuert die Motoren des Ankis</p>
+    <p><strong>type</strong></p>
+    <ul>
+        <li>drive distance =&gt; Anki SDK drive distance methode</li>
+        <li>drive power =&gt; Anki SDK drive power Methode wird gesteuert über Zeit und Power pro Rad</li>
+    </ul>
+    <div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>commandID<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>cmd-2<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>Drive 510 mm<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>publisher<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>backend<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>PENDING<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>drive distance<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>seconds<span class="pl-pds">"</span></span> : <span class="pl-c1">6.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>endPosX<span class="pl-pds">"</span></span> : <span class="pl-c1">990.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>endPosY<span class="pl-pds">"</span></span> : <span class="pl-c1">225.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>endOrientation<span class="pl-pds">"</span></span> : <span
+                class="pl-c1">0.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>gyrolist<span class="pl-pds">"</span></span> : [ ],
+    <span class="pl-s"><span class="pl-pds">"</span>distance<span class="pl-pds">"</span></span> : <span class="pl-c1">510.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>speed<span class="pl-pds">"</span></span> : <span class="pl-c1">100.0</span>
+  } </pre>
+    </div>
+    <h4>
+        <a id="user-content-einstellungen-kommando" class="anchor" href="#einstellungen-kommando"
+           aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Einstellungen
+        Kommando</h4>
+    <p>Darüber lassen sich Gabel, Kopf und Gesicht Einstellen.</p>
+    <div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>commandID<span class="pl-pds">"</span></span>:<span
+                class="pl-s"><span class="pl-pds">"</span>cmd-6<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>:<span
+                class="pl-s"><span class="pl-pds">"</span>adjustment<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>publisher<span class="pl-pds">"</span></span>:<span
+                class="pl-s"><span class="pl-pds">"</span>backend<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span>:<span class="pl-s"><span
+                class="pl-pds">"</span>PENDING<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>forkPosition<span class="pl-pds">"</span></span>:<span
+                class="pl-c1">1.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>headPosition<span class="pl-pds">"</span></span>:<span
+                class="pl-c1">0.0</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>face<span class="pl-pds">"</span></span>:<span class="pl-s"><span
+                class="pl-pds">"</span><span class="pl-pds">"</span></span>
+}</pre>
+    </div>
+    <h4>
+        <a id="user-content-no-operation-kommando" class="anchor" href="#no-operation-kommando"
+           aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>No Operation Kommando
+    </h4>
+    <p>Roboter Wartet mitten im Job eine gegebene Sekunden Anzahl</p>
+    <div class="highlight highlight-source-json"><pre>{
+	<span class="pl-s"><span class="pl-pds">"</span>packetID<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>d0<span class="pl-pds">"</span></span>,
+	<span class="pl-s"><span class="pl-pds">"</span>publisher<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">0</span>,
+	<span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>:<span
+                class="pl-s"><span class="pl-pds">"</span>nop<span class="pl-pds">"</span></span>,
+	<span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span>: <span
+                class="pl-s"><span class="pl-pds">"</span>A1<span class="pl-pds">"</span></span>,
+	<span class="pl-s"><span class="pl-pds">"</span>seconds<span class="pl-pds">"</span></span>: <span
+                class="pl-c1">20</span>
+}</pre>
+    </div>
+    <h2>
+        <a id="user-content-instruction-1" class="anchor" href="#instruction-1" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Instruction</h2>
+    <p><code>data/Gruppe3/instruction</code></p>
+    <p>Befehle an Cozmo senden um den Ablauf zu Steuern</p>
+    <ul>
+        <li>
+            <strong>STOP</strong> =&gt; Stop this Anki &amp; delete all jobs
+        </li>
+        <li>
+            <strong>PAUSE</strong> =&gt; Pause the current running job
+        </li>
+        <li>
+            <strong>PLAY</strong> =&gt; Start the current job
+        </li>
+        <li>
+            <strong>RECONNECT</strong> =&gt; Reconnect this anki (* for all)
+        </li>
+        <li>
+            <strong>RESET</strong> =&gt; Reset Robot
+        </li>
+    </ul>
+    <p><strong>Example</strong></p>
+    <div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>packetID<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>ins-1<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>publisher<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>backend<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>robot<span class="pl-pds">"</span></span> : {
+    <span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>anki-01<span class="pl-pds">"</span></span>
+  },
+  <span class="pl-s"><span class="pl-pds">"</span>instructionCode<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>PAUSE<span class="pl-pds">"</span></span>
+}</pre>
+    </div>
+    <h2>
+        <a id="user-content-information" class="anchor" href="#information" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Information</h2>
+    <p><code>data/Gruppe3/information</code></p>
+    <p>Robot =&gt; Backend</p>
+    <p>Überträgt Informationen über den anki an das backend</p>
+    <p><strong>Activities</strong>:</p>
+    <ul>
+        <li>
+            <strong>image</strong> =&gt; base 64 webcam picture
+        </li>
+        <li>
+            <strong>image-vision</strong> =&gt; base 64 webcam picture
+        </li>
+        <li>
+            <strong>battery</strong> =&gt; float: The current battery voltage (not linear, but &lt; 3.5 is low)
+        </li>
+        <li>
+            <strong>settings</strong> =&gt; info welche publish Einstellung wurde geändert
+        </li>
+        <li>
+            <strong>charger</strong> =&gt; Robot is on charger True/False
+        </li>
+    </ul>
+    <p><strong>example</strong></p>
+    <div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>packetID<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>2357<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>anki-01<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>activity<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>charger<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>timestamp<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>1599138742.285905<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>True<span class="pl-pds">"</span></span>
+}</pre>
+    </div>
+    <h2>
+        <a id="user-content-log" class="anchor" href="#log" aria-hidden="true"><span aria-hidden="true"
+                                                                                     class="octicon octicon-link"></span></a>Log
+    </h2>
+    <p><code>data/Gruppe3/log</code></p>
+    <p>Gibt vom Roboter aus, Informationen über die ausgeführten Kommandos/Befehle des Anki an das Backend</p>
+    <ul>
+        <li>
+            <strong>packetID</strong> =&gt; Unique Identifier der logs des Roboters
+        </li>
+        <li>
+            <strong>robotID</strong> =&gt; Robot Identifier
+        </li>
+        <li>
+            <strong>jobID</strong> =&gt; Unique Identifier
+        </li>
+        <li>
+            <strong>commandID</strong> =&gt; Unique Identifier
+            <ul>
+                <li>nur verfügbar in einem Command log|bei einem job log ist commandID = -1</li>
+            </ul>
+        </li>
+        <li>
+            <strong>activity</strong>
+            <ul>
+                <li>job :wird verwendet wenn ein Job gestartet wird</li>
+                <li>drive/nop/adjustment :wird verwendet um den ausgeführten command typ anzugeben</li>
+            </ul>
+        </li>
+        <li>
+            <strong>state</strong>
+            <ul>
+                <li>job =&gt; RECEIVED/RUNNING/COMPLETE/REMOVED :Gibt den status des Jobs an
+                    <ul>
+                        <li>command =&gt; RUNNING/COMPLETE ::Gibt den status des commands an</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <strong>timestamp</strong> =&gt; Veröffentlichkeits Zeitpunkt
+        </li>
+        <li>
+            <strong>gyrolist</strong> =&gt; Wenn es in "drive" Befehl, mit dem Status COMPLETE ist, kann eine
+            Gyroskopdatenliste übergeben werden
+        </li>
+    </ul>
+    <div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>packetID<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>3422<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>jobID<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>job-2<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>anki-01<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>activity<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>job<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>COMPLETE<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>commandID<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>-1<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>timestamp<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>1599139038.416228<span class="pl-pds">"</span></span>,
+  <span class="pl-s"><span class="pl-pds">"</span>gyrolist<span class="pl-pds">"</span></span> : [ ]
+}</pre>
+    </div>
+    <h2>
+        <a id="user-content-registration" class="anchor" href="#registration" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Registration</h2>
+    <p><code>data/Gruppe3/registration</code></p>
+    <p>Roboter anmelden (robotID muss frei sein, es wird noch keine ID ausgehandelt)</p>
+    <div class="highlight highlight-source-json"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>robotID<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>anki-01<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>robotName<span class="pl-pds">"</span></span> : <span
+                class="pl-s"><span class="pl-pds">"</span>Anki 1<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>state<span class="pl-pds">"</span></span> : <span class="pl-s"><span
+                class="pl-pds">"</span>connect<span class="pl-pds">"</span></span>
+}</pre>
+    </div>
+    <h3>
+        <a id="user-content-settings-not-implemented" class="anchor" href="#settings-not-implemented"
+           aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Settings (not
+        implemented)</h3>
+    <p><code>data/Gruppe3/information_set</code></p>
+    <p>Backend =&gt; Robot</p>
+    <p>Stellt den Aktualisierens Intervall ein in dem informationen an das backend gepublished werden</p>
+    <p>activity:</p>
+    <ul>
+        <li>picture: payload =&gt; publish intervall in double sekunden</li>
+        <li>batterie: payload =&gt; publish intervall in double sekunden</li>
+    </ul>
+    <div class="highlight highlight-source-js"><pre><span class="pl-kos">{</span>
+    <span class="pl-s">"packetID"</span>: <span class="pl-c1">null</span><span class="pl-kos">,</span> #<span
+                class="pl-s1">i</span>*****
+    <span class="pl-s">"robotID"</span>: <span class="pl-c1">null</span><span class="pl-kos">,</span> #<span
+                class="pl-v">Unique</span> <span class="pl-v">Identifier</span>
+    <span class="pl-s">"activity"</span>: <span class="pl-c1">null</span><span class="pl-kos">,</span> #<span
+                class="pl-s1">picture</span>
+    <span class="pl-s">"data"</span>: <span class="pl-c1">null</span> #<span class="pl-v">Payload</span>
+<span class="pl-kos">}</span></pre>
+    </div>
+    <h4>
+        <a id="user-content-dynamisches-modell" class="anchor" href="#dynamisches-modell" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Dynamisches Modell</h4>
+    <p>Aktivitätsdiagramm:
+        <a href="img/aktivitaetsdiagramm.gif" target="_blank" rel="noopener noreferrer"><img
+                src="img/aktivitaetsdiagramm.gif" alt="Aktivitätsdiagramm" title="Aktivitätsdiagramm"
+                style="max-width:100%;"></a></p>
+    <p>Sequenzdiagramm:
+        <a href="img/sequenzdiagramm.gif" target="_blank" rel="noopener noreferrer"><img
+                src="img/sequenzdiagramm.gif" alt="Sequenzdiagramm" title="Sequenzdiagramm" style="max-width:100%;"></a>
+    </p>
+    <h2>
+        <a id="user-content-getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Getting Started</h2>
+    <p><strong>Android</strong></p>
+    <ol>
+        <li><a href="https://developer.android.com/studio/debug/dev-options" rel="nofollow">Android Gerät in Debug
+            Modus versetzen</a></li>
+        <li><a href="https://play.google.com/store/apps/details?id=com.anki.cozmo&amp;hl=de" rel="nofollow">Anki
+            Cozmo App herunterladen</a></li>
+        <li>Anki einschalten und Mobiles Endgerät mit COZMO WLAN verbinden</li>
+    </ol>
+    <p><strong>Backend Starten</strong><br>
+        <code>java -jar target\mqtt-backend-server-0.0.1-SNAPSHOT.jar</code></p>
+    <p><strong>Anki Starten</strong><br>
+        <code>python src/anki/src/main.py</code></p>
+    <p><strong>Frontend</strong><br>
+        <code>http://localhost:8080</code></p>
+    <p><strong>Documentation</strong><br>
+        <code>http://localhost:8080/docs</code></p>
+    <p><em>Anki Simulator</em><br>
+        Wenn beim start des Anki Programmes kein USB Debugging Gerät verfügbar ist, startet eine Simulation des
+        Roboters.</p>
+    <h4>
+        <a id="user-content-vorraussetzungen" class="anchor" href="#vorraussetzungen" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Vorraussetzungen</h4>
+    <p>Welche Voraussetzungen werden benötigt, um ihr Projekt zu starten: Frameworks, Software, Libraries, ggf.
+        Hardware.</p>
+    <ul>
+        <li>Python &gt;= 3</li>
+        <li>Java &gt;= 8</li>
+        <li>
+        </li>
+    </ul>
+    <h4>
+        <a id="user-content-installation-und-deployment" class="anchor" href="#installation-und-deployment"
+           aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation und
+        Deployment</h4>
+    <p>pip3 install</p>
+    <ul>
+        <li>cozmo</li>
+        <li>paho-mqtt</li>
+        <li>opencv-python</li>
+        <li>numpy</li>
+    </ul>
+    <h2>
+        <a id="user-content-built-with" class="anchor" href="#built-with" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Built With</h2>
+    <ul>
+        <li>
+            <a href="https://mvnrepository.com/artifact/org.springframework/spring-web" rel="nofollow">Spring</a> -
+            Webserver, Rest
+        </li>
+        <li>
+            <a href="https://maven.apache.org/" rel="nofollow">Maven</a> - Dependency Management
+        </li>
+        <li>
+            <a href="https://mvnrepository.com/artifact/org.jgrapht/jgrapht-core" rel="nofollow">jgrapht</a> -
+            Wegfindung
+        </li>
+        <li>
+            <a href="https://mvnrepository.com/artifact/com.fasterxml.jackson.core" rel="nofollow">Jackson Core</a>
+            - Java/JSON
+        </li>
+        <li>
+            <a href="https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3"
+               rel="nofollow">Paho</a> - MQTT
+        </li>
+        <li>
+            <a href="http://cozmosdk.anki.com/docs/" rel="nofollow">Anki Cozmo SDK</a> - Anki
+        </li>
+        <li>
+            <a href="https://opencv.org/" rel="nofollow">OpenCV</a> - Open CV
+        </li>
+    </ul>
+    <h2>
+        <a id="user-content-license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true"
+                                                                                             class="octicon octicon-link"></span></a>License
+    </h2>
+    <p>This project is licensed under the GNU General Public License v3.0</p>
+    <h2>
+        <a id="user-content-acknowledgments" class="anchor" href="#acknowledgments" aria-hidden="true"><span
+                aria-hidden="true" class="octicon octicon-link"></span></a>Acknowledgments</h2>
+    <ul>
+        <li>Hat tip to anyone whose code was used</li>
+        <li>Inspiration</li>
+        <li>etc</li>
+    </ul>
+</article>
+</body>
+</html>

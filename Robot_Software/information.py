@@ -29,7 +29,6 @@ def publish_information(local, topic, x, y):
                + publish_picture() + "," \
                + publish_location() + \
                "}}"
-    print(info_str)
     mqtt_client.publish_on_topic(INFORMATION_TOPIC, info_str)
 
 

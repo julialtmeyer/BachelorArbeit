@@ -5,6 +5,8 @@ import ssl
 import logging
 import string
 import threading
+import time
+
 import information
 from paho.mqtt import client as mqtt_client
 from pathlib import Path
@@ -14,9 +16,9 @@ LOG = logging.getLogger("MQTT")
 MAC = ""
 
 dir_path = Path(__file__).parent.absolute().parent.absolute()
-CA_CERTIFICATE_PATH = dir_path / "certificates/ca_certificate.pem"
-CLIENT_CERTIFICATE_PATH = dir_path / "certificates/client_certificate.pem"
-CLIENT_KEY_PATH = dir_path / "certificates/client_key.pem"
+CA_CERTIFICATE_PATH = dir_path / "Robot_Software/certificates/ca_certificate.pem"
+CLIENT_CERTIFICATE_PATH = dir_path / "Robot_Software/certificates/client_certificate.pem"
+CLIENT_KEY_PATH = dir_path / "Robot_Software/certificates/client_key.pem"
 
 MQTT_CLIENT = mqtt_client.Client
 ROBOT_REGISTRATION_TOPIC = "data/BrickPi/registration"
@@ -91,6 +93,7 @@ def on_message(client, userdata, message):
     if message.topic == ROBOT_REGISTRATION_TOPIC and "response" in data.keys():
         response = data['response']
         if response['hsc'] == HANDSHAKE and response['macAdr'] == MAC:
+            print("Registration response received")
             ROBOT_ID = response['id']
             ROBOT_NAME = response['roboterName']
             LOCATION_X = response['robot_info']['location_x']
@@ -119,6 +122,7 @@ def register_robot():
     reg_req = "{\"request\": {\"hsc\": \"" + HANDSHAKE + "\",\"macAdr\": \"" + MAC + "\"}}"
 
     publish_on_topic(ROBOT_REGISTRATION_TOPIC, reg_req)
+    print("Registration request send")
 
 
 def publish_on_topic(topic, payload):

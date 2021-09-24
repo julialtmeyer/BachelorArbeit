@@ -3,12 +3,14 @@ package de.htwsaar.backend_service.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @Entity
 @Table(name = "ROBOTS")
 public class Robot {
@@ -31,6 +33,7 @@ public class Robot {
 
     @Column(name = "last_active")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonIgnore
     private Instant lastActive;
 
     @OneToOne(mappedBy = "robot")

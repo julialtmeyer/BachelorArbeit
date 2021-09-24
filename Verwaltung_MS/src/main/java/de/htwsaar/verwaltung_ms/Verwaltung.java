@@ -64,6 +64,7 @@ public class Verwaltung {
 
         String message = regMessageBuilder(robot);
         publisher.publish(message,config.getTopic(),0);
+        System.out.println("Response send");
     }
 
     public void checkHeartbeat(Heartbeat heartbeat){

@@ -14,6 +14,7 @@ res = (3280, 2464)
 def init_camera():
     with PiCamera(framerate=framerate, resolution=res) as camera:
         time.sleep(2)
+        camera.rotation(180);
         image = io.BytesIO()
         camera.capture(image, 'jpeg', quality=quality, use_video_port=True)
         return image.getvalue()

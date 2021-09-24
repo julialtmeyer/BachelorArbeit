@@ -54,6 +54,7 @@ def drive(data, x, y, o):
 
 
 def drive_distance(distance):
+    global OBSTACLE
     # sleep_timer = calculate_sleep_time(distance)
     revs = distance_cm_to_revs(distance)
     num_revs = calculate_steps_for_distance(revs)
@@ -63,8 +64,9 @@ def drive_distance(distance):
     BP.offset_motor_encoder(BP.PORT_C, BP.get_motor_encoder(BP.PORT_C))
     BP.set_motor_position(BP.PORT_B, num_revs)
     BP.set_motor_position(BP.PORT_C, num_revs)
-    if sub_task(BP.PORT_B, num_revs):
-        print("collision")
+    if ultrasonic.check_obstacle():
+        stop_movement()
+        OBSTACLE = True
 
     # BP.set_motor_dps(BP.PORT_B, SPEED_DPS)
     # BP.set_motor_dps(BP.PORT_C, SPEED_DPS)
