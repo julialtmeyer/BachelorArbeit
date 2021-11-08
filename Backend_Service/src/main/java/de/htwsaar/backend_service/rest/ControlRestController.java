@@ -25,7 +25,7 @@ public class ControlRestController {
     }
 
     @PostMapping("/drive/{id}")
-    public ResponseEntity postDriveDistanceCommand(@RequestParam Double distance, @PathVariable Long id){
+    public ResponseEntity postDriveDistanceCommand(@RequestBody double distance, @PathVariable Long id){
         ResponseEntity response;
         Optional<Robot> robot = robotRepository.findById(id);
         if (robot.isPresent()){
@@ -39,7 +39,7 @@ public class ControlRestController {
     }
 
     @PostMapping("/turn/{id}")
-    public ResponseEntity postTurnCommand(@RequestParam Double distance, @PathVariable Long id){
+    public ResponseEntity postTurnCommand(@RequestBody double distance, @PathVariable Long id){
         ResponseEntity response;
         Optional<Robot> robot = robotRepository.findById(id);
         if (robot.isPresent()){

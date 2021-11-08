@@ -4,6 +4,8 @@ import de.htwsaar.verwaltung_ms.Configuration;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,6 +16,8 @@ public class Publisher {
     private final Client client;
 
     private final Configuration config;
+
+    private final Logger logger = LoggerFactory.getLogger(Publisher.class);
 
     public Publisher(Client client, Configuration config){
         this.client = client;
@@ -31,8 +35,9 @@ public class Publisher {
         if(mqttClient.isConnected()){
             try {
                 mqttClient.publish(topic,mqttMessage);
+                logger.info("message published on {}", topic);
             } catch (MqttException e) {
-                e.printStackTrace();
+                logger.error("error publishing message: {}",topic, e);
             }
         }
     }

@@ -26,6 +26,9 @@ public class Configuration {
     @Value("${serverUrl}")
     private String serverUrl;
 
+    @Value("${controlInfoServiceUrl}")
+    private String controlInfoServiceUrl;
+
     @Value("${brokerHost}")
     private String brokerHost;
 
@@ -37,6 +40,12 @@ public class Configuration {
 
     @Value("${brokerPort}")
     private int brokerPort;
+
+    @Value("${standardStartLocationX}")
+    private Double standardStartLocationX;
+
+    @Value("${standardStartLocationY}")
+    private Double standardStartLocationY;
 
     public String getUsername() {
         return username;
@@ -76,5 +85,17 @@ public class Configuration {
 
     public int getBrokerPort() {
         return brokerPort;
+    }
+
+    public Double getStandardStartLocationX() {
+        return standardStartLocationX;
+    }
+
+    public Double getStandardStartLocationY() {
+        return standardStartLocationY;
+    }
+
+    public String getControlInfoServiceUrl() {
+        return controlInfoServiceUrl;
     }
 }

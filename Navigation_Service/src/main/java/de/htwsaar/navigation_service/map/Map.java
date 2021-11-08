@@ -1,6 +1,5 @@
 package de.htwsaar.navigation_service.map;
 
-
 import javax.persistence.*;
 
 @Entity

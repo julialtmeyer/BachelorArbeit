@@ -1,7 +1,7 @@
 package de.htwsaar.backend_service;
 
 import de.htwsaar.backend_service.Naviagtion.Node;
-import de.htwsaar.backend_service.rest.HttpClient;
+import de.htwsaar.backend_service.http.HttpClient;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Coordinate;
 import org.springframework.beans.factory.annotation.Autowired;

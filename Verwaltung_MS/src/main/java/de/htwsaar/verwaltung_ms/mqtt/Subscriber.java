@@ -9,6 +9,8 @@ import de.htwsaar.verwaltung_ms.Verwaltung;
 import de.htwsaar.verwaltung_ms.mqtt.messages.Heartbeat;
 import de.htwsaar.verwaltung_ms.mqtt.messages.Request;
 import org.eclipse.paho.client.mqttv3.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 
@@ -25,6 +27,8 @@ public class Subscriber implements MqttCallback {
     private final Configuration config;
 
     private Verwaltung verwaltung;
+
+    private final Logger logger = LoggerFactory.getLogger(Subscriber.class);
 
     /**
      * Instantiates a new Subscriber.
@@ -51,14 +55,15 @@ public class Subscriber implements MqttCallback {
     private void subscribe(){
         try {
             this.mqttClient.subscribe(config.getTopic());
+            logger.info("Subscribed to: {}", config.getTopic());
         } catch (MqttException me) {
-            me.printStackTrace();
+            logger.error("Failed to subscribe to topic {}", config.getTopic(), me);
         }
     }
 
     @Override
     public void connectionLost(Throwable throwable) {
-
+        logger.warn("Connection lost!");
     }
 
     /**
@@ -67,18 +72,28 @@ public class Subscriber implements MqttCallback {
      * @param message the Message recieved
      */
     @Override
-    public void messageArrived(String topic, MqttMessage message) throws JsonProcessingException {
+    public void messageArrived(String topic, MqttMessage message) {
         ObjectMapper objectMapper = new ObjectMapper();
         String payloadAsString = message.toString();
-
+        logger.info("Message received from {} on {}.",message.getId() ,topic);
         if(payloadAsString.toLowerCase().contains("request")){
-            System.out.println("Registration Request received.");
-            Request request = objectMapper.readValue(payloadAsString, Request.class);
+            logger.info("Registration Request received.");
+            Request request = null;
+            try {
+                request = objectMapper.readValue(payloadAsString, Request.class);
+            } catch (JsonProcessingException e) {
+                logger.error("Failed to read JSON {}", payloadAsString, e);
+            }
             verwaltung.registerRobot(request);
         }
        else if(payloadAsString.toLowerCase().contains("heartbeat")){
-            System.out.println("Heartbeat received");
-            Heartbeat heartbeat = objectMapper.readValue(payloadAsString, Heartbeat.class);
+            logger.info("Heartbeat received .");
+            Heartbeat heartbeat = null;
+            try {
+                heartbeat = objectMapper.readValue(payloadAsString, Heartbeat.class);
+            } catch (JsonProcessingException e) {
+                logger.error("Failed to read JSON {}", payloadAsString, e);
+            }
             verwaltung.checkHeartbeat(heartbeat);
 
         }

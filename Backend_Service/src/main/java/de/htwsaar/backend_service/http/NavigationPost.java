@@ -1,4 +1,4 @@
-package de.htwsaar.backend_service.rest;
+package de.htwsaar.backend_service.http;
 
 import java.io.Serializable;
 

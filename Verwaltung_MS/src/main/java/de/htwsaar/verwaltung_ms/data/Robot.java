@@ -3,6 +3,7 @@ package de.htwsaar.verwaltung_ms.data;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -31,6 +32,7 @@ public class Robot {
 
     @Column(name = "last_active")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonIgnore
     private Instant lastActive;
 
     @OneToOne(mappedBy = "robot")

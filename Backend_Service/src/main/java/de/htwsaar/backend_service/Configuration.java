@@ -47,6 +47,9 @@ public class Configuration {
     @Value("${navigationURL}")
     private String navigationUrl;
 
+    @Value("${verwaltungURL}")
+    private String verwaltungUrl;
+
     @Value("${mapScaleFactor}")
     private Double mapScaleFactor;
 
@@ -100,6 +103,10 @@ public class Configuration {
 
     public String getNavigationUrl(){
         return navigationUrl;
+    }
+
+    public String getVerwaltungUrl() {
+        return verwaltungUrl;
     }
 
     public Double getMapScaleFactor() {

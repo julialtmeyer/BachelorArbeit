@@ -1,5 +1,7 @@
 package de.htwsaar.backend_service.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
 

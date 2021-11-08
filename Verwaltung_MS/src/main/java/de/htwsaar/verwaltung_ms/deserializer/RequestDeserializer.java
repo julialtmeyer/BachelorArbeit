@@ -6,10 +6,14 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import de.htwsaar.verwaltung_ms.mqtt.messages.Request;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class RequestDeserializer extends StdDeserializer<Request> {
+
+    private final Logger logger = LoggerFactory.getLogger(RequestDeserializer.class);
 
     public RequestDeserializer(){
         this(null);
@@ -30,7 +34,7 @@ public class RequestDeserializer extends StdDeserializer<Request> {
             request.setMacAdr(requestNode.get("macAdr").asText());
         }
         catch (NullPointerException e){
-            System.err.println("Error while reading Request! Payload does not match the requirements.");
+            logger.error("Error while reading Request! Payload does not match the requirements. {}", jsonNode, e);
         }
 
         return request;

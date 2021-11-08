@@ -2,6 +2,8 @@ package de.htwsaar.navigation_service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ public class NavigationRestController {
     private NavigationController navigationController;
 
     private ObjectMapper objectMapper;
+
+    private final Logger logger = LoggerFactory.getLogger(NavigationRestController.class);
 
     public NavigationRestController(NavigationController navigationController, ObjectMapper objectMapper) {
         this.navigationController = navigationController;
@@ -32,7 +36,7 @@ public class NavigationRestController {
 
         } catch (JsonProcessingException e) {
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Request not in the right format");
-            e.printStackTrace();
+            logger.error("Request was not in the right format and could not be processed! {}", request, e);
         }
 
         return response;

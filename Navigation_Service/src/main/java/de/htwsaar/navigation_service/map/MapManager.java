@@ -4,9 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.htwsaar.navigation_service.Configuration;
 import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
+import org.jgrapht.Graphs;
+import org.jgrapht.alg.util.Pair;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.DirectedWeightedMultigraph;
-import org.jgrapht.traverse.BreadthFirstIterator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class MapManager {
@@ -26,6 +27,8 @@ public class MapManager {
     private MapRepository mapRepository;
 
     private Configuration config;
+
+    private final Logger logger = LoggerFactory.getLogger(MapManager.class);
 
     public MapManager(MapRepository mapRepository, Configuration config) throws Exception, IOException {
         this.mapRepository = mapRepository;
@@ -46,30 +49,42 @@ public class MapManager {
      * @throws IOException when there is an error while reading the JSON
      * @throws Exception when there is an error while building the graph
      */
-    private DirectedWeightedMultigraph<Node, DefaultWeightedEdge> readMap() throws IOException, Exception {
+    private DirectedWeightedMultigraph<Node, DefaultWeightedEdge> readMap() throws IOException {
 
         String mapString;
         graph = new DirectedWeightedMultigraph<>(DefaultWeightedEdge.class);
-
+        logger.info("Start reading map ...");
         Optional<Map> map = mapRepository.getMapById(config.getMapId());
         if(map.isEmpty()){
-
+            logger.info("Map not found in Database. Initializing map ...");
             ClassPathResource resource = new ClassPathResource("map.json");
-            InputStream inputStream = resource.getInputStream();
-            BufferedReader bufferReader = new BufferedReader (new InputStreamReader(inputStream));
-            StringBuilder stringBuilder = new StringBuilder();
-            String eachStringLine;
-            while((eachStringLine=bufferReader.readLine()) != null){
-                stringBuilder.append(eachStringLine).append("\n");
+
+            try {
+                InputStream inputStream = resource.getInputStream();
+                BufferedReader bufferReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+                String eachStringLine;
+                while ((eachStringLine = bufferReader.readLine()) != null) {
+                    stringBuilder.append(eachStringLine).append("\n");
+                }
+
+                mapString = stringBuilder.toString();
+                if(addNewMap(mapString)){
+                    logger.info("Map successfully stored in database.");
+                }
+
             }
-            mapString = stringBuilder.toString();
+            catch (IOException ioException){
+                logger.error("Failed to read map data! {}", resource, ioException);
+                throw ioException;
+            }
         }
         else {
             mapString = map.get().getMapJSON();
         }
-
+        logger.info("Map data successfully read.");
         try {
-
+            logger.info("Initializing map graph ...");
             ObjectMapper mapper = new ObjectMapper();
             MapGraph mapGraph = mapper.readValue(mapString, MapGraph.class);
 
@@ -78,7 +93,6 @@ public class MapManager {
             }
 
             for(Node node : mapGraph.getNodes()){
-
                     for (Node neighbor : node.getNeighbors()){
                         neighbor = getNodeById(neighbor.getId());
                         graph.addEdge(node, neighbor);
@@ -86,15 +100,16 @@ public class MapManager {
                     }
             }
 
-        } catch (Exception e){
-            throw new Exception("map is malformed " + e.getMessage());
         }
-
+        catch (Exception e){
+            logger.error("Initialization of map failed! Map data malformed! {}", mapString, e);
+        }
+        logger.info("Map graph successfully initialized.");
         return graph;
     }
 
     /**
-     * Gibt einen Node anhand der ID aus der Karte zurück
+     * Returns the Node corresponding to the given ID
      * @param id
      * @return Node
      */
@@ -108,7 +123,6 @@ public class MapManager {
             }
 
         }
-
         throw new NoSuchElementException("Node " + id + " does not exist");
     }
 
@@ -143,30 +157,26 @@ public class MapManager {
      * iterates over X or Y when X or Y of source and target nodes are the same
      * @param graph the graph that has to be interpolated
      */
-    public void fillGrid(DirectedWeightedMultigraph<Node, DefaultWeightedEdge> graph) {
+    public void fillGrid(DirectedWeightedMultigraph<Node, DefaultWeightedEdge> graph) throws NullPointerException{
 
         //graph needs to be cloned, no changes are allowed to the graph when it is iterated upon
         DirectedWeightedMultigraph<Node, DefaultWeightedEdge> iteratorGraph = (DirectedWeightedMultigraph<Node, DefaultWeightedEdge>) graph.clone();
-        BreadthFirstIterator<Node, DefaultWeightedEdge> iterator = new BreadthFirstIterator<>(iteratorGraph);
-        while (iterator.hasNext()) {
-            Node current = iterator.next();
-            DefaultWeightedEdge edge = iterator.getSpanningTreeEdge(current);
-            if (edge != null) {
-                Node source = iteratorGraph.getEdgeSource(edge);
-                Node target = iteratorGraph.getEdgeTarget(edge);
+        //        BreadthFirstIterator<Node, DefaultWeightedEdge> iterator = new BreadthFirstIterator<>(iteratorGraph);
 
+        List<Pair<Node, Node>> traversed = new ArrayList<>();
+        iteratorGraph.vertexSet().forEach(source -> Graphs.successorListOf(iteratorGraph, source).forEach(target -> {
                 //when X or Y of the source and target are the same it is impossible to calculate a corresponding function
+            if(!traversed.contains(Pair.of(source, target)) || !traversed.contains(Pair.of(target, source))) {
                 if (source.getX().doubleValue() != target.getX().doubleValue() && source.getY().doubleValue() != target.getY().doubleValue()) {
 
                     double x[] = new double[2];
                     double y[] = new double[2];
-                    if(source.getX() < target.getX()){
+                    if (source.getX() < target.getX()) {
                         x[0] = source.getX();
                         x[1] = target.getX();
                         y[0] = source.getY();
                         y[1] = target.getY();
-                    }
-                    else {
+                    } else {
                         x[0] = target.getX();
                         x[1] = source.getX();
                         y[0] = target.getY();
@@ -180,7 +190,7 @@ public class MapManager {
                     Node prevNeighbor = source;
                     double v = source.getX();
                     int i = 0;
-                    while (v <= target.getX()){
+                    while (v <= target.getX()) {
 
                         prevNeighbor = getNode(graph, source, target, v, prevNeighbor, i, false, true, splineFunction);
                         v = v + config.getGridSpacing();
@@ -239,8 +249,11 @@ public class MapManager {
                     }
                 }
                 //graph.removeEdge(source, target);
+                traversed.add(new Pair<>(source, target));
+                traversed.add(new Pair<>(target, source));
             }
-        }
+
+        }));
     }
 
     /**

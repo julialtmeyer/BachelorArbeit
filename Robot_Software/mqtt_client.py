@@ -5,8 +5,6 @@ import ssl
 import logging
 import string
 import threading
-import time
-
 import information
 from paho.mqtt import client as mqtt_client
 from pathlib import Path
@@ -109,6 +107,12 @@ def on_message(client, userdata, message):
         if not LOCAL:
             import drive
             drive.drive(data, LOCATION_X, LOCATION_Y, ORIENTATION)
+        else:
+            import drive_mock
+            location_arr = drive_mock.drive(data, LOCATION_X, LOCATION_Y, ORIENTATION)
+            LOCATION_X = location_arr[0]
+            LOCATION_Y = location_arr[1]
+            ORIENTATION = location_arr[2]
 
 
 def register_robot():
@@ -159,5 +163,18 @@ def publish_heartbeat():
 
 def information_thread():
     if ROBOT_INFORMATION_TOPIC != "":
-        information.publish_information(local=LOCAL, topic=ROBOT_INFORMATION_TOPIC, x=LOCATION_X, y=LOCATION_Y)
+        information.publish_information(local=LOCAL, topic=ROBOT_INFORMATION_TOPIC, x=LOCATION_X, y=LOCATION_Y,
+                                        o=ORIENTATION)
     threading.Timer(1, information_thread).start()
+
+
+# for creating random mac adresses when testing without real robot
+def rand_mac():
+    return "%02x:%02x:%02x:%02x:%02x:%02x" % (
+        random.randint(0, 255),
+        random.randint(0, 255),
+        random.randint(0, 255),
+        random.randint(0, 255),
+        random.randint(0, 255),
+        random.randint(0, 255)
+    )

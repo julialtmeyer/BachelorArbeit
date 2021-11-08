@@ -7,22 +7,25 @@ LOCAL = False
 INFORMATION_TOPIC = ""
 LOCATION_X = 0.0
 LOCATION_Y = 0.0
+ORIENTATION = 0
 
 framerate = 60
 quality = 100
 res = (1280, 720)
 
 
-def publish_information(local, topic, x, y):
+def publish_information(local, topic, x, y, o):
     global LOCAL
     global INFORMATION_TOPIC
     global LOCATION_X
     global LOCATION_Y
+    global ORIENTATION
 
     LOCAL = local
     INFORMATION_TOPIC = topic
     LOCATION_X = x
     LOCATION_Y = y
+    ORIENTATION = o
     import mqtt_client
     info_str = "{\"InformationMessage\":{" \
                + publish_battery() + "," \
@@ -59,5 +62,5 @@ def publish_picture():
 
 
 def publish_location():
-    loc_str = "\"x_coord\":" + str(LOCATION_X) + ",\"y_coord\":" + str(LOCATION_Y) + ""
+    loc_str = "\"x_coord\":" + str(LOCATION_X) + ",\"y_coord\":" + str(LOCATION_Y) + ",\"orientation\":" + str(ORIENTATION) + ""
     return loc_str

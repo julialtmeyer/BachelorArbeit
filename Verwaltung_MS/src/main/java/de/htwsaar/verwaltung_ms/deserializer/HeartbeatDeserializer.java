@@ -6,11 +6,15 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import de.htwsaar.verwaltung_ms.mqtt.messages.Heartbeat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.SpringApplicationEvent;
 
 import java.io.IOException;
 
 public class HeartbeatDeserializer extends StdDeserializer<Heartbeat> {
+
+        private final Logger logger = LoggerFactory.getLogger(HeartbeatDeserializer.class);
 
 public HeartbeatDeserializer(){
         this(null);
@@ -33,7 +37,7 @@ public Heartbeat deserialize(JsonParser p, DeserializationContext ctxt) throws I
                 heartbeat.setMacAdr(heartbeatNode.get("macAdr").asText());
         }
         catch (NullPointerException e){
-                System.err.println("Error while reading Request! Payload does not match the requirements.");
+                logger.error("Error while reading Request! Payload does not match the requirements. {}", jsonNode, e);
         }
 
 

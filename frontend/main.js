@@ -30,12 +30,12 @@ $(document).ready(function() {
 		if(robotID != null){
 			//getJobs(robotID);
 			getLiveView(robotID);
-			for (i in robots.robots){
-				getJobs(robots.robots[i].robotID);
+			for (i in robots){
+				robotPos(robots[i]);
+				//getJobs(robots.robots[i].robotID);
 			}
 		}
 		getRobots();
-		getMap();
   	}, REFRESH_RATE);
 });
 
@@ -228,14 +228,18 @@ function sendDrive(robotID,posX,posY){
     })
 }
 
-function sendInstruction(robotID, instructionCode){
+function sendInstructionDrive(robotID, distance){
 	$.ajax({
 		type: "POST",
-		url: CURRENT_URL + "instruction",
-		data: '{"robotID":"' + robotID + '","instructionCode":"' + instructionCode + '"}',
+		url: CURRENT_URL + "control/drive/" + robotID,
+		data: JSON.stringify(distance),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json"
-    })
+    }).then(function(data) {
+		if(data["error"]){
+			infoModal(data["msg"]);
+		}
+	});
 }
 
 
@@ -292,22 +296,25 @@ function displayRobots(data){
 }
 
 // refresh the robot position on the map
-function robotPos(robotID, x,y,orientation, seconds){
+function robotPos(robot){
 
+	let x = robot.robot_info.location_x
+	let y = robot.robot_info.location_y
+	let orientation = robot.robot_info.direction
 	// calculate mm to px
 	let pos = relativePosition(x,y)
 
 	x = pos[0]
 	y = pos[1]
 
-	let robot = $('.map .robot#' + robotID)
+	let robotMap = $('.map .robot#' + robot.id)
 
 
-	if(robot.length){
+	if(robotMap.length){
 
-		robot.data("orientation", orientation)
+		robotMap.data("orientation", orientation)
 
-		robot.css({
+		robotMap.css({
 			"top": y+"px",
 			"left": x + "px",
 			"transform": "rotate("+orientation+"deg)",
@@ -447,19 +454,22 @@ $('#sendAdjustment').click(function(e) {
 })
 
 $('#breakInstruction').click(function(e) {
+
 	sendInstruction($("#robotID").val(),"PAUSE")
 });
 $('#playInstruction').click(function(e) {
-	sendInstruction($("#robotID").val(),"PLAY")
+	sendInstructionDrive($("#robotID").val(),$('#drive'))
 });
 $('#stopInstruction').click(function(e) {
 	sendInstruction($("#robotID").val(),"STOP")
 });
+
 $('#resetInstruction').click(function(e) {
-	sendInstruction($("#robotID").val(),"RESET")
-
-	setTimeout(function() { location.reload(); }, 1000);
-
+	var elementDom = document.getElementById('map');
+	var spanArr = elementDom.getElementsByTagName('span');
+	while (spanArr.length !== 0){
+		elementDom.removeChild(elementDom.getElementsByTagName('span')[0]);
+	}
 });
 
 

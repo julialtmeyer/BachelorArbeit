@@ -36,7 +36,6 @@
               <img src="assets/img/webcam.jpg">
             </div>
           </div>
-
           <div class="col-2">
             <div class="card shadow info">
               <h3>Roboter</h3>
@@ -67,6 +66,12 @@
           <div class="col-2">
             <div class="card shadow control">
               <h3>Control</h3>
+              <div class="row">
+                <div class="col">
+                  <input type="number" id="drive" placeholder="Drive (cm)" class="form-control"/>
+                  <input type="number" id="turn" placeholder="Turn (-360°  360°)" class="form-control" min="-360" max="360"/>
+                </div>
+              </div>
               <div class="row">
                 <div class="col">
                   <button type="button" id="playInstruction" class="btn btn-success">Start</button>
@@ -143,9 +148,10 @@
 
 
 
-      <!--div class="row mb-3">
+      <div class="row mb-3">
 
-        <div class="col-3">
+
+        <!--div class="col-3">
           <div class="jobqueue card shadow">
             <h2>Job Queue</h2>
             <ul class="list-group jobs">
@@ -155,7 +161,7 @@
 
 
         <div class="col-9">
-          <div class="card shadow map">
+          <div class="card shadow map", id="map">
             <img src="assets/img/map.jpg" alt="">
             <canvas id="mapoverlay" style="width: 100%; height: 100%;position: absolute;"></canvas>
           </div>

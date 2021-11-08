@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RobotInfoRepository extends JpaRepository<Robot_Info, Long> {
 
-     Robot_Info getRobot_InfoByRobot(Robot r);
+    Robot_Info getRobot_InfoByRobot(Robot r);
 }

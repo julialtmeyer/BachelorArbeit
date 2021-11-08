@@ -38,7 +38,7 @@ def drive(data, x, y, o):
         for command in data.get("commands"):
             if "TurnCommand" in command.keys():
                 direction = command.get("TurnCommand").get("direction")
-                drive_corner_counter_turn(direction)
+                drive_turn(direction)
 
             elif "DriveCommand" in command.keys():
                 direction = command.get("DriveCommand").get("direction")
@@ -46,7 +46,7 @@ def drive(data, x, y, o):
     else:
         if "TurnCommand" in data.keys():
             direction = data.get("TurnCommand").get("direction")
-            drive_corner_counter_turn(direction)
+            drive_turn(direction)
 
         elif "DriveCommand" in data.keys():
             direction = data.get("DriveCommand").get("direction")
@@ -57,13 +57,13 @@ def drive_distance(distance):
     global OBSTACLE
     # sleep_timer = calculate_sleep_time(distance)
     revs = distance_cm_to_revs(distance)
-    num_revs = calculate_steps_for_distance(revs)
+    num_steps = calculate_steps_for_number_of_revolutions(revs)
     BP.set_motor_position(BP.PORT_A, 0)
     time.sleep(0.2)
     BP.offset_motor_encoder(BP.PORT_B, BP.get_motor_encoder(BP.PORT_B))
     BP.offset_motor_encoder(BP.PORT_C, BP.get_motor_encoder(BP.PORT_C))
-    BP.set_motor_position(BP.PORT_B, num_revs)
-    BP.set_motor_position(BP.PORT_C, num_revs)
+    BP.set_motor_position(BP.PORT_B, num_steps)
+    BP.set_motor_position(BP.PORT_C, num_steps)
     if ultrasonic.check_obstacle():
         stop_movement()
         OBSTACLE = True
@@ -75,10 +75,10 @@ def drive_distance(distance):
     # BP.set_motor_dps(BP.PORT_C, 0)
 
 
-def drive_corner_counter_turn(angle):
+def drive_turn(angle):
     distance = calculate_counter_turn_distance(angle)
     num_revs = distance_cm_to_revs(distance)
-    target_count = calculate_steps_for_distance(num_revs)
+    target_count = calculate_steps_for_number_of_revolutions(num_revs)
     sleep = calculate_sleep_time_revs(target_count)
 
     BP.set_motor_limits(BP.PORT_B, 0, 360)
@@ -123,9 +123,9 @@ def calculate_counter_turn_distance(angle):
     return distance
 
 
-def calculate_steps_for_distance(distance):
-    num_revs = distance * COUNT_PER_REV
-    return num_revs
+def calculate_steps_for_number_of_revolutions(num_revs):
+    num_steps = num_revs * COUNT_PER_REV
+    return num_steps
 
 
 def distance_cm_to_revs(distance):

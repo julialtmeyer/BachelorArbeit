@@ -10,10 +10,12 @@ import de.htwsaar.backend_service.model.RobotRepository;
 import de.htwsaar.backend_service.messages.DriveCommand;
 import de.htwsaar.backend_service.messages.TurnCommand;
 import de.htwsaar.backend_service.mqtt.Publisher;
-import de.htwsaar.backend_service.rest.HttpClient;
+import de.htwsaar.backend_service.http.HttpClient;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.geom.Coordinate;
 import org.apache.commons.math3.util.Precision;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +25,14 @@ public class DriveController {
 
     private final Publisher publisher;
 
-    private RobotRepository robotRepository;
+    private final RobotRepository robotRepository;
 
-    private HttpClient httpClient;
+    private final HttpClient httpClient;
 
-    private Configuration config;
+    private final Configuration config;
+
+    private final Logger logger = LoggerFactory.getLogger(DriveController.class);
+
 
     public DriveController(Publisher publisher, RobotRepository robotRepository, HttpClient httpClient, Configuration config) {
         this.publisher = publisher;
@@ -43,7 +48,7 @@ public class DriveController {
             String topic = config.getTopicRoot() + robot.getRoboterName() + config.getSubTopicDrive();
             publisher.publish(driveJson, topic, 0);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Failed to write JSON {}", driveCommand, e);
         }
 
     }
@@ -55,7 +60,7 @@ public class DriveController {
             String topic = config.getTopicRoot() + robot.getRoboterName() + config.getSubTopicDrive();
             publisher.publish(turnJson, topic, 0);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Failed to write JSON {}", turnCommand, e);
         }
 
     }
@@ -67,21 +72,25 @@ public class DriveController {
         List<Command> commands = new ArrayList<>();
 
         if(path.isEmpty()){
+            logger.error("No path found from {} to {}", robotLocation, destination);
             return commands;
         }
+
+        //Get Direction of Robot
+        double orientation = robot.getRobot_info().getDirection();
 
         for(int i = 0; i < path.size()-1; i++){
 
             Node start = path.get(i);
             Node dest = path.get(i+1);
 
+            //turn Coordinate-Values in Coordinate-Object
+            // and create a temporary Coordinate to build a triangle
             Coordinate startCoord = new Coordinate(start.getX(), start.getY());
             Coordinate destCoord = new Coordinate(dest.getX(), dest.getY());
             Coordinate tempCoord = new Coordinate(startCoord.getX(), destCoord.getY());
 
             double angle;
-            double orientation = robot.getRobot_info().getDirection();
-
 
             double alpha = Math.toDegrees(Angle.angleBetween(tempCoord, startCoord, destCoord));
             if(start.getX() > dest.getX() && alpha == 180.0){
@@ -167,16 +176,16 @@ public class DriveController {
                 TurnCommand turn = new TurnCommand(angle);
                 commands.add(turn);
             }
-            double o = robot.getRobot_info().getDirection() + angle;
+            //remember latest orientation
+            orientation = orientation + angle;
 
-            if(o >= 360.0){
-                o = o - 360;
+            if(orientation >= 360.0){
+                orientation = orientation - 360;
             }
-            else if( o < 0.0){
-                o = 360 + o;
+            else if( orientation < 0.0){
+                orientation = 360 + orientation;
             }
 
-            robot.getRobot_info().setDirection(o);
             distance = getActualDistance(distance);
             DriveCommand drive = new DriveCommand(distance);
             commands.add(drive);
@@ -202,7 +211,7 @@ public class DriveController {
             publisher.publish(driveJson, topic, 0);
             return true;
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("Failed to write JSON {}", commands, e);
             return false;
         }
     }

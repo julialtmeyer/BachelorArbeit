@@ -5,6 +5,8 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -40,6 +42,8 @@ public class Client {
 
     private final Configuration config;
 
+    final Logger logger = LoggerFactory.getLogger(Client.class);
+
     /**
      * Instantiates a new Client.
      *
@@ -52,6 +56,7 @@ public class Client {
     private void config(boolean cert){
         MemoryPersistence persistence = new MemoryPersistence();
         MqttConnectOptions connectionOptions = new MqttConnectOptions();
+        String uri = "tcp://" + config.getBrokerHost() + ":" + config.getBrokerPort();
         try {
 
 
@@ -64,16 +69,15 @@ public class Client {
                 connectionOptions.setSocketFactory(socketFactory);
             }
             else {
-                String uri = "tcp://" + config.getBrokerHost() + ":" + config.getBrokerPort();
                 this.client = new MqttClient(uri, MqttClient.generateClientId(), persistence);
             }
             connectionOptions.setCleanSession(true);
 
-            System.out.println("starting connect the server...");
+            logger.info("starting connect the server...");
             client.connect(connectionOptions);
-            System.out.println("connected!");
+            logger.info("connected!");
         } catch (Exception me) {
-            me.printStackTrace();
+            logger.error("Failed to connect to the mqtt-server {}",uri, me);
         }
     }
 

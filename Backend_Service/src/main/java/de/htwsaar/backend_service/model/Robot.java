@@ -10,13 +10,12 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @Entity
 @Table(name = "ROBOTS")
 public class Robot {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public Long id;
 
     @Column(name = "robot_name", unique = true, nullable = false)

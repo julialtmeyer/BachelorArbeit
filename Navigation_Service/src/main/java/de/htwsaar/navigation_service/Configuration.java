@@ -8,8 +8,11 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:/application.properties")
 public class Configuration {
 
-    @Value("${nodeToleranz}")
-    private Double nodeToleranz;
+    @Value("${nodeToleranzY}")
+    private Double nodeToleranceY;
+
+    @Value("${nodeToleranzX}")
+    private Double nodeToleranceX;
 
     @Value("${mapId}")
     private Long mapId;
@@ -17,8 +20,12 @@ public class Configuration {
     @Value("${gridSpacing}")
     private Integer gridSpacing;
 
-    public Double getNodeToleranz() {
-        return nodeToleranz;
+    public Double getNodeToleranceY() {
+        return nodeToleranceY;
+    }
+
+    public Double getNodeToleranceX() {
+        return nodeToleranceX;
     }
 
     public Long getMapId() {
