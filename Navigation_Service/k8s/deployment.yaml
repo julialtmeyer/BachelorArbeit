@@ -17,11 +17,11 @@ spec:
           hostnames:
             - "dsl-cluster-master"
       containers:
-        - name: verwaltung-app
+        - name: navigation-app
           image: julialtmeyer/robo-navigation-ms
           envFrom:
             - configMapRef:
-                name: verwaltung-app-config
+                name: navigation-app-config
             - secretRef:
                 name: app-secrets
 ---
