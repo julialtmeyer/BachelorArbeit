@@ -92,7 +92,7 @@ public class RoboterRestController {
         return response;
     }
 
-    @PostMapping("/position/{id}")
+    @PostMapping("/{id}}/position")
     public ResponseEntity setRobotPosition(@RequestBody CoordinateXY position, @PathVariable Long id){
         ResponseEntity response;
         Optional<Robot> robotOptional = robotRepository.findById(id);
