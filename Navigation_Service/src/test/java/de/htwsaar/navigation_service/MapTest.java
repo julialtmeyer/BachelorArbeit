@@ -20,21 +20,8 @@ import org.springframework.test.context.ContextConfiguration;
 import javax.swing.*;
 import java.util.ArrayList;
 
-class HeadlessSpringBootContextLoader extends SpringBootContextLoader {
-    @Override
-    protected SpringApplication getSpringApplication() {
-        SpringApplication application = super.getSpringApplication();
-        application.setHeadless(false);
-        return application;
-    }
-}
-
 @SpringBootTest
-@ContextConfiguration(loader = HeadlessSpringBootContextLoader.class)
 public class MapTest {
-
-    @Autowired
-    private MapManager manager;
 
     @Test
     public void testGraphToJSON(){
@@ -67,26 +54,6 @@ public class MapTest {
             assert(map.equals(control));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void testGraph(){
-        manager.fillGrid(manager.getGraph());
-        manager.getGraph();
-        JGraphXAdapter<Node, DefaultWeightedEdge> graphXAdapter = new JGraphXAdapter<>(manager.getGraph());
-        mxIGraphLayout layout = new mxHierarchicalLayout(graphXAdapter);
-        layout.execute(graphXAdapter.getDefaultParent());
-
-        JFrame frame = new JFrame("TestGraph");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new mxGraphComponent(graphXAdapter));
-
-        frame.pack();
-        frame.setLocationByPlatform(true);
-        frame.setVisible(true);
-        while (true){
-
         }
     }
 

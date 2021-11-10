@@ -25,13 +25,6 @@ public class NavigationTest {
     }
 
     @Test
-    public void findPathExactNodeCoordNoSkippingCorrelation(){
-        NavigationRequest navigationRequest = new NavigationRequest(596, 577, 722, 509);
-
-        navigationController.pathFromPointAtoPointB(navigationRequest);
-    }
-
-    @Test
     public void findPathExactNodeCoordStreetToStreetSkipCorrelation(){
         NavigationRequest navigationRequest = new NavigationRequest(596, 577, 1007, 444);
 
