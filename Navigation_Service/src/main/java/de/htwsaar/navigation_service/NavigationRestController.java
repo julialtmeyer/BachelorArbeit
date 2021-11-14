@@ -28,7 +28,7 @@ public class NavigationRestController {
 
 
     @PostMapping("/")
-    public ResponseEntity getNavigationFromAToB(@RequestBody NavigationRequest request){
+    public ResponseEntity postNavigationFromAToB(@RequestBody NavigationRequest request){
         ResponseEntity response;
         try {
             String path = objectMapper.writeValueAsString(navigationController.pathFromPointAtoPointB(request));

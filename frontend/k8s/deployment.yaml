@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-app
+  template:
+    metadata:
+      labels:
+        app: frontend-app
+    spec:
+      hostAliases:
+        - ip: "134.96.216.207"
+          hostnames:
+            - "dsl-cluster-master"
+      containers:
+        - name: frontend-app
+          image: julialtmeyer/frontend-app
+          envFrom:
+            - configMapRef:
+                name: backend-app-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-app-config
+data:
+  backendURL: http://${BACKEND_APP_SERVICE_SERVICE_HOST}:${BACKEND_APP_SERVICE_SERVICE_PORT}/

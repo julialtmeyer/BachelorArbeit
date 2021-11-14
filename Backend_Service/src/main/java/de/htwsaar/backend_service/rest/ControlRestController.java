@@ -29,8 +29,12 @@ public class ControlRestController {
         ResponseEntity response;
         Optional<Robot> robot = robotRepository.findById(id);
         if (robot.isPresent()){
-            driveController.driveDistance(robot.get(), distance);
-            response = new ResponseEntity(HttpStatus.OK);
+            if(robot.get().isActive()){
+                driveController.driveDistance(robot.get(), distance);
+                response = new ResponseEntity(HttpStatus.OK);
+            }
+            else
+                response = ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(Constants.ROBOT_NOT_ACTIVE_EXCEPTION);
         }
         else
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constants.ROBOT_NOT_FOUND_EXCEPTION);
@@ -48,7 +52,7 @@ public class ControlRestController {
                 response = new ResponseEntity(HttpStatus.OK);
             }
             else
-                response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Constants.ROBOT_NOT_ACTIVE_EXCEPTION);
+                response = ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(Constants.ROBOT_NOT_ACTIVE_EXCEPTION);
         }
         else
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constants.ROBOT_NOT_FOUND_EXCEPTION);

@@ -8,7 +8,7 @@
   <meta name="author" content="name">
   <meta name="description" content="description here">
   <meta name="keywords" content="keywords,here">
-  <link rel="shortcut icon" href="img/favicon.ico">
+  <link rel="shortcut icon" href="assets/img/favicon.ico">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Muli&display=swap" rel="stylesheet">
@@ -36,9 +36,9 @@
               <img src="assets/img/webcam.jpg">
             </div>
           </div>
-          <div class="col-2">
+          <div class="col-4">
             <div class="card shadow info">
-              <h3>Roboter</h3>
+              <h3>Roboter Information</h3>
               <div class="row">
                 <div class="col-6">
                   <span>Name:</span><div id="ankistate"></div><div id="roboterName" class="prop"></div>
@@ -55,36 +55,34 @@
                   <span>Pos:</span><div id="position" class="prop"></div>
                 </div>
               </div>
-
-              <div class="input-group robotSelect">
-                <select class="custom-select" id="robotID">
-                </select>
-              </div>
             </div>
           </div>
-
-          <div class="col-2">
-            <div class="card shadow control">
-              <h3>Control</h3>
-              <div class="row">
-                <div class="col">
-                  <input type="number" id="drive" placeholder="Drive (cm)" class="form-control"/>
-                  <input type="number" id="turn" placeholder="Turn (-360°  360°)" class="form-control" min="-360" max="360"/>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <button type="button" id="playInstruction" class="btn btn-success">Start</button>
-                  <button type="button" id="stopInstruction" class="btn btn-danger">Stop</button>
-                  <button type="button" id="breakInstruction" class="btn btn-warning">Pause</button>
-                  <button type="button" id="resetInstruction" class="btn btn-secondary">Reset</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
 
           <div class="col-4">
+            <div class="card shadow control">
+              <h3>Control</h3>
+              <div class="col">
+                <div class="row">
+                  <div class="col">
+                    <input type="number" id="drive" placeholder="Drive (cm)" class="form-control"/>
+                    <button type="button" id="driveInstruction" class="btn btn-success">Drive</button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                  <input type="number" id="turn" placeholder="Turn (-360°  360°)" class="form-control" min="-360" max="360"/>
+                    <button type="button" id="turnInstruction" class="btn btn-success">Turn</button>
+                  </div>
+                </div>
+                <div class="row">
+                  <button type="button" id="resetInstruction" class="btn btn-secondary">Reset Map</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!--div class="col-4">
             <div class="card shadow container settings">
               <h3>Einstellungen</h3>
 
@@ -95,18 +93,6 @@
                       <span>Gesicht</span>
                       <input type="file" class="custom-file-input" id="bitmapFace">
                       <label class="custom-file-label" for="bitmapFace">Choose file</label>
-                    </div>
-
-                    <div class="col-9">
-                      <div class="row">
-                        <div class="col-6">
-                          <input type="number" class="form-control" placeholder="Fork (0.0  1.0)" id="forkpos" min="0.0" max="1.0">
-                        </div>
-
-                        <div class="col-6">
-                          <input type="number" class="form-control" placeholder="Head (-25 - 44.5)" id="headpos" min="-25" max="44.5">
-                        </div>
-                      </div>
                     </div>
 
                     <div class="col-3">
@@ -120,7 +106,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div-->
 
 
         <!--<div class="col-3">
@@ -151,13 +137,17 @@
       <div class="row mb-3">
 
 
-        <!--div class="col-3">
-          <div class="jobqueue card shadow">
-            <h2>Job Queue</h2>
+        <div class="col-2.5">
+          <div class="Roboter">
+            <h2>Roboter</h2>
             <ul class="list-group jobs">
             </ul>
+            <div class="input-group robotSelect">
+              <select class="custom-select" id="robotID">
+              </select>
+            </div>
           </div>
-        </div-->
+        </div>
 
 
         <div class="col-9">
@@ -167,17 +157,6 @@
           </div>
         </div>
       </div>
-
-
-
-      <div class="row mb-3">
-        <div class="col-12">
-          <div class="card shadow">
-            <div>
-              <span class="data"></span>
-            </div>
-          </div>
-        </div>
 
 
 
@@ -195,9 +174,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
-
-<script type="text/javascript" src="main.js"></script>
-
-
+<script type="text/javascript" src="scripts/main.js"></script>
 </body>
 </html>

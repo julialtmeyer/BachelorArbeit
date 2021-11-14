@@ -232,10 +232,24 @@ function sendInstructionDrive(robotID, distance){
 	$.ajax({
 		type: "POST",
 		url: CURRENT_URL + "control/drive/" + robotID,
-		data: JSON.stringify(distance),
-		contentType: "application/json; charset=utf-8",
-		dataType: "json"
+		data: ''+ distance,
+		contentType: "application/json",
+		dataType: "text"
     }).then(function(data) {
+		if(data["error"]){
+			infoModal(data["msg"]);
+		}
+	});
+}
+
+function sendInstructionTurn(robotID, distance){
+	$.ajax({
+		type: "POST",
+		url: CURRENT_URL + "control/turn/" + robotID,
+		data: ''+ distance,
+		contentType: "application/json",
+		dataType: "text"
+	}).then(function(data) {
 		if(data["error"]){
 			infoModal(data["msg"]);
 		}
@@ -318,7 +332,6 @@ function robotPos(robot){
 			"top": y+"px",
 			"left": x + "px",
 			"transform": "rotate("+orientation+"deg)",
-			"transition-duration": seconds + "s"
 		})
 	}
 }
@@ -453,15 +466,11 @@ $('#sendAdjustment').click(function(e) {
 	sendAdjustment($("#robotID").val(),head.val(),fork.val())
 })
 
-$('#breakInstruction').click(function(e) {
-
-	sendInstruction($("#robotID").val(),"PAUSE")
+$('#driveInstruction').click(function(e) {
+	sendInstructionDrive($("#robotID").val(),$('#drive').val())
 });
-$('#playInstruction').click(function(e) {
-	sendInstructionDrive($("#robotID").val(),$('#drive'))
-});
-$('#stopInstruction').click(function(e) {
-	sendInstruction($("#robotID").val(),"STOP")
+$('#turnInstruction').click(function(e) {
+	sendInstructionTurn($("#robotID").val(),$('#turn').val())
 });
 
 $('#resetInstruction').click(function(e) {
