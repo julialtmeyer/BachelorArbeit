@@ -8,9 +8,12 @@ const MAP_HEIGHT = 589;
 const MAP_WIDTH = 1200;
 
 const REFRESH_RATE = 250;
+let CURRENT_URL;
 
-const CURRENT_URL = "http://localhost:8080/"
-
+//get the URL for the backend-service
+$.get( "/geturl", function( data ) {
+	CURRENT_URL = data.url;
+});
 
 let ctx;
 
@@ -172,6 +175,8 @@ function getJobs(robotID){
 /**
  * All the REST Setter
  */
+
+
 
 function sendAdjustment(robotID,headpos,forkpos){
 
