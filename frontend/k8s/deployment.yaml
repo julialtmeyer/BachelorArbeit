@@ -19,9 +19,26 @@ spec:
       containers:
         - name: frontend-app
           image: julialtmeyer/frontend-app
+          ports:
+            - containerPort: 3000
+              name: nodejs
           envFrom:
             - configMapRef:
                 name: backend-app-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-app-service
+  labels:
+    app: frontend-app
+spec:
+  type: NodePort
+  selector:
+    app: frontend-app
+  ports:
+    - port: 3000
+      name: nodejs
 ---
 apiVersion: v1
 kind: ConfigMap
