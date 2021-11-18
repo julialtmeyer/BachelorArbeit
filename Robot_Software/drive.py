@@ -76,6 +76,7 @@ def drive_distance(distance):
 
 
 def drive_turn(angle):
+    global OBSTACLE
     distance = calculate_counter_turn_distance(angle)
     num_revs = distance_cm_to_revs(distance)
     target_count = calculate_steps_for_number_of_revolutions(num_revs)
@@ -91,13 +92,17 @@ def drive_turn(angle):
         time.sleep(0.2)
         BP.set_motor_position(BP.PORT_C, -target_count)
         BP.set_motor_position(BP.PORT_B, target_count)
-        sub_task(BP.PORT_B, target_count, "turn", angle)
+        if ultrasonic.check_obstacle():
+            stop_movement()
+            OBSTACLE = True
     else:
         BP.set_motor_position(BP.PORT_A, 40)
         time.sleep(0.2)
         BP.set_motor_position(BP.PORT_C, target_count)
         BP.set_motor_position(BP.PORT_B, -target_count)
-        sub_task(BP.PORT_C, target_count, "turn", angle)
+        if ultrasonic.check_obstacle():
+            stop_movement()
+            OBSTACLE = True
 
     if OBSTACLE:
         print("collision")
