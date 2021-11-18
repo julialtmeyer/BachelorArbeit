@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import mqtt_client
 
-local = True
+local = True #true when not using a real robot, false when using the robot
 
 if not local:
     import brickpi3

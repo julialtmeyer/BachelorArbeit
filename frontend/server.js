@@ -8,7 +8,7 @@ app.get('/', (req, res) => {
 })
 
 app.get("/geturl", function(req, res){
-    res.json({ url: process.env.BACKEND_URL });
+    res.json({ url: process.env.backendURL });
 });
 
 app.use('/img',express.static(path.join(__dirname, '/assets/img')))

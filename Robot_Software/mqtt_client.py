@@ -23,13 +23,13 @@ ROBOT_REGISTRATION_TOPIC = "data/BrickPi/registration"
 ROBOT_INFORMATION_TOPIC = ""
 ROBOT_DRIVE_TOPIC = ""
 
-MQTT_SERVER_LOCAL = "192.168.178.49"
+MQTT_SERVER_LOCAL = "192.168.178.49" #when running rabbitmq local, use the local address
 MQTT_PORT_LOCAL = 32598
 MQTT_SERVER_HTW = "134.96.216.207"
 MQTT_PORT_HTW = 8883
 USERNAME_HTW = "user"
 PASSWORD_HTW = "DgBe3RZVvZ"
-USE_CERTIFICATE = False
+USE_CERTIFICATE = False #true when connecting to the DSL RabbitMQ Broker, False when connecting to a locally hosted one
 
 HANDSHAKE = ""
 ROBOT_ID = ""
@@ -165,7 +165,7 @@ def information_thread():
     if ROBOT_INFORMATION_TOPIC != "":
         information.publish_information(local=LOCAL, topic=ROBOT_INFORMATION_TOPIC, x=LOCATION_X, y=LOCATION_Y,
                                         o=ORIENTATION)
-    threading.Timer(1, information_thread).start()
+    threading.Timer(0.1, information_thread).start()
 
 
 # for creating random mac adresses when testing without real robot

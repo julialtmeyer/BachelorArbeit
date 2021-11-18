@@ -52,6 +52,7 @@ data:
   nodeToleranzY: "10"
   mapId: "1"
   gridSpacing: "10"
+  server.port: "8080"
 ---
 apiVersion: v1
 kind: Secret

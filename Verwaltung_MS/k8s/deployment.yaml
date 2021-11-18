@@ -53,6 +53,7 @@ data:
   brokerHost: "rabbitmq-service"
   brokerPort: "1883"
   controlInfoServiceUrl: http://${BACKEND_APP_SERVICE_SERVICE_HOST}:${BACKEND_APP_SERVICE_SERVICE_PORT}
+  server.port: "8080"
 ---
 apiVersion: v1
 kind: Secret

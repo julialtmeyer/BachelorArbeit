@@ -24,7 +24,7 @@ spec:
               name: nodejs
           envFrom:
             - configMapRef:
-                name: backend-app-config
+                name: frontend-app-config
 ---
 apiVersion: v1
 kind: Service
@@ -45,4 +45,4 @@ kind: ConfigMap
 metadata:
   name: frontend-app-config
 data:
-  backendURL: http://${BACKEND_APP_SERVICE_SERVICE_HOST}:${BACKEND_APP_SERVICE_SERVICE_PORT}/
+  backendURL: "http://192.168.178.49:32037/"

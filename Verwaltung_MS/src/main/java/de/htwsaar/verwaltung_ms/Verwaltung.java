@@ -64,23 +64,30 @@ public class Verwaltung {
             robot_info = robotInfoRepository.save(robot_info);
             robot.setRobot_info(robot_info);
             robot = robotRepository.save(robot);
+            String message = responseMessageBuilder(robot);
+            publisher.publish(message,config.getTopic(),0);
+            logger.info("Response to request from {} send.", robot.getRoboterName());
         }
 
         else {
             robotOptional.get().setHsc(request.getHsc());
-            Robot robotTemp = httpClient.createPositionGetRequest(robotOptional.get().id);
+            Optional<Robot> robotTemp = httpClient.createPositionGetRequest(robotOptional.get().id);
             Robot_Info robot_info = robotOptional.get().getRobot_info();
-            robot_info.setLocation_y(robotTemp.getRobot_info().getLocation_y());
-            robot_info.setLocation_x(robotTemp.getRobot_info().getLocation_x());
-            robot_info.setDirection(robotTemp.getRobot_info().getDirection());
-            robot_info = robotInfoRepository.save(robot_info);
-            robotOptional.get().setRobot_info(robot_info);
-            robot = robotRepository.save(robotOptional.get());
+            if(robotTemp.isPresent()){
+                robot_info.setLocation_y(robotTemp.get().getRobot_info().getLocation_y());
+                robot_info.setLocation_x(robotTemp.get().getRobot_info().getLocation_x());
+                robot_info.setDirection(robotTemp.get().getRobot_info().getDirection());
+                robot_info = robotInfoRepository.save(robot_info);
+                robotOptional.get().setRobot_info(robot_info);
+                robot = robotRepository.save(robotOptional.get());
+                String message = responseMessageBuilder(robot);
+                publisher.publish(message,config.getTopic(),0);
+                logger.info("Response to request from {} send.", robot.getRoboterName());
+            }
+            else {
+                logger.error("Registration failed!");
+            }
         }
-
-        String message = responseMessageBuilder(robot);
-        publisher.publish(message,config.getTopic(),0);
-        logger.info("Response to request from {} send.", robot.getRoboterName());
     }
 
     public void checkHeartbeat(Heartbeat heartbeat){

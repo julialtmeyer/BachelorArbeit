@@ -64,6 +64,11 @@ public class Subscriber implements MqttCallback {
     @Override
     public void connectionLost(Throwable throwable) {
         logger.warn("Connection lost!");
+        try {
+            mqttClient.connect();
+        } catch (MqttException e) {
+            logger.error("Cannot reconnect to broker!");
+        }
     }
 
     /**

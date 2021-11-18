@@ -9,10 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Optional;
 
 @Component
 public class HttpClient {
@@ -25,8 +27,8 @@ public class HttpClient {
         this.config = config;
     }
 
-    public Robot createPositionGetRequest(Long id) {
-        Robot robot = new Robot();
+    public Optional<Robot> createPositionGetRequest(Long id) {
+        Optional<Robot> robot = Optional.empty();
         RestTemplate restTemplate = new RestTemplate();
         final String baseUrl = config.getControlInfoServiceUrl() + "/robots/" + id;
         URI uri = null;
@@ -37,20 +39,25 @@ public class HttpClient {
         }
 
         assert uri != null;
-        ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
 
-        if(response.getStatusCode().is2xxSuccessful()){
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.findAndRegisterModules();
-            try {
-                robot = objectMapper.readValue(response.getBody(), new TypeReference<>(){});
+            if(response.getStatusCode().is2xxSuccessful()){
+                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.findAndRegisterModules();
+                try {
+                    robot = Optional.of(objectMapper.readValue(response.getBody(), new TypeReference<>(){}));
+                }
+                catch (JsonProcessingException e){
+                    logger.error("Failed to create JSON {}", response.getBody(), e);
+                }
             }
-            catch (JsonProcessingException e){
-                logger.error("Failed to create JSON {}", response.getBody(), e);
+            else {
+                logger.error("HTTP-Request failed. {}", response.getStatusCode());
             }
         }
-        else {
-            logger.error("HTTP-Request failed. {}", response.getStatusCode());
+        catch (RestClientException e){
+            logger.error("Error connecting to resource at url {}. {}", baseUrl, e.getCause());
         }
 
         return robot;
