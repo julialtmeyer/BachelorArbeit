@@ -119,7 +119,7 @@ public class Verwaltung {
             if(duration.getSeconds() > 10){
                 robot.setActive(false);
                 robotRepository.save(robot);
-                logger.warn("{} is now inactive!", robot.getRoboterName());
+                logger.info("{} is now inactive!", robot.getRoboterName());
             }
         }
     }

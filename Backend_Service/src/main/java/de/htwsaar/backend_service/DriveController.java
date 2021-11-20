@@ -85,7 +85,7 @@ public class DriveController {
             Node dest = path.get(i+1);
 
             //turn Coordinate-Values in Coordinate-Object
-            // and create a temporary Coordinate to build a triangle
+            //and create a temporary Coordinate to build a triangle
             Coordinate startCoord = new Coordinate(start.getX(), start.getY());
             Coordinate destCoord = new Coordinate(dest.getX(), dest.getY());
             Coordinate tempCoord = new Coordinate(startCoord.getX(), destCoord.getY());

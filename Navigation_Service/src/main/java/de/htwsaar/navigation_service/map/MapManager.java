@@ -89,13 +89,15 @@ public class MapManager {
             MapGraph mapGraph = mapper.readValue(mapString, MapGraph.class);
 
             for(Node node : mapGraph.getNodes()) {
-                graph.addVertex(node);
+                graph.addVertex(node); //every Node gets added to the graph as a vertex
             }
 
+            //for every Node we look at the neighbors and add the corresponding edges to the graph
             for(Node node : mapGraph.getNodes()){
                     for (Node neighbor : node.getNeighbors()){
                         neighbor = getNodeById(neighbor.getId());
                         graph.addEdge(node, neighbor);
+                        //the distance between the node and the neighbor is added as the weight of the edge
                         graph.setEdgeWeight(node, neighbor, getDistanceToNode(node, neighbor));
                     }
             }
