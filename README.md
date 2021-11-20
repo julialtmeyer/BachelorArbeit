@@ -1,6 +1,7 @@
 # Bachelorthesis Julian Altmeyer
 ## Konzeption und Implementierung einer Architektur zur Verteilung von Steuerungs- und Navigationsaufgaben an Roboter in einem Smart-City-Umfeld
 
+![](markdown-images/Robot_front_back.JPEG)
 
 
 Dieses Projekt ist Teil des Smart City IoT-Testfelds der Hochschule für Technik und Wirtschaft des Saarlandes (HTW Saar).
@@ -94,8 +95,12 @@ Dafür werden drei Micrsoervices definiert:
 * der Steuerungs- und Informations-Service
 * der Navigations-Service
 * und der Verwaltungs-Service
+Die Prototypen für die Backend-Systeme werden mit Java 11 und Spring-Boot entwickelt.
+Für die Datenhaltung kommt MySQL zum Einsatz und für die MQTT-Clients wird Eclipse Paho eingesetzt.
+Die Services werden mit Docker containerisiert und in einem Kubernetes-Cluster zur Verfügung gestellt.
 
-
+Die Webanwendung wird mit NodeJS, JavaScript und HTML implementiert.
+Die Roboter-Software wird mit Python entwickelt, auch hier wird Paho für den MQTT-Client verwendet.
 
 ### Statisches Modell
 
@@ -128,6 +133,9 @@ Das **Frontend** hingegen spricht die vom Backend zur Verfügung gestellte REST-
 #### Datenbank
 ![](markdown-images/database-1.png)
 
+### Benutzeroberfläche
+![](markdown-images/BenutzerScreenshot-1.png)
+
 ### Schnittstellen Beschreibung
 Anschließend werden alle REST-Endpunkte und verwendeten MQTT-Topics aufgeführt.
 #### REST-Endpunkte Steuerungs und Verwaltungs-Service
@@ -141,6 +149,7 @@ Anschließend werden alle REST-Endpunkte und verwendeten MQTT-Topics aufgeführt
 
 #### Verwendete MQTT-Topics
 ![](markdown-images/topics.png)
+
 
 
 
