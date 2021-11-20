@@ -150,7 +150,57 @@ Anschließend werden alle REST-Endpunkte und verwendeten MQTT-Topics aufgeführt
 #### Verwendete MQTT-Topics
 ![](markdown-images/topics.png)
 
+## Getting Started
 
+````
+git clone https://github.com/htw-saar/BachelorthesisJulianAltmeyer.git
+````
 
+Nach dem Clonen des Repositories müssen die einzelnen Docker Images erstellt werden.
+Dafür muss zuerst jede der Microservices mit Maven gepackt mit folgednem Befehl werden.
+Die Tests müssen geskippt werden, da einige vorraussetzten, das die Services verfügbar sind.
 
+````
+mvn clean package -Dmaven.test.skip
+````
 
+Danach können die Docker Images erstellt werden. Für das Frontend wird Maven nicht benötigt, aber ein Docker Image muss auch hier erstellt werden.
+
+````
+docker build -t {dockerhub-name}/{service name} .
+````
+
+Nachdem das Image erstellt wurde kann dieses auf Docker-Hub hochgeladen werden.
+
+````
+docker push {dockerhub-name}/{service name}
+````
+
+Die deployment.yaml Dateien müssen auch mit dem verwendeten dockerhub-namen aktualisiert werden.
+Diese liegen jeweils in den k8s Ordnern.
+Für das Deployment für die MySQL Datenbank auf dem DSL-Cluster muss ''storageClassName: glusterfs'' auskommentiert werden. Gegebenenfalles müssen in dem .yaml-Dateien auch die Adressen für die Endpunkte angepasst werden.
+
+## Built With
+* [Spring Boot](https://spring.io/projects/spring-boot) - Das allmächtige Framework
+* [Swagger](https://swagger.io/) / [springdoc](https://springdoc.org/) - OpenAPI-Konforme Schnittstellenspezifikation
+* [Maven](https://maven.apache.org/) - Verwaltung von Abhängigkeiten, Build-Prozess
+* [Spring Data JPA](https://spring.io/projects/spring-data-jpa) - Library zur Datenabfrage  
+* [MySQL](https://www.mysql.com/) - Datenbanksystem
+* [JUnit](https://junit.org/) - Framework zum Testen
+* [JGraphT](https://jgrapht.org/) - Java Bibliothek für Datenstrukturen der Graphentheorie und Algorithmen
+* [Docker](https://www.docker.com/) - Anwendung zur Containervirtualisierung
+* [Kubernetes](https://kubernetes.io/) - Cluster Software
+* [NodeJs](https://nodejs.org/en/) - JavaScript Runtime
+* [jQuery](https://jquery.com/) - JavaScript Bibliothek für HTML und DOM traversal
+* [Express](https://expressjs.com/) - Webanwedungs Framework für NodeJs
+
+## License
+This project is licensed under the GNU General Public License v3.0
+
+## Acknowledgments
+* [Prof. Dr. Markus Esch](https://www.htwsaar.de/htw/ingwi/fakultaet/personen/profile/markus-esch) - Projektbetreuung
+* [Baeldung](https://www.baeldung.com/) - Große Auswahl an Spring Boot-fokussierten Guides
+* [Sprint Data JPA - Reference Documentation](https://docs.spring.io/spring-data/jpa/docs/1.5.0.RELEASE/reference/html/index.html) - Dokumentation über Spring Data JPA
+* [RabbitMQ](https://www.rabbitmq.com/) - RabbitMQ Dokumentation, Guides für Server und Client Konfiguration und Deployment
+* [Kubernetes](https://kubernetes.io/) - Kubernetes Dokumentation
+* [Stackoverflow](https://stackoverflow.com/) - :ok_man:
