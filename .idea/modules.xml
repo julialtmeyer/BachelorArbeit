@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/BachelorthesisJulianAltmeyer.iml" filepath="$PROJECT_DIR$/.idea/BachelorthesisJulianAltmeyer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Backend_Service/Backend_Service.iml" filepath="$PROJECT_DIR$/Backend_Service/Backend_Service.iml" />
       <module fileurl="file://$PROJECT_DIR$/Navigation_Service/Navigation_Service.iml" filepath="$PROJECT_DIR$/Navigation_Service/Navigation_Service.iml" />
       <module fileurl="file://$PROJECT_DIR$/Robot_Software/Robot_Software.iml" filepath="$PROJECT_DIR$/Robot_Software/Robot_Software.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Backend_Service/Steuer-Info-Service.iml" filepath="$PROJECT_DIR$/Backend_Service/Steuer-Info-Service.iml" />
       <module fileurl="file://$PROJECT_DIR$/Verwaltung_MS/Verwaltung_MS.iml" filepath="$PROJECT_DIR$/Verwaltung_MS/Verwaltung_MS.iml" />
       <module fileurl="file://$PROJECT_DIR$/frontend/frontend.iml" filepath="$PROJECT_DIR$/frontend/frontend.iml" />
     </modules>
