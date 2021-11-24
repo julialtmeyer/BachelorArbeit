@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.htwsaar</groupId>
-    <artifactId>Navigation_Service</artifactId>
+    <artifactId>Navigation-Service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Navigation_Service</name>
+    <name>Navigation-Service</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>

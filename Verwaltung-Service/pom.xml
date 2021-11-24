@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.htwsaar</groupId>
-    <artifactId>Verwaltung_MS</artifactId>
+    <artifactId>Verwaltung-Service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Verwaltung_MS</name>
+    <name>Verwaltung-Service</name>
     <description>Verwaltungs Microservice für Roboter im SmartCity-Testfeld</description>
     <properties>
         <java.version>11</java.version>

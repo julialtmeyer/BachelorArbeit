@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.htwsaar</groupId>
-    <artifactId>Backend_Service</artifactId>
+    <artifactId>Steuerung-Information-Service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Backend_Service</name>
-    <description>Backend Service für Roboter im SmartCity-Testfeld</description>
+    <name>Steuerung-Information-Service</name>
+    <description>Steuerung-Information-Service für Roboter im SmartCity-Testfeld</description>
     <properties>
         <java.version>11</java.version>
     </properties>
