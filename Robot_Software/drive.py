@@ -64,9 +64,6 @@ def drive_distance(distance):
     BP.offset_motor_encoder(BP.PORT_C, BP.get_motor_encoder(BP.PORT_C))
     BP.set_motor_position(BP.PORT_B, num_steps)
     BP.set_motor_position(BP.PORT_C, num_steps)
-    if ultrasonic.check_obstacle():
-        stop_movement()
-        OBSTACLE = True
 
     # BP.set_motor_dps(BP.PORT_B, SPEED_DPS)
     # BP.set_motor_dps(BP.PORT_C, SPEED_DPS)
@@ -92,17 +89,13 @@ def drive_turn(angle):
         time.sleep(0.2)
         BP.set_motor_position(BP.PORT_C, -target_count)
         BP.set_motor_position(BP.PORT_B, target_count)
-        if ultrasonic.check_obstacle():
-            stop_movement()
-            OBSTACLE = True
+
     else:
         BP.set_motor_position(BP.PORT_A, 40)
         time.sleep(0.2)
         BP.set_motor_position(BP.PORT_C, target_count)
         BP.set_motor_position(BP.PORT_B, -target_count)
-        if ultrasonic.check_obstacle():
-            stop_movement()
-            OBSTACLE = True
+
 
     if OBSTACLE:
         print("collision")

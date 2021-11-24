@@ -5,9 +5,12 @@ import ssl
 import logging
 import string
 import threading
+
+import drive
 import information
 from paho.mqtt import client as mqtt_client
 from pathlib import Path
+from sensors import ultrasonic
 
 LOG = logging.getLogger("MQTT")
 
@@ -62,6 +65,7 @@ def connect_mqtt(local):
 
     information_thread()
     publish_heartbeat()
+    check_obstacle()
 
     MQTT_CLIENT.loop_forever()
 
@@ -166,6 +170,13 @@ def information_thread():
         information.publish_information(local=LOCAL, topic=ROBOT_INFORMATION_TOPIC, x=LOCATION_X, y=LOCATION_Y,
                                         o=ORIENTATION)
     threading.Timer(0.1, information_thread).start()
+
+
+def check_obstacle():
+    if ultrasonic.check_obstacle():
+        drive.stop_movement()
+
+    threading.Timer(0.1, check_obstacle).start()
 
 
 # for creating random mac adresses when testing without real robot
