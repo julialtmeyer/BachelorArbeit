@@ -1,43 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: steuer-info-app-deployment
+  name: backend-app-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: steuer-info-app
+      app: backend-app
   template:
     metadata:
       labels:
-        app: steuer-info-app
+        app: backend-app
     spec:
       hostAliases:
         - ip: "134.96.216.207"
           hostnames:
             - "dsl-cluster-master"
       containers:
-        - name: steuer-info-app
-          image: julialtmeyer/steuer-info-service
+        - name: backend-app
+          image: julialtmeyer/backend-service
           ports:
             - containerPort: 8080
               name: http
           envFrom:
             - configMapRef:
-                name: steuer-info-app-config
+                name: backend-app-config
             - secretRef:
                 name: app-secrets
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: steuer-info-app-service
+  name: backend-app-service
   labels:
-    app: steuer-info-app
+    app: backend-app
 spec:
   type: NodePort
   selector:
-    app: steuer-info-app
+    app: backend-app
   ports:
     - port: 8080
       name: http
@@ -45,7 +45,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: steuer-info-app-config
+  name: backend-app-config
 data:
   topicRoot: data/BrickPi/
   subTopicInformation: /information
